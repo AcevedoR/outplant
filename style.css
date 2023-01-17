@@ -1,0 +1,56 @@
+#unknown-game{
+    background-color: #231942;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    color: #e0b1cb;
+    height: 1000px;
+}
+button {
+    font-family: 'Orbitron', sans-serif;
+    color: #e0b1cb;
+}
+#state-dashboard {
+    margin: 20px;
+    width: 50%;
+    border: solid;
+    padding: 20px;
+}
+h2 {
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+#state-dashboard > p {
+    padding-left: 20px;
+}
+#game-board{
+    margin: 20px;
+    width: 50%;
+    background-color: #5e548e;
+    border: solid;
+    padding: 20px;
+}
+li.choice {
+    list-style: none;
+}
+button {
+    display: flex;
+    background-color: #5e548e;
+}
+button:hover {
+    background-color: #9f86c0;
+}
+.choice > button {
+    padding: 10px;
+    margin: 20px;
+
+
+    /*
+    #5e548e
+    #e0b1cb
+    #be95c4
+    #9f86c0
+    #231942
+    */
+}
