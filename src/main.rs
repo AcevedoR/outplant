@@ -52,9 +52,10 @@ impl Component for App {
                 self.current_event = None;
             }
             AppEvent::WaitOneCycle => {
-                self.game_state = GameState::Waiting;
+                self.current_event = None;
                 let opt_event = self.game.play_next_cycle();
                 if let Some(event) = opt_event {
+                    self.game_state = GameState::Waiting;
                     self.game_state = GameState::ResolvingEvent;
                     self.current_event = Some(event);
                 }
@@ -75,7 +76,6 @@ impl Component for App {
 
                 <div id="game-board">
                     <h2>{ "Species interface:" }</h2>
-                    {self.view_continue_button(ctx.link())}
                     {self.view_event(ctx.link())}
                 </div>
             </div>
@@ -96,8 +96,7 @@ impl App {
                 </div>
             };
         } else {
-            return html! {
-            };
+            return self.view_continue_button(link);
         }
     }
     fn view_one_choice(&self, choice: Choice, link: &Scope<Self>) -> Html {

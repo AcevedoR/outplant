@@ -30,7 +30,7 @@ impl Engine {
         self.state.evolve();
 
         let mut rng = rand::thread_rng();
-        if self.state.natural_balance < 70 && rng.gen_range(0..100) < get_disaster_occurence_percentage(&self.state) {
+        if self.state.natural_balance < 70 && rng.gen_range(0..100) < get_induced_disaster_occurence_percentage(&self.state) {
             return Some(self.get_disaster());
         }
         return self.get_random_event();
@@ -55,6 +55,9 @@ impl Engine {
     }
 
     fn get_random_event(&self) -> Option<Event> {
+         if rand::thread_rng().gen_range(0..100) < 70 {
+             return None;
+         }
         let res = self.event_store.events.iter().filter(|event| !!!event.is_disaster()).choose(&mut rand::thread_rng());
         if res.is_none() {
             panic!("no event found in {:?}", self.event_store.events);
@@ -70,18 +73,18 @@ fn apply_operation_on_state_value(actual_value: u32, modifier: f64, operation: C
     }) as u32
 }
 
-fn get_disaster_occurence_percentage(state: &State) -> u8 {
+fn get_induced_disaster_occurence_percentage(state: &State) -> u8 {
     return 100 - state.natural_balance;
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::engine::get_disaster_occurence_percentage;
+    use crate::engine::get_induced_disaster_occurence_percentage;
     use crate::state::State;
 
     #[test]
     fn occurence_percentage_none() {
-        assert_eq!(get_disaster_occurence_percentage(
+        assert_eq!(get_induced_disaster_occurence_percentage(
             &State::new(
                 10,
                 100,
@@ -93,7 +96,7 @@ mod tests {
 
     #[test]
     fn occurence_percentage_almost_always() {
-        assert_eq!(get_disaster_occurence_percentage(
+        assert_eq!(get_induced_disaster_occurence_percentage(
             &State::new(
                 10,
                 10,
@@ -105,7 +108,7 @@ mod tests {
 
     #[test]
     fn occurence_percentage_sometimes() {
-        assert_eq!(get_disaster_occurence_percentage(
+        assert_eq!(get_induced_disaster_occurence_percentage(
             &State::new(
                 10,
                 60,
