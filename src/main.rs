@@ -2,6 +2,8 @@ extern crate core;
 
 use yew::html::Scope;
 use yew::prelude::*;
+use crate::dtos::ChoiceWrapper;
+use crate::dtos::EventWrapper;
 
 use crate::event::Choice;
 use crate::ui_orchestrator::UIOrchestrator;
@@ -11,6 +13,9 @@ mod engine;
 mod event;
 mod ui_orchestrator;
 mod event_store;
+mod event_chain;
+mod effect;
+mod dtos;
 
 // see https://github.com/yewstack/yew/blob/yew-v0.20.0/examples/todomvc/src/main.rs
 
@@ -22,14 +27,14 @@ pub enum GameState {
 }
 
 pub enum AppEvent {
-    MakeChoice(Choice),
+    MakeChoice(ChoiceWrapper),
     WaitOneCycle,
 }
 
 pub struct App {
     game: UIOrchestrator,
     game_state: GameState,
-    current_event: Option<event::Event>,
+    current_event: Option<EventWrapper>,
 }
 
 impl Component for App {
@@ -40,7 +45,7 @@ impl Component for App {
         Self {
             game: UIOrchestrator::new(),
             game_state: GameState::Pause,
-            current_event: None,
+            current_event: None::<EventWrapper>,
         }
     }
 
@@ -88,10 +93,12 @@ impl App {
         if let Some(event) = self.current_event.clone() {
             return html! {
                 <div class="event">
-                    <h3>{"Something happened: "}{event.title}</h3>
-                    <p>{event.description}</p>
+                    <h3>{"Something happened: "}{event.event.text}</h3>
                     <ul class="todo-list">
-                        {for event.choices.iter().map(|choice| self.view_one_choice(choice.clone(), link))}
+                        {for event.event.choices.unwrap().iter().map(|choice| self.view_one_choice(
+                            ChoiceWrapper{choice: choice.clone(), event_chain_id: event.event_chain_id.clone()},
+                            link
+                        ))}
                     </ul>
                 </div>
             };
@@ -99,12 +106,12 @@ impl App {
             return self.view_continue_button(link);
         }
     }
-    fn view_one_choice(&self, choice: Choice, link: &Scope<Self>) -> Html {
+    fn view_one_choice(&self, choice: ChoiceWrapper, link: &Scope<Self>) -> Html {
         let choice2 = choice.clone();
         return html! {
              <li class="choice">
                 <button class="choice" onclick={link.callback(move |_| AppEvent::MakeChoice(choice.clone()))}>
-                    { choice2.description }
+                    { choice2.choice.text }
                 </button>
              </li>
         };

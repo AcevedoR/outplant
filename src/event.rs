@@ -1,48 +1,41 @@
+use std::collections::HashMap;
+use std::iter::Map;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Event {
-    pub(crate) title: String,
-    pub(crate) description: String,
-    pub(crate) choices: Vec<Choice>,
+    pub(crate) text: String,
+    pub(crate) effects: Option<HashMap<String, bool>>,
+    pub(crate) choices: Option<Vec<Choice>>,
 }
 
 impl Event {
-    pub(crate) fn is_disaster(&self) -> bool {
-        self.title == "Famine" || self.title == "Plague" // TODO move to events.json file, as Tags
+    pub(crate) fn is_choice(&self) -> bool {
+        self.choices.is_some()
     }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Choice {
-    pub(crate) description: String,
-    pub(crate) possible_changes: Vec<Change>,
+    pub(crate) text: String,
+    pub(crate) next: Vec<ChoiceOutcome>,
 }
 
 impl Choice {
-    pub fn resolve(&self) -> Vec<Change> {
-        return self.possible_changes.clone().clone();
+    pub fn resolve(&self) -> ChoiceOutcome {
+        return self.next.first().unwrap().clone();
     }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct Change {
-    pub(crate) description: String,
-    pub(crate) operation: ChangeOperation,
-    pub(crate) target: ChangeTarget,
-    pub(crate) value: f64,
+pub struct ChoiceOutcome {
+    pub(crate) event: String,
+    // pub(crate) in: u8,
+    pub(crate) weight: Option<u8>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub(crate) enum ChangeOperation {
-    ADD,
-    MULTIPLY,
+pub struct EventId {
+    pub(crate) event_chain_id: String,
+    pub(crate) id: String,
 }
-
-#[derive(Clone, Debug, Deserialize, Serialize)]
-pub(crate) enum ChangeTarget {
-    Population,
-    NaturalBalance,
-    ExternalInterventionStock,
-}
-
