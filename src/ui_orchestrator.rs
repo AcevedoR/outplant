@@ -1,7 +1,8 @@
 use serde::{Deserialize, Serialize};
+use crate::dtos::{ChoiceWrapper, EventWrapper};
 
 use crate::engine::Engine;
-use crate::event::{Change, Choice, Event};
+use crate::event::{Choice, ChoiceOutcome, Event};
 use crate::state::State;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -11,19 +12,19 @@ pub struct UIOrchestrator {
 
 impl UIOrchestrator {
     pub fn new() -> UIOrchestrator {
-        let _first_event = Event {
-            title: "Welcome, fake god..".parse().unwrap(),
-            description: "Your species was created, and it starting to evolve !".parse().unwrap(),
-            choices: vec![],
-        };
+        // let _first_event = Event {
+        //     title: "Welcome, fake god..".parse().unwrap(),
+        //     description: "Your species was created, and it starting to evolve !".parse().unwrap(),
+        //     choices: vec![],
+        // };
         return UIOrchestrator {
             engine: Engine::new()
         };
     }
-    pub fn make_a_choice(&mut self, choice: &Choice) -> Vec<Change> {
+    pub fn make_a_choice(&mut self, choice: &ChoiceWrapper) -> ChoiceOutcome {
         return self.engine.apply_choice(choice);
     }
-    pub fn play_next_cycle(&mut self) -> Option<Event> {
+    pub fn play_next_cycle(&mut self) -> Option<EventWrapper> {
         return self.engine.play_next_cycle();
     }
     pub fn get_state(&self) -> &State {

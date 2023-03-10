@@ -1,5 +1,5 @@
 ---
-- title: Famine
+- title: Famine event chain
   coolDown: 5
   trigger:
     comparator: gt

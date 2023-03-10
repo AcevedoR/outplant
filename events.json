@@ -1,7 +1,94 @@
 [
   {
-    "title": "Famine",
-    "description": "Your species is starving.",
+    "title": "Famine event chain",
+    "cooldown": 5,
+    "trigger": {
+      "comparator": "gt",
+      "target": "Population",
+      "value": 2000
+    },
+    "events": {
+      "start": {
+        "text": "Your species is starving.",
+        "effects": {
+          "reduce_growth": true
+        },
+        "choices": [
+          {
+            "text": "Do nothing. Let the strongest survive.",
+            "next": [
+              {
+                "event": "choice_strongest",
+                "in": 2
+              }
+            ]
+          },
+          {
+            "text": "Show them how to hunt bigger prey, and so, climb the food chain.",
+            "next": [
+              {
+                "event": "choice_hunt_success",
+                "in": 1
+              },
+              {
+                "weight": 2,
+                "event": "choice_hunt_failure",
+                "in": 1
+              }
+            ]
+          }
+        ]
+      },
+      "choice_strongest": {
+        "text": "You watch as your species is starving, but slowly adapting to the situation afterwards.",
+        "next": [
+          {
+            "event": "choice_strongest_end"
+          }
+        ]
+      },
+      "choice_strongest_end": {
+        "text": "The famine has ended as a lot of members died.",
+        "effect": {
+          "reduce_growth": false
+        }
+      },
+      "choice_hunt_success": {
+        "text": "They are better hunters now.",
+        "effect": {
+          "better_hunting": true
+        }
+      },
+      "choice_hunt_failure": {
+        "text": "Your species is dying while trying to hunt.",
+        "effect": {
+          "decrease_in_food_chain": true
+        }
+      }
+    },
+    "effects": {
+      "reduce_growth": {
+        "description": "You watch as your species is starving, but slowly adapting to the situation afterwards.",
+        "operation": "MULTIPLY",
+        "target": "Population",
+        "value": 0.6,
+        "type": "permanent"
+      },
+      "better_hunting": {
+        "description": "They are better hunter.",
+        "operation": "MULTIPLY",
+        "target": "Population",
+        "value": 1.1,
+        "type": "permanent"
+      },
+      "decrease_in_food_chain": {
+        "description": "Hunters are being hunted.",
+        "operation": "MULTIPLY",
+        "target": "Population",
+        "value": 0.8,
+        "type": "instant"
+      }
+    },
     "choices": [
       {
         "description": "Do nothing. Let the strongest survive.",
@@ -28,125 +115,6 @@
             "operation": "ADD",
             "target": "NaturalBalance",
             "value": -20
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Event 2",
-    "description": "222222",
-    "choices": [
-      {
-        "description": "Do nothing.",
-        "possible_changes": [
-          {
-            "description": "Nothing happens",
-            "operation": "ADD",
-            "target": "Population",
-            "value": 0.0
-          }
-        ]
-      },
-      {
-        "description": "Teach them survival",
-        "possible_changes": [
-          {
-            "description": "They learn and grow",
-            "operation": "MULTIPLY",
-            "target": "Population",
-            "value": 1.2
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Event 3",
-    "description": "3333",
-    "choices": [
-      {
-        "description": "Do nothing.",
-        "possible_changes": [
-          {
-            "description": "Nothing happens",
-            "operation": "ADD",
-            "target": "Population",
-            "value": 0
-          }
-        ]
-      },
-      {
-        "description": "Teach them austerity",
-        "possible_changes": [
-          {
-            "description": "They learn to respect the Nature",
-            "operation": "ADD",
-            "target": "NaturalBalance",
-            "value": 5
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Tempest",
-    "description": "A tempest happens",
-    "choices": [
-      {
-        "description": "Do nothing.",
-        "possible_changes": [
-          {
-            "description": "Some of them die",
-            "operation": "MULTIPLY",
-            "target": "Population",
-            "value": 0.95
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Cold winter",
-    "description": "This year the winter is really cold",
-    "choices": [
-      {
-        "description": "Do nothing.",
-        "possible_changes": [
-          {
-            "description": "A lot of them die",
-            "operation": "MULTIPLY",
-            "target": "Population",
-            "value": 0.8
-          },
-          {
-            "description": "Biodiversity was impacted",
-            "operation": "ADD",
-            "target": "NaturalBalance",
-            "value": -20
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Plague",
-    "description": "A strange disease is killing everybody",
-    "choices": [
-      {
-        "description": "Do nothing.",
-        "possible_changes": [
-          {
-            "description": "Most of them die",
-            "operation": "MULTIPLY",
-            "target": "Population",
-            "value": 0.4
-          },
-          {
-            "description": "Other species were impacted",
-            "operation": "ADD",
-            "target": "NaturalBalance",
-            "value": -50
           }
         ]
       }

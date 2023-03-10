@@ -3,11 +3,12 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::event::Event;
+use crate::event::{Event, EventId};
+use crate::event_chain::EventChain;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct EventStore {
-    pub events: Vec<Event>,
+    pub event_chains: Vec<EventChain>,
 }
 
 impl EventStore {
@@ -20,10 +21,17 @@ impl EventStore {
         if result.is_err() {
             panic!("events json file was not well formatted, \nerror: {}, \nfile: {}", result.err().unwrap(), data);
         }
-        let events: Vec<Event> = result.unwrap();
+        let events: Vec<EventChain> = result.unwrap();
 
         return EventStore {
-            events
+            event_chains: events
         };
+    }
+    pub fn getEvent(&self, eventId: EventId) -> &Event {
+        return self.getEvent2(eventId.event_chain_id, eventId.id);
+    }
+    pub fn getEvent2(&self, eventChainId: String, eventId: String) -> &Event {
+        return self.event_chains.iter().filter(|eventChain| eventChain.title == eventChainId).next().unwrap()
+            .events.get(&*eventId).unwrap();
     }
 }
