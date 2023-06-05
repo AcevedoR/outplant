@@ -19,6 +19,7 @@ impl Event {
 pub struct Choice {
     pub(crate) text: String,
     pub(crate) next: Vec<ChoiceOutcome>,
+    pub(crate) effect: Option<HashMap<String, bool>>,
 }
 
 impl Choice {
@@ -30,8 +31,8 @@ impl Choice {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct ChoiceOutcome {
     pub(crate) event: String,
-    // pub(crate) in: u8,
-    pub(crate) weight: Option<u8>,
+    // pub(crate) in: u32,
+    pub(crate) weight: Option<u32>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

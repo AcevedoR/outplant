@@ -1,11 +1,11 @@
 [
   {
-    "title": "Famine event chain",
+    "title": "starvation",
     "cooldown": 5,
     "trigger": {
       "comparator": "gt",
       "target": "Population",
-      "value": 2000
+      "value": 4
     },
     "events": {
       "start": {
