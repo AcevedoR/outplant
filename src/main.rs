@@ -35,7 +35,7 @@ pub enum AppEvent {
 pub struct App {
     game: UIOrchestrator,
     game_state: GameState,
-    current_event: Option<EventWrapper>,
+    current_events: Vec<EventWrapper>,
 }
 
 impl Component for App {
@@ -46,7 +46,7 @@ impl Component for App {
         Self {
             game: UIOrchestrator::new(),
             game_state: GameState::Pause,
-            current_event: None::<EventWrapper>,
+            current_events: Vec::new(),
         }
     }
 
@@ -55,15 +55,15 @@ impl Component for App {
             AppEvent::MakeChoice(choice) => {
                 self.game_state = GameState::Pause;
                 self.game.make_a_choice(&choice);
-                self.current_event = None;
+                self.current_events.clear();
             }
             AppEvent::WaitOneCycle => {
-                self.current_event = None;
-                let opt_event = self.game.play_next_cycle();
-                if let Some(event) = opt_event {
+                self.current_events.clear();
+                let events = self.game.play_next_cycle();
+                if !!!events.is_empty() {
                     self.game_state = GameState::Waiting;
                     self.game_state = GameState::ResolvingEvent;
-                    self.current_event = Some(event);
+                    self.current_events = events;
                 }
             }
         }
@@ -91,20 +91,22 @@ impl Component for App {
 
 impl App {
     fn view_event(&self, link: &Scope<Self>) -> Html {
-        if let Some(event) = self.current_event.clone() {
-            return html! {
+        return if !!!self.current_events.is_empty() {
+            let event = self.current_events.first().unwrap();
+            println!("event");
+            html! {
                 <div class="event">
-                    <h3>{"Something happened: "}{event.event.text}</h3>
+                    <h3>{"Something happened: "}{&event.event.text}</h3>
                     <ul class="todo-list">
-                        {for event.event.choices.unwrap().iter().map(|choice| self.view_one_choice(
+                        {for event.event.choices.clone().unwrap().iter().map(|choice| self.view_one_choice(
                             ChoiceWrapper{choice: choice.clone(), event_chain_id: event.event_chain_id.clone()},
                             link
                         ))}
                     </ul>
                 </div>
-            };
+            }
         } else {
-            return self.view_continue_button(link);
+            self.view_continue_button(link)
         }
     }
     fn view_one_choice(&self, choice: ChoiceWrapper, link: &Scope<Self>) -> Html {
