@@ -1,6 +1,4 @@
-use std::iter::Map;
 use serde::{Deserialize, Serialize};
-use crate::event::Event;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Effect {

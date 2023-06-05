@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
-use crate::dtos::{ChoiceWrapper, EventWrapper};
 
+use crate::dtos::{ChoiceWrapper, EventWrapper};
 use crate::engine::Engine;
-use crate::event::{Choice, ChoiceOutcome, Event};
+use crate::event::ChoiceOutcome;
 use crate::state::State;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -18,7 +18,7 @@ impl UIOrchestrator {
         //     choices: vec![],
         // };
         return UIOrchestrator {
-            engine: Engine::new()
+            engine: Engine::new(),
         };
     }
     pub fn make_a_choice(&mut self, choice: &ChoiceWrapper) -> ChoiceOutcome {
@@ -31,4 +31,3 @@ impl UIOrchestrator {
         self.engine.get_state()
     }
 }
-

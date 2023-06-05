@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::iter::Map;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -9,11 +9,7 @@ pub struct Event {
     pub(crate) choices: Option<Vec<Choice>>,
 }
 
-impl Event {
-    pub(crate) fn is_choice(&self) -> bool {
-        self.choices.is_some()
-    }
-}
+impl Event {}
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Choice {

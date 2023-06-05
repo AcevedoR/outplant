@@ -2,21 +2,20 @@ extern crate core;
 
 use yew::html::Scope;
 use yew::prelude::*;
+
 use crate::dtos::ChoiceWrapper;
 use crate::dtos::EventWrapper;
-
-use crate::event::Choice;
 use crate::ui_orchestrator::UIOrchestrator;
 
-mod state;
+mod dtos;
+mod effect;
 mod engine;
 mod event;
-mod ui_orchestrator;
-mod event_store;
 mod event_chain;
-mod effect;
-mod dtos;
+mod event_store;
+mod state;
 mod trigger;
+mod ui_orchestrator;
 
 // see https://github.com/yewstack/yew/blob/yew-v0.20.0/examples/todomvc/src/main.rs
 
@@ -107,7 +106,7 @@ impl App {
             }
         } else {
             self.view_continue_button(link)
-        }
+        };
     }
     fn view_one_choice(&self, choice: ChoiceWrapper, link: &Scope<Self>) -> Html {
         let choice2 = choice.clone();
@@ -119,18 +118,18 @@ impl App {
              </li>
         };
     }
-    fn view_continue_button(&self, link: &Scope<Self>) -> Html{
-        if self.game_state == GameState::Pause {
-           return html! {
-            <button
-                type="button"
-                id="wait-one-cycle"
-                onclick={link.callback(|_| AppEvent::WaitOneCycle)}
-            > {"wait one cycle"}</button>
-        }
-        } else{
-            return html!{}
-        }
+    fn view_continue_button(&self, link: &Scope<Self>) -> Html {
+        return if self.game_state == GameState::Pause {
+            html! {
+                <button
+                    type="button"
+                    id="wait-one-cycle"
+                    onclick={link.callback(|_| AppEvent::WaitOneCycle)}
+                > {"wait one cycle"}</button>
+            }
+        } else {
+            html! {}
+        };
     }
 }
 

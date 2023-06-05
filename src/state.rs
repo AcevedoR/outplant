@@ -1,4 +1,5 @@
 use std::collections::HashSet;
+
 use gloo_console::log;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsValue;
@@ -8,7 +9,7 @@ pub struct State {
     pub(crate) population: u32,
     pub(crate) natural_balance: u32,
     pub(crate) external_intervention_reserve: u32,
-    pub(crate) ongoing_event_chains: HashSet<String>
+    pub(crate) ongoing_event_chains: HashSet<String>,
 }
 
 impl State {
@@ -25,13 +26,13 @@ impl State {
         return instance;
     }
     pub fn set_population(&mut self, new: u32) {
-        if new < 0 || new > 12 {
+        if new > 12 {
             panic!();
         }
         self.population = new;
     }
     pub fn set_natural_balance(&mut self, new: u32) {
-        if new < 0 || new > 12 {
+        if new > 12 {
             panic!();
         }
         self.natural_balance = new;
@@ -53,6 +54,5 @@ impl State {
             self.population = self.population - 1;
         }
         log!("state after evolve: ", JsValue::from(format!("{:?}", self)));
-
     }
 }
