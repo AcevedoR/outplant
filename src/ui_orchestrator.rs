@@ -24,7 +24,7 @@ impl UIOrchestrator {
     pub fn make_a_choice(&mut self, choice: &ChoiceWrapper) -> ChoiceOutcome {
         return self.engine.apply_choice(choice);
     }
-    pub fn play_next_cycle(&mut self) -> Option<EventWrapper> {
+    pub fn play_next_cycle(&mut self) -> Vec<EventWrapper> {
         return self.engine.play_next_cycle();
     }
     pub fn get_state(&self) -> &State {

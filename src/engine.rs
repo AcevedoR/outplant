@@ -32,7 +32,7 @@ impl Engine {
             next_event: None,
         };
     }
-    pub fn play_next_cycle(&mut self) -> Option<EventWrapper> {
+    pub fn play_next_cycle(&mut self) -> Vec<EventWrapper> {
         if self.has_won(self.state.external_intervention_reserve, self.state.population, self.state.natural_balance) {
             println!("Bravo !");
             panic!("you won");
@@ -48,11 +48,13 @@ impl Engine {
 
         self.state.evolve();
 
-        let optional_event_chain = self.select_event_chain();
-        if optional_event_chain.is_some() {
-            self.state.ongoing_event_chains.insert(optional_event_chain.clone().unwrap().event_chain_id);
+        let new_event_chains = self.select_event_chain();
+
+        for chain in &new_event_chains {
+            self.state.ongoing_event_chains.insert(chain.clone().event_chain_id);
         }
-        return optional_event_chain;
+
+        return new_event_chains;
     }
 
     fn has_lost(&self, money: u32, pop_level: u32, ecology_level: u32) -> bool {
@@ -86,20 +88,13 @@ impl Engine {
         return &self.state;
     }
 
-    fn select_event_chain(&self) -> Option<EventWrapper> {
-        let random_event = self.event_store.event_chains.iter()
+    fn select_event_chain(&self) -> Vec<EventWrapper> {
+        return self.event_store.event_chains.iter()
             .filter(|chain| chain.trigger.is_satisfied(&self.state))
             .filter(|chain| !!!self.state.ongoing_event_chains.contains(&chain.title))
-            .choose(&mut rand::thread_rng());
-
-        if random_event.is_none() {
-            return None;
-        }
-
-        let chain = random_event.cloned().unwrap();
-        let first_event = EventWrapper { event_chain_id: chain.title, event: chain.events.get("start").unwrap().clone() };
-        self.play_event(&first_event);
-        return Some(first_event);
+            .filter(|chain| rand::thread_rng().gen_range(0..100) < 80)
+            .map(|chain| EventWrapper { event_chain_id: chain.title.clone(), event: chain.events.get("start").unwrap().clone() })
+            .collect::<Vec<EventWrapper>>();
     }
 
     fn play_event(&self, event: &EventWrapper) {
