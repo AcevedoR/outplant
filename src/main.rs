@@ -16,6 +16,7 @@ mod event_store;
 mod event_chain;
 mod effect;
 mod dtos;
+mod trigger;
 
 // see https://github.com/yewstack/yew/blob/yew-v0.20.0/examples/todomvc/src/main.rs
 
