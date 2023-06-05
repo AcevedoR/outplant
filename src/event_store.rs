@@ -19,19 +19,30 @@ impl EventStore {
 
         let result = serde_json::from_str(&*data);
         if result.is_err() {
-            panic!("events json file was not well formatted, \nerror: {}, \nfile: {}", result.err().unwrap(), data);
+            panic!(
+                "events json file was not well formatted, \nerror: {}, \nfile: {}",
+                result.err().unwrap(),
+                data
+            );
         }
         let events: Vec<EventChain> = result.unwrap();
 
         return EventStore {
-            event_chains: events
+            event_chains: events,
         };
     }
-    pub fn getEvent(&self, eventId: EventId) -> &Event {
-        return self.getEvent2(eventId.event_chain_id, eventId.id);
+    pub fn get_event(&self, event_id: EventId) -> &Event {
+        return self.get_event2(event_id.event_chain_id, event_id.id);
     }
-    pub fn getEvent2(&self, eventChainId: String, eventId: String) -> &Event {
-        return self.event_chains.iter().filter(|eventChain| eventChain.title == eventChainId).next().unwrap()
-            .events.get(&*eventId).unwrap();
+    pub fn get_event2(&self, event_chain_id: String, event_id: String) -> &Event {
+        return self
+            .event_chains
+            .iter()
+            .filter(|event_chain| event_chain.title == event_chain_id)
+            .next()
+            .unwrap()
+            .events
+            .get(&*event_id)
+            .unwrap();
     }
 }
