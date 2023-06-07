@@ -1,0 +1,92 @@
+{
+  "$schema": "./schema.json",
+  "title": "starvation",
+  "cooldown": 5,
+  "trigger": {
+    "comparator": "gt",
+    "target": "Population",
+    "value": 4
+  },
+  "events": {
+    "start": {
+      "text": "Your species is starving.",
+      "effects": {
+        "reduce_growth": true
+      },
+      "choices": [
+        {
+          "text": "Do nothing. Let the strongest survive.",
+          "next": [
+            {
+              "event": "choice_strongest",
+              "in": 2
+            }
+          ]
+        },
+        {
+          "text": "Show them how to hunt bigger prey, and so, climb the food chain.",
+          "next": [
+            {
+              "event": "choice_hunt_success",
+              "in": 1
+            },
+            {
+              "weight": 2,
+              "event": "choice_hunt_failure",
+              "in": 1
+            }
+          ]
+        }
+      ]
+    },
+    "choice_strongest": {
+      "text": "You watch as your species is starving, but slowly adapting to the situation afterwards.",
+      "next": [
+        {
+          "event": "choice_strongest_end"
+        }
+      ]
+    },
+    "choice_strongest_end": {
+      "text": "The famine has ended as a lot of members died.",
+      "effects": {
+        "reduce_growth": false
+      }
+    },
+    "choice_hunt_success": {
+      "text": "They are better hunters now.",
+      "effects": {
+        "better_hunting": true
+      }
+    },
+    "choice_hunt_failure": {
+      "text": "Your species is dying while trying to hunt.",
+      "effects": {
+        "decrease_in_food_chain": true
+      }
+    }
+  },
+  "effects": {
+    "reduce_growth": {
+      "description": "You watch as your species is starving, but slowly adapting to the situation afterwards.",
+      "operation": "MULTIPLY",
+      "target": "Population",
+      "value": 0.6,
+      "type": "permanent"
+    },
+    "better_hunting": {
+      "description": "They are better hunter.",
+      "operation": "MULTIPLY",
+      "target": "Population",
+      "value": 1.1,
+      "type": "permanent"
+    },
+    "decrease_in_food_chain": {
+      "description": "Hunters are being hunted.",
+      "operation": "MULTIPLY",
+      "target": "Population",
+      "value": 0.8,
+      "type": "instant"
+    }
+  }
+}
