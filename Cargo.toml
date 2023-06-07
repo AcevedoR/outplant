@@ -18,3 +18,6 @@ getrandom = { version = "0.2", features = ["js"] }
 gloo-console = "0.2.3"
 wasm-logger = "0.2.0"
 wasm-bindgen = "0.2.83"
+
+rust-embed= { version = "6.7.0", features = ["debug-embed", "include-exclude"] }
+simple-error = "0.2"

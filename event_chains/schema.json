@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Json schema for an event chain",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "cooldown": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "comparator": {
+          "type": "string",
+          "enum": [
+            "lt",
+            "lte",
+            "eq",
+            "gte",
+            "gt"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "enum": [
+            "Population",
+            "NaturalBalance",
+            "ExternalInterventionStock"
+          ]
+        },
+        "value": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "comparator",
+        "target",
+        "value"
+      ]
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "effects": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "type": "string"
+                      },
+                      "in": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "weight": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    },
+                    "required": [
+                      "event"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "text",
+                "next"
+              ]
+            }
+          },
+          "next": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "type": "string"
+                },
+                "in": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "weight": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "event"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "text"
+        ]
+      },
+      "required": [
+        "start"
+      ]
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "MULTIPLY",
+              "ADD",
+              "SUBTRACT"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "enum": [
+              "Population",
+              "NaturalBalance",
+              "ExternalInterventionStock"
+            ]
+          },
+          "value": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "instant",
+              "permanent"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "target",
+          "value",
+          "type"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "title",
+    "trigger",
+    "events"
+  ]
+}
