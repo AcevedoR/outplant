@@ -12,11 +12,6 @@ pub struct UIOrchestrator {
 
 impl UIOrchestrator {
     pub fn new() -> UIOrchestrator {
-        // let _first_event = Event {
-        //     title: "Welcome, fake god..".parse().unwrap(),
-        //     description: "Your species was created, and it starting to evolve !".parse().unwrap(),
-        //     choices: vec![],
-        // };
         return UIOrchestrator {
             engine: Engine::new(),
         };

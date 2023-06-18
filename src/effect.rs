@@ -10,14 +10,16 @@ pub struct Effect {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub(crate) enum ChangeOperation {
-    ADD,
-    MULTIPLY,
+    Add,
+    Subtract,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub(crate) enum ChangeTarget {
     Population,
-    NaturalBalance,
-    ExternalInterventionStock,
+    Ecology,
+    Money,
 }

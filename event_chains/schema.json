@@ -29,9 +29,9 @@
         "target": {
           "type": "string",
           "enum": [
-            "Population",
-            "NaturalBalance",
-            "ExternalInterventionStock"
+            "population",
+            "ecology",
+            "money"
           ]
         },
         "value": {
@@ -139,17 +139,16 @@
           "operation": {
             "type": "string",
             "enum": [
-              "MULTIPLY",
-              "ADD",
-              "SUBTRACT"
+              "add",
+              "subtract"
             ]
           },
           "target": {
             "type": "string",
             "enum": [
-              "Population",
-              "NaturalBalance",
-              "ExternalInterventionStock"
+              "population",
+              "ecology",
+              "money"
             ]
           },
           "value": {

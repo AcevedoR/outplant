@@ -1,4 +1,3 @@
-use gloo_console::log;
 use serde::{Deserialize, Serialize};
 
 use crate::event::{Event, EventId};
@@ -13,11 +12,8 @@ pub struct EventStore {
 
 impl EventStore {
     pub fn new() -> EventStore {
-        let chains = get_event_chains();
-        log!(format!("CHAINS {} {}", chains.len(), serde_json::to_string_pretty(&chains).unwrap()));
-
         return EventStore {
-            event_chains: chains ,
+            event_chains: get_event_chains(),
         };
     }
     pub fn get_event(&self, event_id: EventId) -> &Event {
