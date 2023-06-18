@@ -86,10 +86,6 @@ impl Engine {
             .collect::<Vec<EventWrapper>>();
     }
 
-    fn play_event(&self, _event: &EventWrapper) {
-        // TODO
-    }
-
     pub fn get_state(&self) -> &State {
         return &self.state;
     }
