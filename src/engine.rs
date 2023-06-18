@@ -45,7 +45,7 @@ impl Engine {
     }
 
     fn has_lost(&self) -> bool {
-        return self.state.external_intervention_reserve <= 0 ||
+        return self.state.money <= 0 ||
             self.state.population == 0;
     }
 

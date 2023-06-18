@@ -13,23 +13,33 @@ impl Trigger {
     pub(crate) fn is_satisfied(&self, state: &State) -> bool {
         let actual_value = match self.target {
             TriggerTarget::Population => state.population,
-            TriggerTarget::NaturalBalance => state.natural_balance,
-            TriggerTarget::ExternalInterventionStock => state.external_intervention_reserve,
+            TriggerTarget::Ecology => state.ecology,
+            TriggerTarget::Money => state.money,
         };
         return match self.comparator {
-            TriggerComparator::gt => actual_value > self.value,
+            TriggerComparator::Lt => actual_value < self.value,
+            TriggerComparator::Lte => actual_value <= self.value,
+            TriggerComparator::Eq => actual_value == self.value,
+            TriggerComparator::Gte => actual_value >= self.value,
+            TriggerComparator::Gt => actual_value > self.value,
         };
     }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub(crate) enum TriggerComparator {
-    gt,
+    Lt,
+    Lte,
+    Eq,
+    Gte,
+    Gt,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub(crate) enum TriggerTarget {
     Population,
-    NaturalBalance,
-    ExternalInterventionStock,
+    Ecology,
+    Money,
 }

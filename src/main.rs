@@ -76,8 +76,8 @@ impl Component for App {
                 <div id="state-dashboard">
                     <h2>{ "Species dashboard:" }</h2>
                     <p>{"population: "} { self.game.get_state().population}</p>
-                    <p>{"natural_balance: "}{ self.game.get_state().natural_balance}</p>
-                    <p>{"ext reserve: "}{ self.game.get_state().external_intervention_reserve}</p>
+                    <p>{"natural_balance: "}{ self.game.get_state().ecology}</p>
+                    <p>{"ext reserve: "}{ self.game.get_state().money}</p>
                 </div>
 
                 <div id="game-board">

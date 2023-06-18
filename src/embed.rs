@@ -17,9 +17,6 @@ pub fn get_event_chains() -> Vec<EventChain> {
         chains.push(read_event_chain(file.into_owned()).unwrap());
     }
 
-    println!("EEEEEEEEEEEEEEEEEEE");
-    println!("{}", chains.len());
-
     return chains;
 }
 
