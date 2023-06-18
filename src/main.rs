@@ -5,10 +5,7 @@ use yew::prelude::*;
 
 use crate::dtos::ChoiceWrapper;
 use crate::dtos::EventWrapper;
-use crate::event_store::EventStore;
 use crate::ui_orchestrator::UIOrchestrator;
-
-use gloo_console::log;
 
 mod dtos;
 mod effect;
