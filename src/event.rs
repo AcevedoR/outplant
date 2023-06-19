@@ -15,7 +15,6 @@ impl Event {}
 pub struct Choice {
     pub(crate) text: String,
     pub(crate) next: Vec<ChoiceOutcome>,
-    pub(crate) effect: Option<HashMap<String, bool>>,
 }
 
 impl Choice {

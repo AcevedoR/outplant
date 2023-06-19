@@ -1,15 +1,14 @@
-use std::collections::HashSet;
-
 use gloo_console::log;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsValue;
+use crate::dtos::OngoingEventChain;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct State {
     pub(crate) population: u32,
     pub(crate) ecology: u32,
     pub(crate) money: u32,
-    pub(crate) ongoing_event_chains: HashSet<String>,
+    pub(crate) ongoing_event_chains: Vec<OngoingEventChain>,
 }
 
 impl State {
