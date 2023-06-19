@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::dtos::{ChoiceWrapper, EventWrapper};
+use crate::dtos::{ChoiceWrapper, OngoingEventChain};
 use crate::engine::Engine;
 use crate::event::ChoiceOutcome;
 use crate::state::State;
@@ -19,8 +19,9 @@ impl UIOrchestrator {
     pub fn make_a_choice(&mut self, choice: &ChoiceWrapper) -> ChoiceOutcome {
         return self.engine.apply_choice(choice);
     }
-    pub fn play_next_cycle(&mut self) -> Vec<EventWrapper> {
-        return self.engine.play_next_cycle();
+    pub fn play_next_cycle(&mut self) -> Vec<OngoingEventChain> {
+        self.engine.play_next_cycle();
+        return self.engine.get_state().clone().ongoing_event_chains;
     }
     pub fn get_state(&self) -> &State {
         self.engine.get_state()

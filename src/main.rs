@@ -4,7 +4,7 @@ use yew::html::Scope;
 use yew::prelude::*;
 
 use crate::dtos::ChoiceWrapper;
-use crate::dtos::EventWrapper;
+use crate::dtos::OngoingEventChain;
 use crate::ui_orchestrator::UIOrchestrator;
 
 mod dtos;
@@ -35,7 +35,7 @@ pub enum AppEvent {
 pub struct App {
     game: UIOrchestrator,
     game_state: GameState,
-    current_events: Vec<EventWrapper>,
+    current_events: Vec<OngoingEventChain>,
 }
 
 impl Component for App {

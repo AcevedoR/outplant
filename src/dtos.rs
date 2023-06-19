@@ -9,7 +9,7 @@ pub struct ChoiceWrapper {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct EventWrapper {
+pub struct OngoingEventChain {
     pub(crate) event: Event,
     pub(crate) event_chain_id: String,
 }
