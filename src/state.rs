@@ -1,14 +1,14 @@
-use gloo_console::log;
 use serde::{Deserialize, Serialize};
 
 use crate::dtos::OngoingEventChain;
+use crate::log_wasm;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct State {
-    pub(crate) population: u32,
-    pub(crate) ecology: u32,
-    pub(crate) money: u32,
-    pub(crate) ongoing_event_chains: Vec<OngoingEventChain>,
+    pub population: u32,
+    pub ecology: u32,
+    pub money: u32,
+    pub ongoing_event_chains: Vec<OngoingEventChain>,
 }
 
 impl State {
@@ -52,6 +52,6 @@ impl State {
         if self.ecology == 0 && self.population > 0 {
             self.population = self.population - 1;
         }
-        log!(format!("state after evolve: {:?}", self));
+        log_wasm!(format!("state after evolve: {:?}", self));
     }
 }

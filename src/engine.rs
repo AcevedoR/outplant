@@ -1,10 +1,10 @@
-use gloo_console::log;
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
 use crate::dtos::{ChoiceWrapper, OngoingEventChain};
 use crate::event::ChoiceOutcome;
 use crate::event_store::EventStore;
+use crate::log_wasm;
 use crate::state::State;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -25,11 +25,11 @@ impl Engine {
     }
     pub fn play_next_cycle(&mut self) {
         if self.has_won() {
-            log!("Bravo !");
+            log_wasm!("Bravo !");
             panic!("you won");
         }
         if self.has_lost() {
-            log!("Looser! Not bravo");
+            log_wasm!("Looser! Not bravo");
             panic!("you lost")
         }
 
@@ -94,6 +94,6 @@ impl Engine {
     }
 
     fn log_events_chains(new_event_chains: &Vec<OngoingEventChain>) {
-        log!(format!("there is some events to play: {:?}", new_event_chains.iter().map(|x| x.event_chain_id.clone()).reduce(|a,b| a+", "+&b).unwrap_or("".to_string())));
+        log_wasm!(format!("there is some events to play: {:?}", new_event_chains.iter().map(|x| x.event_chain_id.clone()).reduce(|a,b| a+", "+&b).unwrap_or("".to_string())));
     }
 }

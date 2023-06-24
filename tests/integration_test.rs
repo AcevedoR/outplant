@@ -1,0 +1,10 @@
+use unnamed_game;
+
+#[test]
+fn nominal_case() {
+    let mut engine = unnamed_game::engine::Engine::new();
+
+    engine.play_next_cycle();
+
+    assert_eq!(engine.get_state().population, 2);
+}
