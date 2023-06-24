@@ -1,3 +1,4 @@
+use gloo_console::log;
 use serde::{Deserialize, Serialize};
 
 use crate::state::State;
@@ -28,7 +29,8 @@ pub(crate) enum ChangeTarget {
 
 impl Effect {
     pub fn apply(self: &Effect, state: &mut State) {
-        let mut value = self.value;
+        let mut value: i32 = self.value as i32;
+        log!(format!("applying effect {:?}", self));
         match self.operation {
             ChangeOperation::Add => {}
             ChangeOperation::Subtract => {
@@ -37,13 +39,13 @@ impl Effect {
         }
         match self.target {
             ChangeTarget::Population => {
-                state.population = state.population + value;
+                state.population = state.population.saturating_add_signed(value);
             }
             ChangeTarget::Ecology => {
-                state.ecology = state.ecology + value;
+                state.ecology = state.ecology.saturating_add_signed(value);
             }
             ChangeTarget::Money => {
-                state.money = state.money + value;
+                state.money = state.money.saturating_add_signed(value);
             }
         }
     }

@@ -1,6 +1,6 @@
 use gloo_console::log;
 use serde::{Deserialize, Serialize};
-use wasm_bindgen::JsValue;
+
 use crate::dtos::OngoingEventChain;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -52,6 +52,6 @@ impl State {
         if self.ecology == 0 && self.population > 0 {
             self.population = self.population - 1;
         }
-        log!("state after evolve: ", JsValue::from(format!("{:?}", self)));
+        log!(format!("state after evolve: {:?}", self));
     }
 }

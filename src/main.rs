@@ -93,7 +93,6 @@ impl App {
     fn view_event(&self, link: &Scope<Self>) -> Html {
         return if !!!self.current_events.is_empty() {
             let event = self.current_events.first().unwrap();
-            println!("event");
             html! {
                 <div class="event">
                     <h3>{"Something happened: "}{&event.event.text}</h3>

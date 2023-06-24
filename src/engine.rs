@@ -1,8 +1,9 @@
+use gloo_console::log;
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
 use crate::dtos::{ChoiceWrapper, OngoingEventChain};
-use crate::event::{ChoiceOutcome, EventId};
+use crate::event::ChoiceOutcome;
 use crate::event_store::EventStore;
 use crate::state::State;
 
@@ -24,11 +25,11 @@ impl Engine {
     }
     pub fn play_next_cycle(&mut self) {
         if self.has_won() {
-            println!("Bravo !");
+            log!("Bravo !");
             panic!("you won");
         }
         if self.has_lost() {
-            println!("Looser! Not bravo");
+            log!("Looser! Not bravo");
             panic!("you lost")
         }
 
@@ -36,12 +37,22 @@ impl Engine {
 
         let mut new_event_chains = self.select_event_chains();
 
-        while !self.state.ongoing_event_chains.is_empty() {
+        while !!!self.state.ongoing_event_chains.is_empty() {
             new_event_chains.push(self.state.ongoing_event_chains.pop().unwrap())
         }
 
-        for event_chain in &new_event_chains {
-            // if event_chain.event. TODO
+        while !!!new_event_chains.is_empty() {
+            Self::log_events_chains(&new_event_chains);
+
+            let event_chain_to_play = new_event_chains.pop().unwrap();
+            event_chain_to_play.event.apply_effects(
+                &mut self.state,
+                &self.event_store.event_chains
+                    .iter()
+                    .find(|event_chain| event_chain_to_play.event_chain_id == event_chain.title).unwrap()
+                    .effects,
+            );
+            self.state.ongoing_event_chains.push(event_chain_to_play);
         }
     }
 
@@ -56,20 +67,8 @@ impl Engine {
 
     pub fn apply_choice(&mut self, choice_wrapper: &ChoiceWrapper) -> ChoiceOutcome {
         let choice_outcome = choice_wrapper.choice.resolve();
-
-        self.schedule_next_event_in_chain(
-            EventId {
-                event_chain_id: choice_wrapper.clone().event_chain_id,
-                id: choice_outcome.event.clone(),
-            },
-            1,
-        );
+        // TODO choice should trigger an event and add it to the stack
         return choice_outcome.clone();
-    }
-
-    pub fn schedule_next_event_in_chain(&mut self, event_id: EventId, _delay: u32) {
-        let _event = self.event_store.get_event(event_id);
-        // TODO implement delay
     }
 
     fn select_event_chains(&self) -> Vec<OngoingEventChain> {
@@ -92,5 +91,9 @@ impl Engine {
 
     pub fn get_state(&self) -> &State {
         return &self.state;
+    }
+
+    fn log_events_chains(new_event_chains: &Vec<OngoingEventChain>) {
+        log!(format!("there is some events to play: {:?}", new_event_chains.iter().map(|x| x.event_chain_id.clone()).reduce(|a,b| a+", "+&b).unwrap_or("".to_string())));
     }
 }
