@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use crate::log_wasm;
+use crate::log;
 
 use crate::state::State;
 
@@ -30,7 +30,7 @@ pub(crate) enum ChangeTarget {
 impl Effect {
     pub fn apply(self: &Effect, state: &mut State) {
         let mut value: i32 = self.value as i32;
-        log_wasm!(format!("applying effect {:?}", self));
+        log!(format!("applying effect {:?}", self));
         match self.operation {
             ChangeOperation::Add => {}
             ChangeOperation::Subtract => {

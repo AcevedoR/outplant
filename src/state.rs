@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::dtos::OngoingEventChain;
-use crate::log_wasm;
+use crate::log;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct State {
@@ -52,6 +52,6 @@ impl State {
         if self.ecology == 0 && self.population > 0 {
             self.population = self.population - 1;
         }
-        log_wasm!(format!("state after evolve: {:?}", self));
+        log!(format!("state after evolve: {:?}", self));
     }
 }
