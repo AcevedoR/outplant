@@ -19,7 +19,6 @@ use crate::dtos::OngoingEventChain;
 use crate::ui_orchestrator::UIOrchestrator;
 
 
-// see https://github.com/yewstack/yew/blob/yew-v0.20.0/examples/todomvc/src/main.rs
 
 #[derive(PartialEq)]
 pub enum GameState {
