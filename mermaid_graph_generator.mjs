@@ -28,14 +28,16 @@ const nodeLines = transitions.map(transition => {
     if (transition.event === "start") {
         return "start[[start]]";
     } else if (transition.reachable.length !== 0) {
-        return `${transition.event}(${transition.event})`;
+        return `${transition.event.replace("end", "End")}(${transition.event})`;
+    } else if (transition.event.includes("end")) {
+        return `${transition.event.replace("end", "End")}[${transition.event}]`;
     }
     return ""
 }).filter(l => l !== "")
 .map(l => "\t" +l);
 
 const arrowLines = transitions.filter(node => node.reachable.length !== 0)
-    .map(node => `${node.event} --> ${node.reachable.join(" & ")}`)
+    .map(node => `${node.event} --> ${node.reachable.map(event => event.replace("end", "End")).join(" & ")}`)
     .map(l => "\t" +l);
 
 console.log([
