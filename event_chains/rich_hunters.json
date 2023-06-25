@@ -1,0 +1,181 @@
+{
+  "$schema": "./schema.json",
+  "title": "rich hunters",
+  "cooldown": 5,
+  "trigger": {
+    "comparator": "gt",
+    "target": "population",
+    "value": 8
+  },
+  "events": {
+    "start": {
+      "text": "You're contacted by some employees of very, very wealthy people. Their bosses are avid hunters and would be willing to pay loads of cash to be the first hunters of the species you're taking care of.",
+      "choices": [
+        {
+          "text": "I guess just a fewer specimens won't hurt in the long run.",
+          "next": [
+            {
+              "event": "base_payment_received"
+            }
+          ]
+        },
+        {
+          "text": "What? Who do they think they are? I won't let them undo all my hard work!",
+          "next": [
+            {
+              "event": "no_news_from_hunters",
+              "weight": 3
+            },
+            {
+              "event": "counter_offer_after_refusal"
+            }
+          ]
+        }
+      ]
+    },
+    "base_payment_received":{
+      "text": "You receive 100 credits.",
+      "effects": {
+        "base_payment_received": true
+      },
+      "next": [
+        {
+          "event": "successful_hunt"
+        },
+        {
+          "event": "unsuccessful_hunt"
+        }
+      ]
+    },
+    "double_payment_received": {
+      "text": "You receive 200 credits.",
+      "effects": {
+        "double_payment_received": true
+      },
+      "next": [
+        {
+          "event": "successful_hunt"
+        },
+        {
+          "event": "unsuccessful_hunt"
+        }
+      ]
+    },
+    "successful_hunt": {
+      "text": "A few days pass before the hunters get on the planet and successfully hunt down 10 specimens of your species.",
+      "effects": {
+        "hunted_species": true
+      },
+      "next": [
+        {
+          "event": "no_news_from_hunters"
+        },
+        {
+          "event": "hunters_want_to_hunt_again"
+        }
+      ]
+    },
+    "unsuccessful_hunt": {
+      "text": "You receive 100 credits. A few days pass before the hunters get on the planet. It turns out they aren’t as good hunters as they think they are - they couldn’t capture even juvenile specimens and some of them are actually wounded.",
+      "effects": {
+        "base_payment_received": true
+      },
+      "choices": [
+        {
+          "text": "Pretend nothing has happened while they shamefully enter the medical bay",
+          "next": [
+            {
+              "event": "no_news_from_hunters"
+            }
+          ]
+        },
+        {
+          "text": "Praise them for being so skilled at “tactical retreat”",
+          "next": [
+            {
+              "event": "no_news_from_hunters"
+            }
+          ]
+        },
+        {
+          "text": "Try to blackmail them - either they become “generous donators” or everybody will know about just how poor hunters they are",
+          "next": [
+            {
+              "event": "blackmail_success",
+              "weight": 4
+            },
+            {
+              "event": "blackmail_failure"
+            }
+          ]
+        }
+      ]
+    },
+    "no_news_from_hunters": {
+      "text": "You never hear of the hunters again."
+    },
+    "hunters_want_to_hunt_again": {
+      "text": "The rich hunters tell you how they'd like to hunt your species again."
+    },
+    "counter_offer_after_refusal": {
+      "text": "They immediately get back to you with an offer twice as generous.",
+      "choices": [
+        {
+          "text": "On second thought...",
+          "next": [
+            {
+              "event": "double_payment_received"
+            }
+          ]
+        },
+        {
+          "text": "Typical rich people reaction. Throwing money at the problem won’t help them here though.",
+          "next": [
+            {
+              "event": "no_news_from_hunters"
+            }
+          ]
+        }
+      ]
+    },
+    "blackmail_success": {
+      "text": "They're so worried about appearing manly that they accept. You get another 100 credits.",
+      "effects": {
+        "blackmail_payment_received": true
+      }
+    },
+    "blackmail_failure": {
+      "text": "As soon as you finish insinuating your intentions, a lawyer appears and offers you a detailed explanation of how that would be a very, very bad idea for you."
+    }
+  },
+  "effects": {
+    "base_payment_received": {
+      "description": "You received a payment.",
+      "type": "instant",
+      "operation": "add",
+      "target": "money",
+      "value": 100
+    },
+    "double_payment_received": {
+      "description": "You received a payment.",
+      "type": "instant",
+      "operation": "add",
+      "target": "money",
+      "value": 200
+    },
+    "blackmail_payment_received": {
+      "description": "You received a payment.",
+      "type": "instant",
+      "operation": "add",
+      "target": "money",
+      "value": 100
+    },
+    "hunted_species": {
+      "description": "Hunters have killed members of the species.",
+      "type": "instant",
+      "operation": "subtract",
+      "target": "population",
+      "value": 1
+    }
+  }
+}
