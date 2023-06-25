@@ -11,3 +11,13 @@ a simple text game POC
 cargo build
 trunk serve
 ```
+
+## test
+```
+cargo test --no-default-features
+```
+
+to display logs and full stacktrace:
+```
+export RUST_BACKTRACE=1 && cargo test --no-default-features -- --nocapture
+```

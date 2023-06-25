@@ -1,5 +1,5 @@
-use gloo_console::log;
 use serde::{Deserialize, Serialize};
+use crate::log;
 
 use crate::state::State;
 

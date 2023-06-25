@@ -1,10 +1,10 @@
-use gloo_console::log;
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
 use crate::dtos::{ChoiceWrapper, OngoingEventChain};
 use crate::event::ChoiceOutcome;
 use crate::event_store::EventStore;
+use crate::log;
 use crate::state::State;
 
 #[derive(Debug, Serialize, Deserialize)]
