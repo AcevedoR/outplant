@@ -21,15 +21,19 @@ jobs:
           targets: wasm32-unknown-unknown
       - name: Install Trunk
         uses: jetli/trunk-action@v0.4.0
+      - name: Run tests
+        run: cargo test --no-default-features
       - name: Build
         run: trunk --config ./Trunk.itch_io.toml build --release
       - name: Install butler
+        if: github.ref == 'refs/heads/main'
         run: |
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
           ./butler -V
       - name: Release on itch.io
+        if: github.ref == 'refs/heads/main'
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: ./butler push dist remieven/greatancientsimulator:web --if-changed
