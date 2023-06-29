@@ -10,7 +10,7 @@ use crate::trigger::Trigger;
 pub struct EventChain {
     pub(crate) title: String,
     pub(crate) cooldown: u32,
-    pub(crate) trigger: Trigger,
+    pub(crate) trigger: Option<Trigger>,
     pub(crate) events: HashMap<String, Event>,
     pub(crate) effects: HashMap<String, Effect>,
 }
