@@ -76,7 +76,7 @@ impl Engine {
             .event_store
             .event_chains
             .iter()
-            .filter(|chain| chain.trigger.is_satisfied(&self.state))
+            .filter(|chain| chain.trigger.is_none() || chain.trigger.as_ref().unwrap().is_satisfied(&self.state))
             .filter(|chain| !!!self.state.ongoing_event_chains.iter()
                 .find(|e| e.event_chain_id == chain.title)
                 .is_some()
