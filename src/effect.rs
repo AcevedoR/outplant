@@ -5,11 +5,12 @@ use crate::state::State;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Effect {
-    pub(crate) description: String,
+    pub(crate) description: Option<String>,
     pub(crate) operation: ChangeOperation,
     pub(crate) target: ChangeTarget,
     pub(crate) value: u32,
-    // pub(crate) type: f64,
+    #[serde(rename = "type")]
+    pub(crate) effect_type: EffectType,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -25,6 +26,13 @@ pub(crate) enum ChangeTarget {
     Population,
     Ecology,
     Money,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) enum EffectType {
+    Instant,
+    Permanent,
 }
 
 impl Effect {
