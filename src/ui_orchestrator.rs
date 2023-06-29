@@ -23,7 +23,29 @@ impl UIOrchestrator {
         self.engine.play_next_cycle();
         return self.engine.get_state().clone().ongoing_event_chains;
     }
+
+    pub fn make_choice(&mut self, index: u32) -> ViewModel {
+        return ViewModel {
+            lines: vec!["hello choice".to_string()],
+            choices: vec![],
+        };
+    }
+
+    pub fn next_cycle(&mut self) -> ViewModel {
+        return ViewModel {
+            lines: vec!["hello next cycle".to_string()],
+            choices: vec![],
+        };
+    }
+
+
     pub fn get_state(&self) -> &State {
         self.engine.get_state()
     }
+}
+
+#[derive(Clone, Debug)]
+pub struct ViewModel {
+    pub lines: Vec<String>,
+    pub choices: Vec<String>,
 }

@@ -1,5 +1,5 @@
 {
-  "$schema": "./schema.json",
+  "$schema": "../event_chains/schema.json",
   "title": "missing form",
   "cooldown": 5,
   "events": {

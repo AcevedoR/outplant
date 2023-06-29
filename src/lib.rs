@@ -1,3 +1,8 @@
+use yew::html::Scope;
+use yew::prelude::*;
+
+use crate::ui_orchestrator::{UIOrchestrator, ViewModel};
+
 pub mod engine;
 pub mod dtos;
 pub mod effect;
@@ -11,31 +16,14 @@ pub mod ui_orchestrator;
 mod macros;
 
 
-use yew::html::Scope;
-use yew::prelude::*;
-
-use crate::dtos::ChoiceWrapper;
-use crate::dtos::OngoingEventChain;
-use crate::ui_orchestrator::UIOrchestrator;
-
-
-
-#[derive(PartialEq)]
-pub enum GameState {
-    Pause,
-    Waiting,
-    ResolvingEvent,
-}
-
 pub enum AppEvent {
-    MakeChoice(ChoiceWrapper),
+    MakeChoice(u32),
     WaitOneCycle,
 }
 
 pub struct App {
     game: UIOrchestrator,
-    game_state: GameState,
-    current_events: Vec<OngoingEventChain>,
+    view_model: ViewModel,
 }
 
 impl Component for App {
@@ -45,26 +33,17 @@ impl Component for App {
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
             game: UIOrchestrator::new(),
-            game_state: GameState::Pause,
-            current_events: Vec::new(),
+            view_model: ViewModel { lines: vec!["hello first turn".to_string()], choices: vec![] },
         }
     }
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             AppEvent::MakeChoice(choice) => {
-                self.game_state = GameState::Pause;
-                self.game.make_a_choice(&choice);
-                self.current_events.clear();
+                self.view_model = self.game.make_choice(choice);
             }
             AppEvent::WaitOneCycle => {
-                self.current_events.clear();
-                let events = self.game.play_next_cycle();
-                if !!!events.is_empty() {
-                    self.game_state = GameState::Waiting;
-                    self.game_state = GameState::ResolvingEvent;
-                    self.current_events = events;
-                }
+                self.view_model = self.game.next_cycle();
             }
         }
         return true;
@@ -82,7 +61,8 @@ impl Component for App {
 
                 <div id="game-board">
                     <h2>{ "Species interface:" }</h2>
-                    {self.view_event(ctx.link())}
+                    {self.view_event()}
+                    {self.view_choices(ctx.link())}
                 </div>
             </div>
         };
@@ -90,48 +70,66 @@ impl Component for App {
 }
 
 impl App {
-    fn view_event(&self, link: &Scope<Self>) -> Html {
-        return if !!!self.current_events.is_empty() {
-            let event = self.current_events.first().unwrap();
+    fn view_event(&self) -> Html {
+        log!(format!("debug view_model : {:?}", self.view_model));
+
+        return if !!!self.view_model.lines.is_empty() {
             html! {
                 <div class="event">
-                    <h3>{"Something happened: "}{&event.event.text}</h3>
-                    <ul class="todo-list">
-                        {for event.event.choices.clone().unwrap().iter().map(|choice| self.view_one_choice(
-                            ChoiceWrapper{choice: choice.clone(), event_chain_id: event.event_chain_id.clone()},
-                            link
-                        ))}
+                    <h3>{"Log entries: "}</h3>
+                    <ul class="log-entries">
+                        {for self.view_model.lines.clone().iter().map(|log_entry| self.view_one_log_entry(log_entry))}
                     </ul>
                 </div>
-            }
-        } else {
-            self.view_continue_button(link)
-        };
-    }
-    fn view_one_choice(&self, choice: ChoiceWrapper, link: &Scope<Self>) -> Html {
-        let choice2 = choice.clone();
-        return html! {
-             <li class="choice">
-                <button class="choice" onclick={link.callback(move |_| AppEvent::MakeChoice(choice.clone()))}>
-                    { choice2.choice.text }
-                </button>
-             </li>
-        };
-    }
-    fn view_continue_button(&self, link: &Scope<Self>) -> Html {
-        return if self.game_state == GameState::Pause {
-            html! {
-                <button
-                    type="button"
-                    id="wait-one-cycle"
-                    onclick={link.callback(|_| AppEvent::WaitOneCycle)}
-                > {"wait one cycle"}</button>
             }
         } else {
             html! {}
         };
     }
+
+    fn view_one_log_entry(&self, log_entry: &String) -> Html {
+        return html! {
+             <li class="log-entry">
+                    { log_entry }
+             </li>
+        };
+    }
+
+    fn view_choices(&self, link: &Scope<Self>) -> Html {
+        return
+            if !!!self.view_model.choices.is_empty() {
+                html! {
+                <div class="choices">
+                    <h3>{"Choices: "}</h3>
+                    <ul class="choices">
+                        {for self.view_model.choices.clone().iter().map(|choice| self.view_one_choice(choice))}
+                    </ul>
+                </div>
+            }
+            } else {
+                self.view_continue_next_cycle(link)
+            };
+    }
+
+    fn view_one_choice(&self, choice: &String) -> Html {
+        return html! {
+             <li class="choice">
+                    { choice }
+             </li>
+        };
+    }
+
+    fn view_continue_next_cycle(&self, link: &Scope<Self>) -> Html {
+        return html! {
+                <button
+                    type="button"
+                    id="wait-one-cycle"
+                    onclick={link.callback(|_| AppEvent::WaitOneCycle)}
+                > {"wait one cycle"}</button>
+            };
+    }
 }
+
 pub fn run() {
     yew::Renderer::<App>::new().render();
 }
