@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use crate::dtos::OngoingEventChain;
 use crate::log;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -8,7 +7,6 @@ pub struct State {
     pub population: u32,
     pub ecology: u32,
     pub money: u32,
-    pub ongoing_event_chains: Vec<OngoingEventChain>,
 }
 
 impl State {
@@ -17,7 +15,6 @@ impl State {
             population: 0,
             ecology: 0,
             money: 0,
-            ongoing_event_chains: Default::default(),
         };
         instance.set_population(population);
         instance.set_ecology(natural_balance);

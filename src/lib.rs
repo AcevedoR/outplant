@@ -4,7 +4,6 @@ use yew::prelude::*;
 use crate::ui_orchestrator::{UIOrchestrator, ViewModel};
 
 pub mod engine;
-pub mod dtos;
 pub mod effect;
 pub mod embed;
 pub mod event;
@@ -17,7 +16,7 @@ mod macros;
 
 
 pub enum AppEvent {
-    MakeChoice(u32),
+    MakeChoice(usize),
     WaitOneCycle,
 }
 
@@ -102,7 +101,7 @@ impl App {
                 <div class="choices">
                     <h3>{"Choices: "}</h3>
                     <ul class="choices">
-                        {for self.view_model.choices.clone().iter().map(|choice| self.view_one_choice(choice))}
+                        {for self.view_model.choices.clone().iter().enumerate().map(|(index, choice)| self.view_one_choice(choice, index, link))}
                     </ul>
                 </div>
             }
@@ -111,10 +110,14 @@ impl App {
             };
     }
 
-    fn view_one_choice(&self, choice: &String) -> Html {
+    fn view_one_choice(&self, choice: &String, index: usize, link: &Scope<Self>) -> Html {
         return html! {
              <li class="choice">
-                    { choice }
+                <button
+                    type="button"
+                    id="wait-one-cycle"
+                    onclick={link.callback(move |_| AppEvent::MakeChoice(index))}
+                > { choice }</button>
              </li>
         };
     }
