@@ -8,6 +8,7 @@ use crate::state::State;
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Event {
     pub(crate) text: String,
+    pub(crate) next: Option<Vec<Next>>,
     pub(crate) effects: Option<HashMap<String, bool>>,
     pub(crate) choices: Option<Vec<Choice>>,
 }
@@ -29,21 +30,18 @@ pub struct Choice {
     pub(crate) next: Vec<ChoiceOutcome>,
 }
 
-impl Choice {
-    pub fn resolve(&self) -> ChoiceOutcome {
-        return self.next.first().unwrap().clone();
-    }
-}
-
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct ChoiceOutcome {
     pub(crate) event: String,
-    // pub(crate) in: u32,
+    #[serde(rename = "in")]
+    pub(crate) timer: Option<u32>,
     pub(crate) weight: Option<u32>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct EventId {
-    pub(crate) event_chain_id: String,
-    pub(crate) id: String,
+pub struct Next {
+    pub(crate) event: String,
+    #[serde(rename = "in")]
+    pub(crate) timer: Option<u32>,
+    pub(crate) weight: Option<u32>,
 }
