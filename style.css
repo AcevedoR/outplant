@@ -24,7 +24,7 @@ h2 {
 #state-dashboard > p {
     padding-left: 20px;
 }
-#game-board{
+.game-board{
     margin: 20px;
     width: 50%;
     background-color: #5e548e;
