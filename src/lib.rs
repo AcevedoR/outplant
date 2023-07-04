@@ -58,9 +58,12 @@ impl Component for App {
                     <p>{"ext reserve: "}{ self.game.get_state().money}</p>
                 </div>
 
-                <div id="game-board">
-                    <h2>{ "Species interface:" }</h2>
+                <div class="game-board">
+                    <h2>{ "Entry logs:" }</h2>
                     {self.view_event()}
+                </div>
+                <div class="game-board">
+                    <h2>{ "Control panel:" }</h2>
                     {self.view_choices(ctx.link())}
                 </div>
             </div>
@@ -75,7 +78,6 @@ impl App {
         return if !!!self.view_model.lines.is_empty() {
             html! {
                 <div class="event">
-                    <h3>{"Log entries: "}</h3>
                     <ul class="log-entries">
                         {for self.view_model.lines.clone().iter().map(|log_entry| self.view_one_log_entry(log_entry))}
                     </ul>
