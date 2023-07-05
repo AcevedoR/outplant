@@ -1,8 +1,8 @@
-use unnamed_game;
+use unnamed_game::{self, random::PseudoRandomGenerator};
 
 #[test]
 fn population_should_grow_if_no_event() {
-    let mut engine = unnamed_game::engine::Engine::new();
+    let mut engine = unnamed_game::engine::Engine::new(PseudoRandomGenerator{});
 
     engine.next_cycle();
 

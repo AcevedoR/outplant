@@ -38,7 +38,7 @@ pub struct ChoiceOutcome {
     pub(crate) weight: Option<u32>,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct Next {
     pub(crate) event: String,
     #[serde(rename = "in")]

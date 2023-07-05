@@ -1,17 +1,15 @@
-use serde::{Deserialize, Serialize};
-
 use crate::engine::Engine;
+use crate::random::PseudoRandomGenerator;
 use crate::state::State;
 
-#[derive(Debug, Serialize, Deserialize)]
 pub struct UIOrchestrator {
-    engine: Engine,
+    engine: Engine<PseudoRandomGenerator>,
 }
 
 impl UIOrchestrator {
     pub fn new() -> UIOrchestrator {
         return UIOrchestrator {
-            engine: Engine::new(),
+            engine: Engine::new(PseudoRandomGenerator{}),
         };
     }
 

@@ -8,16 +8,15 @@ a simple text game POC
 
 ## start
 ```
-cargo build
-trunk serve
+trunk serve --features wasm-logging
 ```
 
 ## test
 ```
-cargo test --no-default-features
+cargo test
 ```
 
 to display logs and full stacktrace:
 ```
-export RUST_BACKTRACE=1 && cargo test --no-default-features -- --nocapture
+export RUST_BACKTRACE=1 && cargo test -- --nocapture
 ```

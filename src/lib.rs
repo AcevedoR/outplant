@@ -9,6 +9,7 @@ pub mod embed;
 pub mod event;
 pub mod event_chain;
 pub mod event_store;
+pub mod random;
 pub mod state;
 pub mod trigger;
 pub mod ui_orchestrator;
