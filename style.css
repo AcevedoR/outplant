@@ -1,4 +1,4 @@
-#unknown-game{
+#unknown-game {
     background-color: #231942;
     display: flex;
     flex-direction: column;
@@ -7,41 +7,69 @@
     color: #e0b1cb;
     height: 1000px;
 }
+
 button {
     font-family: 'Orbitron', sans-serif;
     color: #e0b1cb;
 }
+
 #state-dashboard {
     margin: 20px;
     width: 50%;
     border: solid;
     padding: 20px;
 }
+#kpi {
+    display: flex;
+    justify-content: space-evenly;
+}
+#kpi p {
+    border: solid;
+    padding:10px;
+}
+
 h2 {
     font-size: 20px;
     padding-bottom: 20px;
 }
+
 #state-dashboard > p {
     padding-left: 20px;
 }
-.game-board{
+
+.game-board {
     margin: 20px;
     width: 50%;
     background-color: #5e548e;
     border: solid;
-    padding: 20px;
+    padding: 20px 20px 0;
 }
+
 li.choice {
     list-style: none;
 }
+
+li.log-entry {
+    margin-bottom: 20px;
+}
+li.log-entry:before {
+    content: ">";
+    display: inline-block;
+    margin-right: 0.8em;
+    margin-left: -0.5em;
+    padding-left: 0;
+}
+
 button {
     display: flex;
     background-color: #5e548e;
 }
+
 button:hover {
     background-color: #9f86c0;
 }
-.choice > button {
+
+button {
     padding: 10px;
     margin: 20px;
 
