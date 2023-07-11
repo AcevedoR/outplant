@@ -102,7 +102,7 @@ impl App {
             if !!!self.view_model.choices.is_empty() {
                 html! {
                 <div class="choices">
-                    <h3>{"What is your response ?"}</h3>
+                    <h3>{"What is your response?"}</h3>
                     <ul class="choices">
                         {for self.view_model.choices.clone().iter().enumerate().map(|(index, choice)| self.view_one_choice(choice, index, link))}
                     </ul>
