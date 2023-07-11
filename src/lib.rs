@@ -52,18 +52,19 @@ impl Component for App {
         return html! {
             <div id="unknown-game">
                 <div id="state-dashboard">
-                    <h2>{ "Species dashboard:" }</h2>
-                    <p>{"population: "} { self.game.get_state().population}</p>
-                    <p>{"natural_balance: "}{ self.game.get_state().ecology}</p>
-                    <p>{"ext reserve: "}{ self.game.get_state().money}</p>
+                    <h2>{ "Species dashboard" }</h2>
+                    <div id="kpi">
+                        <p>{"population: "} { self.game.get_state().population}</p>
+                        <p>{"ecology: "}{ self.game.get_state().ecology}</p>
+                        <p>{"money: "}{ self.game.get_state().money}</p>
+                    </div>
                 </div>
-
                 <div class="game-board">
-                    <h2>{ "Entry logs:" }</h2>
+                    <h2>{ "Entry logs" }</h2>
                     {self.view_event()}
                 </div>
                 <div class="game-board">
-                    <h2>{ "Control panel:" }</h2>
+                    <h2>{ "Control panel" }</h2>
                     {self.view_choices(ctx.link())}
                 </div>
             </div>
@@ -91,7 +92,7 @@ impl App {
     fn view_one_log_entry(&self, log_entry: &String) -> Html {
         return html! {
              <li class="log-entry">
-                    { log_entry }
+                { log_entry }
              </li>
         };
     }
@@ -101,7 +102,7 @@ impl App {
             if !!!self.view_model.choices.is_empty() {
                 html! {
                 <div class="choices">
-                    <h3>{"Choices: "}</h3>
+                    <h3>{"What is your response?"}</h3>
                     <ul class="choices">
                         {for self.view_model.choices.clone().iter().enumerate().map(|(index, choice)| self.view_one_choice(choice, index, link))}
                     </ul>
@@ -126,11 +127,14 @@ impl App {
 
     fn view_continue_next_cycle(&self, link: &Scope<Self>) -> Html {
         return html! {
+            <div>
+                <h3>{"There is nothing you can do"}</h3>
                 <button
                     type="button"
                     id="wait-one-cycle"
                     onclick={link.callback(|_| AppEvent::WaitOneCycle)}
-                > {"wait one cycle"}</button>
+                > {"Wait until next cycle"}</button>
+            </div>
             };
     }
 }
