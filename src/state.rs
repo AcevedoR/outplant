@@ -10,30 +10,33 @@ pub struct State {
 }
 
 impl State {
-    pub fn new(population: u32, natural_balance: u32, external_intervention_reserve: u32) -> State {
+    pub fn new(population: u32, ecology: u32, money: u32) -> State {
         let mut instance = State {
             population: 0,
             ecology: 0,
             money: 0,
         };
         instance.set_population(population);
-        instance.set_ecology(natural_balance);
-        instance.set_money(external_intervention_reserve);
+        instance.set_ecology(ecology);
+        instance.set_money(money);
         return instance;
     }
-    pub fn set_population(&mut self, new: u32) {
+
+    fn set_population(&mut self, new: u32) {
         if new > 12 {
             panic!();
         }
         self.population = new;
     }
-    pub fn set_ecology(&mut self, new: u32) {
+
+    fn set_ecology(&mut self, new: u32) {
         if new > 12 {
             panic!();
         }
         self.ecology = new;
     }
-    pub fn set_money(&mut self, new: u32) {
+
+    fn set_money(&mut self, new: u32) {
         self.money = new;
     }
 

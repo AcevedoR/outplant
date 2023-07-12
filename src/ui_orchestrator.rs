@@ -1,9 +1,6 @@
-use serde::{Deserialize, Serialize};
-
 use crate::engine::Engine;
 use crate::state::State;
 
-#[derive(Debug, Serialize, Deserialize)]
 pub struct UIOrchestrator {
     engine: Engine,
 }
