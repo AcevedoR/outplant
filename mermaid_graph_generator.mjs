@@ -37,7 +37,7 @@ const nodeLines = transitions.map(transition => {
 .map(l => "\t" +l);
 
 const arrowLines = transitions.filter(node => node.reachable.length !== 0)
-    .map(node => `${node.event} --> ${node.reachable.map(event => event.replace("end", "End")).join(" & ")}`)
+    .map(node => `${node.event.replace("end", "End")} --> ${node.reachable.map(event => event.replace("end", "End")).join(" & ")}`)
     .map(l => "\t" +l);
 
 console.log([

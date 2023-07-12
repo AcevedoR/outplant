@@ -54,9 +54,9 @@ impl Component for App {
                 <div id="state-dashboard">
                     <h2>{ "Species dashboard" }</h2>
                     <div id="kpi">
-                        <p>{"population: "} { self.game.get_state().population}</p>
-                        <p>{"ecology: "}{ self.game.get_state().ecology}</p>
-                        <p>{"money: "}{ self.game.get_state().money}</p>
+                        <p>{ "population: " } { self.game.get_state().population}</p>
+                        <p>{ "ecology: " }{ self.game.get_state().ecology}</p>
+                        <p>{ "money: " }{ self.game.get_state().money}</p>
                     </div>
                 </div>
                 <div class="game-board">
