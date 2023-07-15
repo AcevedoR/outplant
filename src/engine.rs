@@ -1,7 +1,7 @@
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
-use crate::event::{Event, ChoiceOutcome, Next};
+use crate::event::{ChoiceOutcome, Event, Next};
 use crate::event_store::EventStore;
 use crate::log;
 use crate::state::State;
@@ -35,7 +35,6 @@ impl Engine {
     }
 
     pub fn next_cycle(&mut self) -> ViewModel {
-        // TODO: also apply events
         if !self.events_to_resolve_this_turn.is_empty() {
             panic!("next_cycle called when some events of current turn were waiting to be resolved")
         }
@@ -64,45 +63,10 @@ impl Engine {
             self.events_to_resolve_this_turn.push(self.events_to_resolve_later.pop().unwrap())
         }
 
-        let mut lines = vec![];
-
-        while !!!self.events_to_resolve_this_turn.is_empty() {
-            let mut event_chain_to_play = self.events_to_resolve_this_turn.pop().unwrap();
-            if event_chain_to_play.timer != 0 {
-                // The event is scheduled for later
-                event_chain_to_play.timer = event_chain_to_play.timer - 1;
-                self.events_to_resolve_later.push(event_chain_to_play);
-                continue;
-            }
-
-            lines.push(event_chain_to_play.event.text.clone());
-            if event_chain_to_play.event.choices.is_some() {
-                // We encountered a choice the player has to make
-                self.events_to_resolve_this_turn.push(event_chain_to_play.clone());
-                return ViewModel {
-                    lines,
-                    choices: event_chain_to_play.event.choices.unwrap().iter().map(|choice| choice.clone().text).collect(),
-                }
-            }
-
-            if event_chain_to_play.event.next.is_some() {
-                let next = Engine::select_next_event(&event_chain_to_play.event.next.unwrap());
-                let next_event = self.event_store.clone().get_event(next.event.clone()).unwrap();
-                let chain_of_next_event = self.event_store.clone().get_chain(next.event).unwrap();
-                self.events_to_resolve_this_turn.push(OngoingEventChain {
-                    timer: next.timer.unwrap_or_default(),
-                    event: next_event,
-                    event_chain_id: chain_of_next_event,
-            });
-            }
-        }
-
-        // We resolved every event that could be during this turn;
-        return ViewModel { lines, choices: vec![] };
+        return self.unstack_events_to_resolve_this_turn();
     }
 
     pub fn make_choice(&mut self, index: usize) -> ViewModel {
-        // TODO: also apply events
         if self.events_to_resolve_this_turn.is_empty() {
             panic!("make_choice called when no events of current turn were waiting to be resolved")
         }
@@ -124,6 +88,10 @@ impl Engine {
             event_chain_id: chain_of_next_event,
         });
 
+        return self.unstack_events_to_resolve_this_turn();
+    }
+
+    fn unstack_events_to_resolve_this_turn(&mut self) -> ViewModel {
         let mut lines = vec![];
 
         while !!!self.events_to_resolve_this_turn.is_empty() {
@@ -142,7 +110,7 @@ impl Engine {
                 return ViewModel {
                     lines,
                     choices: event_chain_to_play.event.choices.unwrap().iter().map(|choice| choice.clone().text).collect(),
-                }
+                };
             }
 
             if event_chain_to_play.event.next.is_some() {
@@ -153,7 +121,7 @@ impl Engine {
                     timer: next.timer.unwrap_or_default(),
                     event: next_event,
                     event_chain_id: chain_of_next_event,
-            });
+                });
             }
         }
 
