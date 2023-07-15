@@ -113,6 +113,13 @@ impl Engine {
                 };
             }
 
+            event_chain_to_play.event.apply_effects(
+                &mut self.state,
+                &self.event_store.event_chains.iter()
+                    .find(|x| x.title == event_chain_to_play.event_chain_id)
+                    .unwrap().effects,
+            );
+
             if event_chain_to_play.event.next.is_some() {
                 let next = Engine::select_next_event(&event_chain_to_play.event.next.unwrap());
                 let next_event = self.event_store.clone().get_event(next.event.clone()).unwrap();
