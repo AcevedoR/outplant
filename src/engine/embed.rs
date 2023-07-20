@@ -1,6 +1,6 @@
 use std::error::Error;
 
-use crate::event_chain::EventChain;
+use crate::engine::event_chain::EventChain;
 use rust_embed::{EmbeddedFile, RustEmbed};
 use serde_json;
 

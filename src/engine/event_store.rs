@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use crate::embed::get_event_chains;
-use crate::event::Event;
-use crate::event_chain::EventChain;
+use crate::engine::embed::get_event_chains;
+use crate::engine::event::Event;
+use crate::engine::event_chain::EventChain;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct EventStore {

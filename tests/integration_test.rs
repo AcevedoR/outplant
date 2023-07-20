@@ -2,7 +2,7 @@ use unnamed_game;
 
 #[test]
 fn population_should_grow_if_no_event() {
-    let mut engine = unnamed_game::engine::Engine::new();
+    let mut engine = unnamed_game::engine::engine::Engine::new();
 
     engine.next_cycle();
 

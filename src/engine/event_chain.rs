@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::effect::Effect;
-use crate::event::Event;
-use crate::trigger::Trigger;
+use crate::engine::effect::Effect;
+use crate::engine::event::Event;
+use crate::engine::trigger::Trigger;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct EventChain {

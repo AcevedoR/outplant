@@ -1,4 +1,4 @@
-use unnamed_game::run;
+use unnamed_game::ui::run;
 
 fn main() {
     run();

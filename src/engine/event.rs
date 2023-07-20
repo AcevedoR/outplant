@@ -2,8 +2,8 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::effect::Effect;
-use crate::state::State;
+use crate::engine::effect::Effect;
+use crate::engine::state::State;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Event {
