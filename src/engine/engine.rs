@@ -1,11 +1,16 @@
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
-use crate::event::{ChoiceOutcome, Event, Next};
-use crate::event_store::EventStore;
+use crate::engine::event::{ChoiceOutcome, Event, Next};
+use crate::engine::event_store::EventStore;
 use crate::log;
-use crate::state::State;
-use crate::ui_orchestrator::ViewModel;
+use crate::engine::state::State;
+
+#[derive(Clone, Debug)]
+pub struct ViewModel {
+    pub lines: Vec<String>,
+    pub choices: Vec<String>,
+}
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct OngoingEventChain {

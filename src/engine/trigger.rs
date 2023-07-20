@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::state::State;
+use crate::engine::state::State;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Trigger {
@@ -10,7 +10,7 @@ pub struct Trigger {
 }
 
 impl Trigger {
-    pub(crate) fn is_satisfied(&self, state: &State) -> bool {
+    pub fn is_satisfied(&self, state: &State) -> bool {
         let actual_value = match self.target {
             TriggerTarget::Population => state.population,
             TriggerTarget::Ecology => state.ecology,

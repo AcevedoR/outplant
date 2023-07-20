@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use crate::log;
 
-use crate::state::State;
+use crate::engine::state::State;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Effect {
