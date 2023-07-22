@@ -22,7 +22,7 @@ jobs:
       - name: Install Trunk
         uses: jetli/trunk-action@v0.4.0
       - name: Run tests
-        run: cargo test
+        run: cargo test --features integration-test
       - name: Build
         run: trunk --config ./Trunk.itch_io.toml build --release --features wasm-logging
       - name: Install butler

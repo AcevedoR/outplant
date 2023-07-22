@@ -10,9 +10,9 @@ pub struct EventStore {
 }
 
 impl EventStore {
-    pub fn new() -> EventStore {
+    pub fn new(event_chains_filepath_for_integration_tests: &str) -> EventStore {
         return EventStore {
-            event_chains: get_event_chains(),
+            event_chains: get_event_chains(event_chains_filepath_for_integration_tests),
         };
     }
 
