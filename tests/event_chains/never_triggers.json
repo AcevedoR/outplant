@@ -1,0 +1,15 @@
+{
+  "title": "starvation",
+  "cooldown": 5,
+  "trigger": {
+    "comparator": "gt",
+    "target": "population",
+    "value": 400000
+  },
+  "events": {
+    "start": {
+      "text": "Should not happend"
+    }
+  },
+  "effects": {}
+}

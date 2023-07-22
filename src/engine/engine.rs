@@ -3,8 +3,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::engine::event::{ChoiceOutcome, Event, Next};
 use crate::engine::event_store::EventStore;
-use crate::log;
 use crate::engine::state::State;
+use crate::log;
 
 #[derive(Clone, Debug)]
 pub struct ViewModel {
@@ -29,11 +29,11 @@ pub struct Engine {
 }
 
 impl Engine {
-    pub fn new() -> Engine {
+    pub fn new(event_chains_filepath: &str) -> Engine {
         return Engine {
             turn: 1,
             state: State::new(1, 12, 1000),
-            event_store: EventStore::new(),
+            event_store: EventStore::new(event_chains_filepath),
             events_to_resolve_this_turn: Default::default(),
             events_to_resolve_later: Default::default(),
         };
