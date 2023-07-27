@@ -8,7 +8,7 @@
   },
   "events": {
     "start": {
-      "text": "Should not happend"
+      "text": "Should not happen"
     }
   },
   "effects": {}
