@@ -2,6 +2,7 @@ use yew::html::Scope;
 use yew::prelude::*;
 
 use crate::engine::engine::{Engine, ViewModel};
+use crate::engine::random::PseudoRandomGenerator;
 use crate::log;
 
 pub enum AppEvent {
@@ -10,7 +11,7 @@ pub enum AppEvent {
 }
 
 pub struct App {
-    game: Engine,
+    game: Engine<PseudoRandomGenerator>,
     view_model: ViewModel,
 }
 
@@ -20,7 +21,7 @@ impl Component for App {
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            game: Engine::new(""),
+            game: Engine::new("", PseudoRandomGenerator{}),
             view_model: ViewModel { lines: vec!["Welcome to unnamed game".to_string()], choices: vec![] },
         }
     }

@@ -20,6 +20,9 @@ pub fn get_event_chains(_event_chains_filepath: &str) -> Vec<EventChain> {
 
 #[cfg(feature = "integration-test")]
 pub fn get_event_chains(event_chains_filepath: &str) -> Vec<EventChain> {
+    if event_chains_filepath == "" {
+        return vec![];
+    }
     let file = fs::read_to_string(event_chains_filepath);
     let event_chain: EventChain = serde_json::from_str(&*file.unwrap()).unwrap();
     return vec![event_chain];

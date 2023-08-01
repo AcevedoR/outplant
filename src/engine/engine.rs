@@ -1,9 +1,9 @@
-use rand::Rng;
 use serde::{Deserialize, Serialize};
 
 use crate::engine::event::{ChoiceOutcome, Event, Next};
 use crate::engine::event_store::EventStore;
 use crate::engine::state::State;
+use crate::engine::random::RandomGenerator;
 use crate::log;
 
 #[derive(Clone, Debug)]
@@ -20,22 +20,24 @@ pub struct OngoingEventChain {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Engine {
+pub struct Engine<Rng> {
     turn: u32,
     state: State,
     event_store: EventStore,
     events_to_resolve_this_turn: Vec<OngoingEventChain>,
     events_to_resolve_later: Vec<OngoingEventChain>,
+    random_generator: Rng,
 }
 
-impl Engine {
-    pub fn new(event_chains_filepath: &str) -> Engine {
+impl<Rng: RandomGenerator> Engine<Rng> {
+    pub fn new(event_chains_filepath: &str, random_generator: Rng) -> Engine<Rng> {
         return Engine {
             turn: 1,
             state: State::new(1, 12, 1000),
             event_store: EventStore::new(event_chains_filepath),
             events_to_resolve_this_turn: Default::default(),
             events_to_resolve_later: Default::default(),
+            random_generator,
         };
     }
 
@@ -83,7 +85,7 @@ impl Engine {
             .get(index)
             .unwrap();
 
-        let outcome = Engine::select_choice_outcome(&next.next);
+        let outcome = self.select_choice_outcome(&next.next);
 
         let next_event = self.event_store.clone().get_event(outcome.clone().event).unwrap();
         let chain_of_next_event = self.event_store.clone().get_chain(outcome.event).unwrap();
@@ -126,7 +128,7 @@ impl Engine {
             );
 
             if event_chain_to_play.event.next.is_some() {
-                let next = Engine::select_next_event(&event_chain_to_play.event.next.unwrap());
+                let next = self.select_next_event(&event_chain_to_play.event.next.unwrap());
                 let next_event = self.event_store.clone().get_event(next.event.clone()).unwrap();
                 let chain_of_next_event = self.event_store.clone().get_chain(next.clone().event).unwrap();
                 self.events_to_resolve_this_turn.push(OngoingEventChain {
@@ -160,7 +162,7 @@ impl Engine {
                 .find(|e| e.event_chain_id == chain.title)
                 .is_some()
             )
-            .filter(|_chain| rand::thread_rng().gen_range(0..100) < 80)
+            .filter(|_chain| self.random_generator.generate(0, 100) < 80)
             .map(|chain| OngoingEventChain {
                 timer: 0,
                 event_chain_id: chain.title.clone(),
@@ -169,13 +171,13 @@ impl Engine {
             .collect::<Vec<OngoingEventChain>>();
     }
 
-    fn select_choice_outcome(outcomes: &Vec<ChoiceOutcome>) -> ChoiceOutcome {
+    fn select_choice_outcome(&self, outcomes: &Vec<ChoiceOutcome>) -> ChoiceOutcome {
         let total_weights = outcomes.iter()
             .map(|outcome| outcome.weight.unwrap_or(1))
             .reduce(|total: u32, weight: u32| total + weight)
             .unwrap();
 
-        let mut random = rand::thread_rng().gen_range(0..total_weights);
+        let mut random = self.random_generator.generate(0, total_weights);
 
         for outcome in outcomes {
             let w = outcome.weight.unwrap_or(1);
@@ -188,13 +190,13 @@ impl Engine {
         return outcomes.first().unwrap().clone(); // should never happen
     }
 
-    fn select_next_event(nexts: &Vec<Next>) -> Next {
+    fn select_next_event(&self,nexts: &Vec<Next>) -> Next {
         let total_weights = nexts.iter()
             .map(|next| next.weight.unwrap_or(1))
             .reduce(|total: u32, weight: u32| total + weight)
             .unwrap();
 
-        let mut random = rand::thread_rng().gen_range(0..total_weights);
+        let mut random = self.random_generator.generate(0, total_weights);
 
         for next in nexts {
             let w = next.weight.unwrap_or(1);
@@ -209,5 +211,80 @@ impl Engine {
 
     pub fn get_state(&self) -> &State {
         return &self.state;
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{engine::event::Next, engine::engine::Engine, engine::random::{PseudoRandomGenerator, TestRandomGenerator}};
+
+    #[test]
+    fn select_next_event_should_return_unique_outcome() {
+        let engine = Engine::new("", PseudoRandomGenerator{});
+
+        let next = engine.select_next_event(&vec![Next{
+            event: "unique_outcome".to_string(),
+            timer: None,
+            weight: Some(4),
+        }]);
+        assert_eq!(next, Next{
+            event: "unique_outcome".to_string(),
+            timer: None,
+            weight: Some(4),
+        });
+    }
+
+    #[test]
+    fn select_next_event_should_return_a_random_outcome_respecting_weight() {
+        let engine = Engine::new("", TestRandomGenerator{
+            expected_min: 0,
+            expected_max: 4,
+            return_value: 2,
+        });
+
+        let next = engine.select_next_event(&vec![Next{
+            event: "first_outcome".to_string(),
+            timer: None,
+            weight: Some(1),
+        },Next{
+            event: "second_outcome".to_string(),
+            timer: None,
+            weight: Some(1),
+        },Next{
+            event: "third_outcome".to_string(),
+            timer: None,
+            weight: Some(2),
+        },]);
+
+        assert_eq!(next, Next{
+            event: "third_outcome".to_string(),
+            timer: None,
+            weight: Some(2),
+        });
+    }
+
+    #[test]
+    fn select_next_event_should_use_1_as_the_default_weight() {
+        let engine = Engine::new("", TestRandomGenerator{
+            expected_min: 0,
+            expected_max: 2,
+            return_value: 0,
+        });
+
+        let next = engine.select_next_event(&vec![Next{
+            event: "first_outcome".to_string(),
+            timer: None,
+            weight: None,
+        },Next{
+            event: "second_outcome".to_string(),
+            timer: None,
+            weight: None,
+        },]);
+
+        assert_eq!(next, Next{
+            event: "first_outcome".to_string(),
+            timer: None,
+            weight: None,
+        });
     }
 }
