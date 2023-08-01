@@ -21,8 +21,11 @@ impl Component for App {
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            game: Engine::new("", PseudoRandomGenerator{}),
-            view_model: ViewModel { lines: vec!["Welcome to unnamed game".to_string()], choices: vec![] },
+            game: Engine::new("", PseudoRandomGenerator {}),
+            view_model: ViewModel {
+                lines: vec!["Welcome to unnamed game".to_string()],
+                choices: vec![],
+            },
         }
     }
 
@@ -88,9 +91,8 @@ impl App {
     }
 
     fn view_choices(&self, link: &Scope<Self>) -> Html {
-        return
-            if !!!self.view_model.choices.is_empty() {
-                html! {
+        return if !!!self.view_model.choices.is_empty() {
+            html! {
                 <div class="choices">
                     <h3>{"What is your response?"}</h3>
                     <ul class="choices">
@@ -98,9 +100,9 @@ impl App {
                     </ul>
                 </div>
             }
-            } else {
-                self.view_continue_next_cycle(link)
-            };
+        } else {
+            self.view_continue_next_cycle(link)
+        };
     }
 
     fn view_one_choice(&self, choice: &String, index: usize, link: &Scope<Self>) -> Html {
@@ -117,15 +119,15 @@ impl App {
 
     fn view_continue_next_cycle(&self, link: &Scope<Self>) -> Html {
         return html! {
-            <div>
-                <h3>{"There is nothing you can do"}</h3>
-                <button
-                    type="button"
-                    id="wait-one-cycle"
-                    onclick={link.callback(|_| AppEvent::WaitOneCycle)}
-                > {"Wait until next cycle"}</button>
-            </div>
-            };
+        <div>
+            <h3>{"There is nothing you can do"}</h3>
+            <button
+                type="button"
+                id="wait-one-cycle"
+                onclick={link.callback(|_| AppEvent::WaitOneCycle)}
+            > {"Wait until next cycle"}</button>
+        </div>
+        };
     }
 }
 
