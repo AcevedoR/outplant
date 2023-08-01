@@ -14,9 +14,16 @@ pub struct Event {
 }
 
 impl Event {
-    pub fn apply_effects(self: &Event, state: &mut State, event_chain_effects: &HashMap<String, Effect>) {
+    pub fn apply_effects(
+        self: &Event,
+        state: &mut State,
+        event_chain_effects: &HashMap<String, Effect>,
+    ) {
         if self.effects.is_some() {
-            self.effects.as_ref().unwrap().iter()
+            self.effects
+                .as_ref()
+                .unwrap()
+                .iter()
                 .filter(|(_, is_event_effect_activated)| **is_event_effect_activated == true)
                 .map(|(event_effect_id, _)| event_chain_effects.get(event_effect_id).unwrap())
                 .for_each(|effect| effect.apply(state));
