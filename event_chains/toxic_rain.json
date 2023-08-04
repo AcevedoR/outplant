@@ -1,0 +1,123 @@
+{
+  "$schema": "../event_chains/schema.json",
+  "title": "toxic rain",
+  "cooldown": 2,
+  "events": {
+    "start": {
+      "text": "Your ship's sensors detect an incoming small meteorite",
+      "choices": [
+        {
+          "text": "“Probably a false positive again... Maybe one day I'll fix that damn sensor...” [ignore it]",
+          "next": [
+            {
+              "event": "no_meteorite",
+              "in": 2
+            },
+            {
+              "event": "meteorite_not_dangerous",
+              "in": 2
+            },
+            {
+              "event": "toxic_meteorite",
+              "in": 2,
+              "weight": 2
+            }
+          ]
+        },
+        {
+          "text": "“Alright, I will look at it, but only this one last time!!”",
+          "next": [
+            {
+              "event": "no_meteorite"
+            },
+            {
+              "event": "meteorite_not_dangerous_spotted"
+            },
+            {
+              "event": "toxic_meteorite_spotted"
+            }
+          ]
+        }
+      ]
+    },
+    "meteorite_not_dangerous_spotted": {
+      "text": "The meteorite is little and composed of rock and ice, it will disintegrate in the atmosphere, nothing to worry about. - You're not sure if the planetary collision-detection system should filter out these harmless objets. You don't remember how you configured it back in the time, and of course this is not documented.",
+      "next": [
+        {
+          "event": "meteorite_not_dangerous"
+        }
+      ]
+    },
+    "toxic_meteorite_spotted": {
+      "text": "The meteorite is in reality a chemicals container ! - Some company probably rocketed it to the sky instead of paying to destroy it safely",
+      "choices": [
+        {
+          "text": "Try to guide the population to a safe area",
+          "next": [
+            {
+              "event": "population_saved"
+            },
+            {
+              "event": "population_saved_failed"
+            }
+          ]
+        },
+        {
+          "text": "“They'll be fine“ [do nothing]",
+          "next": [
+            {
+              "event": "toxic_rain"
+            }
+          ]
+        }
+      ]
+    },
+    "toxic_meteorite": {
+      "text": "The meteorite seems to be a toxic container, we have an issue!",
+      "next": [
+        {
+          "event": "toxic_rain"
+        }
+      ]
+    },
+    "no_meteorite": {
+      "text": "“No meteorite in sight eh? I'm losing my time with these sensors...“"
+    },
+    "meteorite_not_dangerous": {
+      "text": "The meteorite disintegrates while entering the atmosphere."
+    },
+    "toxic_rain": {
+      "text": "When reaching the atmosphere, the container disintegrates, causing a toxic rain.",
+      "effects": {
+        "toxic_rain_hits_vegetation": true,
+        "toxic_rain_kills_specimens": true
+      }
+    },
+    "population_saved": {
+      "text": "Your population followed your path and dodged the toxic rain"
+    },
+    "population_saved_failed": {
+      "text": "Unfortunately, your population did not follow your path to dodge the toxic rain",
+      "effects": {
+        "toxic_rain_hits_vegetation": true,
+        "toxic_rain_kills_specimens": true
+      }
+    }
+  },
+  "effects": {
+    "toxic_rain_hits_vegetation": {
+      "description": "The toxic rain affects local vegetation",
+      "operation": "subtract",
+      "target": "ecology",
+      "value": 1,
+      "type": "permanent"
+    },
+    "toxic_rain_kills_specimens": {
+      "description": "Some of your specimens don't survive the rain",
+      "operation": "subtract",
+      "target": "population",
+      "value": 1,
+      "type": "permanent"
+    }
+  }
+}

@@ -92,7 +92,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             .event_store
             .clone()
             .get_event(outcome.clone().event)
-            .unwrap();
+            .expect(format!("Could not find outcome event '{}' in chain_store, this means the chain definition is invalid", outcome.clone().event).as_str());
         let chain_of_next_event = self.event_store.clone().get_chain(outcome.event).unwrap();
         self.events_to_resolve_this_turn.push(OngoingEventChain {
             timer: outcome.timer.unwrap_or_default(),
@@ -149,7 +149,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     .event_store
                     .clone()
                     .get_event(next.event.clone())
-                    .unwrap();
+                    .expect(format!("Could not find event '{}' in chain_store, this means the chain definition is invalid", next.event.clone()).as_str());
                 let chain_of_next_event = self
                     .event_store
                     .clone()
