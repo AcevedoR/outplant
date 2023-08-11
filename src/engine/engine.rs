@@ -13,8 +13,19 @@ use crate::log;
 
 #[derive(Clone, Debug)]
 pub enum ViewModel {
-    Ingame { lines: Vec<String>, choices: Vec<String> },
-    EndOfGame { is_victory: bool },
+    InGame(InGameView),
+    EndOfGame(EndOfGameView),
+}
+
+#[derive(Clone, Debug)]
+pub struct InGameView {
+    pub(crate) lines: Vec<String>,
+    pub(crate) choices: Vec<String>,
+}
+
+#[derive(Clone, Debug)]
+pub struct EndOfGameView {
+    pub(crate) is_victory: bool,
 }
 
 
@@ -68,11 +79,15 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         // Test for win and lose condition
         if self.has_won() {
             log!("Bravo!");
-            return ViewModel::EndOfGame { is_victory: true };
+            return ViewModel::EndOfGame {
+                0: EndOfGameView { is_victory: true }
+            };
         }
         if self.has_lost() {
             log!("Loser! Not bravo");
-            return ViewModel::EndOfGame { is_victory: false };
+            return ViewModel::EndOfGame {
+                0: EndOfGameView { is_victory: false }
+            };
         }
 
         // Queue new chains
@@ -143,15 +158,17 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                 // We encountered a choice the player has to make
                 self.events_to_resolve_this_turn
                     .push(event_to_play.clone());
-                return ViewModel::Ingame {
-                    lines,
-                    choices: event_to_play
-                        .event
-                        .choices
-                        .unwrap()
-                        .iter()
-                        .map(|choice| choice.clone().text)
-                        .collect(),
+                return ViewModel::InGame {
+                    0: InGameView {
+                        lines,
+                        choices: event_to_play
+                            .event
+                            .choices
+                            .unwrap()
+                            .iter()
+                            .map(|choice| choice.clone().text)
+                            .collect(),
+                    }
                 };
             }
 
@@ -177,9 +194,11 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         }
 
         // We resolved every event that could be during this turn;
-        return ViewModel::Ingame {
-            lines,
-            choices: vec![],
+        return ViewModel::InGame {
+            0: InGameView {
+                lines,
+                choices: vec![],
+            }
         };
     }
 
