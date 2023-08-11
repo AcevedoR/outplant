@@ -1,0 +1,16 @@
+pouvoir mettre des effets sur les transitions (= dans les next)
+pouvoir ne pas mettre de next dans un choice si jamais c'est un choix terminal
+pouvoir mettre un nb de tour en target dans les triggers d'event chain
+faire qqch des descriptions d'effects
+---
+les effets permanents, c'est comme des effets instants sauf qu'ils vont (sauf si ils sont annulés) se jouer aussi lors des tours d'après
+par contre on veut pas qu'ils se jouent 2 fois d'un coup si jamais leur déclenchement arrive en fin de tour
+du coup, on peut les gerer avec deux sets
+le premier, c'est tous les effects permanents activés
+le deuxième, c'est ceux qui ont été activés lors du dernier round interactif
+quand on démarre un nouveau round interactif, on reset le 2e set
+quand on démarre un nouveau tour, on applique les effets de tout le 1er set moins les éléments qui sont aussi dans le 2nd
+---
+TODO: apply the instant effects
+TODO: for long-lasting effects, add them to a set
+TODO: put effects and event names in namespaces (probably forbid use of "/" in their identifiers + event chain ids)

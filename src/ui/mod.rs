@@ -21,7 +21,7 @@ impl Component for App {
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            game: Engine::new("", PseudoRandomGenerator {}),
+            game: Engine::new(vec![], PseudoRandomGenerator {}),
             view_model: ViewModel {
                 lines: vec!["Welcome to unnamed game".to_string()],
                 choices: vec![],

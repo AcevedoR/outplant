@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::engine::{effect::Effect, event::Event, trigger::Trigger};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct EventChain {
+pub struct Chain {
     pub(crate) title: String,
     pub(crate) cooldown: u32,
     pub(crate) trigger: Option<Trigger>,
@@ -13,4 +13,4 @@ pub struct EventChain {
     pub(crate) effects: HashMap<String, Effect>,
 }
 
-impl EventChain {}
+impl Chain {}

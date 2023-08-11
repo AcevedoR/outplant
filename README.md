@@ -13,10 +13,10 @@ trunk serve --features wasm-logging
 
 ## test
 ```
-cargo test --features integration-test
+cargo test
 ```
 
 to display logs and full stacktrace:
 ```
-export RUST_BACKTRACE=1 && cargo test --features integration-test -- --nocapture
+export RUST_BACKTRACE=1 && cargo test -- --nocapture
 ```
