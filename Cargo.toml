@@ -8,7 +8,6 @@ edition = "2021"
 [features]
 default = []
 wasm-logging = []
-integration-test = []
 
 [dependencies]
 #wasm

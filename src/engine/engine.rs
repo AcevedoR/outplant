@@ -1,10 +1,13 @@
+use std::collections::{HashMap, HashSet};
+
 use serde::{Deserialize, Serialize};
 
 use crate::engine::{
     event::{ChoiceOutcome, Event, Next},
-    event_store::EventStore,
+    chain_store::ChainStore,
     random::RandomGenerator,
     state::State,
+    effect::{EffectType, Effect},
 };
 use crate::log;
 
@@ -18,27 +21,31 @@ pub struct ViewModel {
 pub struct OngoingEventChain {
     timer: u32,
     pub(crate) event: Event,
-    pub(crate) event_chain_id: String,
+    pub(crate) chain: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Engine<Rng> {
     turn: u32,
     state: State,
-    event_store: EventStore,
+    chain_store: ChainStore,
     events_to_resolve_this_turn: Vec<OngoingEventChain>,
     events_to_resolve_later: Vec<OngoingEventChain>,
+    ongoing_permanent_effects: HashSet<Effect>,
+    just_applied_permanent_effects: HashSet<Effect>,
     random_generator: Rng,
 }
 
 impl<Rng: RandomGenerator> Engine<Rng> {
-    pub fn new(event_chains_filepath: &str, random_generator: Rng) -> Engine<Rng> {
+    pub fn new(chains_files: Vec<String>, random_generator: Rng) -> Engine<Rng> {
         return Engine {
             turn: 1,
             state: State::new(1, 12, 1000),
-            event_store: EventStore::new(event_chains_filepath),
+            chain_store: ChainStore::new(chains_files),
             events_to_resolve_this_turn: Default::default(),
             events_to_resolve_later: Default::default(),
+            ongoing_permanent_effects: Default::default(),
+            just_applied_permanent_effects: Default::default(),
             random_generator,
         };
     }
@@ -48,27 +55,33 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             panic!("next_cycle called when some events of current turn were waiting to be resolved")
         }
 
+        // Apply "natural" effects
+        self.state.evolve();
+
+        // Apply ongoing effects
+        let ongoing_effects_to_apply = self.ongoing_permanent_effects.iter()
+            .filter(|effect| !self.just_applied_permanent_effects.contains(effect));
+        ongoing_effects_to_apply.for_each(|effect| effect.apply(&mut self.state));
+        self.just_applied_permanent_effects.clear();
+
         // Test for win and lose condition
         if self.has_won() {
             log!("Bravo!");
             panic!("you won");
         }
         if self.has_lost() {
-            log!("Looser! Not bravo");
+            log!("Loser! Not bravo");
             panic!("you lost");
         }
 
-        // Apply "natural" effects
-        self.state.evolve();
-
-        // Queue new event chains
-        let mut new_event_chains = self.select_event_chains();
-        while !!!new_event_chains.is_empty() {
+        // Queue new chains
+        let mut new_chains = self.select_chains();
+        while !!!new_chains.is_empty() {
             self.events_to_resolve_this_turn
-                .push(new_event_chains.pop().unwrap())
+                .push(new_chains.pop().unwrap())
         }
 
-        // Queue ongoing event chains
+        // Queue ongoing chains
         while !!!self.events_to_resolve_later.is_empty() {
             self.events_to_resolve_this_turn
                 .push(self.events_to_resolve_later.pop().unwrap())
@@ -82,6 +95,8 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             panic!("make_choice called when no events of current turn were waiting to be resolved")
         }
 
+        self.just_applied_permanent_effects.clear();
+
         let event_with_choice = self.events_to_resolve_this_turn.pop().unwrap().event;
         let binding = event_with_choice.choices.unwrap();
         let next = binding.get(index).unwrap();
@@ -89,15 +104,16 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         let outcome = self.select_choice_outcome(&next.next);
 
         let next_event = self
-            .event_store
+            .chain_store
             .clone()
             .get_event(outcome.clone().event)
             .expect(format!("Could not find outcome event '{}' in chain_store, this means the chain definition is invalid", outcome.clone().event).as_str());
-        let chain_of_next_event = self.event_store.clone().get_chain(outcome.event).unwrap();
+
+        let chain_of_next_event = self.chain_store.clone().get_containing_event(outcome.event).unwrap().title;
         self.events_to_resolve_this_turn.push(OngoingEventChain {
             timer: outcome.timer.unwrap_or_default(),
             event: next_event,
-            event_chain_id: chain_of_next_event,
+            chain: chain_of_next_event,
         });
 
         return self.unstack_events_to_resolve_this_turn();
@@ -107,22 +123,28 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         let mut lines = vec![];
 
         while !!!self.events_to_resolve_this_turn.is_empty() {
-            let mut event_chain_to_play = self.events_to_resolve_this_turn.pop().unwrap();
-            if event_chain_to_play.timer != 0 {
+            let mut event_to_play = self.events_to_resolve_this_turn.pop().unwrap();
+            if event_to_play.timer != 0 {
                 // The event is scheduled for later
-                event_chain_to_play.timer = event_chain_to_play.timer - 1;
-                self.events_to_resolve_later.push(event_chain_to_play);
+                event_to_play.timer = event_to_play.timer - 1;
+                self.events_to_resolve_later.push(event_to_play);
                 continue;
             }
 
-            lines.push(event_chain_to_play.event.text.clone());
-            if event_chain_to_play.event.choices.is_some() {
+            lines.push(event_to_play.event.text.clone());
+
+            // Apply effects, if any
+            if event_to_play.event.effects.is_some() {
+                self.apply_effects(&event_to_play.event.effects.clone().unwrap(), &event_to_play.chain);
+            }
+
+            if event_to_play.event.choices.is_some() {
                 // We encountered a choice the player has to make
                 self.events_to_resolve_this_turn
-                    .push(event_chain_to_play.clone());
+                    .push(event_to_play.clone());
                 return ViewModel {
                     lines,
-                    choices: event_chain_to_play
+                    choices: event_to_play
                         .event
                         .choices
                         .unwrap()
@@ -132,33 +154,23 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                 };
             }
 
-            event_chain_to_play.event.apply_effects(
-                &mut self.state,
-                &self
-                    .event_store
-                    .event_chains
-                    .iter()
-                    .find(|x| x.title == event_chain_to_play.event_chain_id)
-                    .unwrap()
-                    .effects,
-            );
-
-            if event_chain_to_play.event.next.is_some() {
-                let next = self.select_next_event(&event_chain_to_play.event.next.unwrap());
+            if event_to_play.event.next.is_some() {
+                let next = self.select_next_event(&event_to_play.event.next.unwrap());
                 let next_event = self
-                    .event_store
+                    .chain_store
                     .clone()
                     .get_event(next.event.clone())
                     .expect(format!("Could not find event '{}' in chain_store, this means the chain definition is invalid", next.event.clone()).as_str());
                 let chain_of_next_event = self
-                    .event_store
+                    .chain_store
                     .clone()
-                    .get_chain(next.clone().event)
-                    .unwrap();
+                    .get_containing_event(next.clone().event)
+                    .unwrap()
+                    .title;
                 self.events_to_resolve_this_turn.push(OngoingEventChain {
                     timer: next.timer.unwrap_or_default(),
                     event: next_event,
-                    event_chain_id: chain_of_next_event,
+                    chain: chain_of_next_event,
                 });
             }
         }
@@ -178,10 +190,10 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         self.state.population == 8
     }
 
-    fn select_event_chains(&self) -> Vec<OngoingEventChain> {
+    fn select_chains(&self) -> Vec<OngoingEventChain> {
         return self
-            .event_store
-            .event_chains
+            .chain_store
+            .chains
             .iter()
             .filter(|chain| {
                 chain.trigger.is_none() || chain.trigger.as_ref().unwrap().is_satisfied(&self.state)
@@ -190,13 +202,13 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                 !!!self
                     .events_to_resolve_later
                     .iter()
-                    .find(|e| e.event_chain_id == chain.title)
+                    .find(|e| e.chain == chain.title)
                     .is_some()
             })
             .filter(|_chain| self.random_generator.generate(0, 100) < 80)
             .map(|chain| OngoingEventChain {
                 timer: 0,
-                event_chain_id: chain.title.clone(),
+                chain: chain.title.clone(),
                 event: chain.events.get("start").unwrap().clone(),
             })
             .collect::<Vec<OngoingEventChain>>();
@@ -242,6 +254,40 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         return nexts.first().unwrap().clone(); // should never happen
     }
 
+    fn apply_effects(&mut self, effects: &HashMap<String, bool>, chain_id: &String) {
+        let effect_activations = effects.iter()
+            .filter(|(_, activate)| **activate)
+            .map(|(effect_name, _)| effect_name)
+            .map(|effect| self.chain_store.clone().get_by_name(chain_id.clone()).unwrap().effects.get(effect).unwrap().to_owned());
+
+        let activated_instant_effects = effect_activations
+            .clone()
+            .filter(|effect| effect.effect_type == EffectType::Instant);
+        activated_instant_effects.for_each(|effect| effect.apply(&mut self.state));
+
+        let cloned_ongoing_permanent_effects = self.ongoing_permanent_effects.clone();
+
+        let newly_activated_permanent_effects = effect_activations
+            .clone()
+            .filter(|effect| effect.effect_type == EffectType::Permanent)
+            .filter(|permanent_effect: &Effect| !cloned_ongoing_permanent_effects.contains(&permanent_effect));
+
+        for effect in newly_activated_permanent_effects {
+            effect.apply(&mut self.state);
+            self.ongoing_permanent_effects.insert(effect.clone());
+            self.just_applied_permanent_effects.insert(effect);
+
+        }
+
+        let effect_deactivations = effects.iter()
+            .filter(|(_, activate)| !**activate)
+            .map(|(effect_name, _)| effect_name)
+            .map(|effect| self.chain_store.clone().get_by_name(chain_id.clone()).unwrap().effects.get(effect).unwrap().to_owned());
+        effect_deactivations.for_each(|effect| {
+            self.ongoing_permanent_effects.remove(&effect);
+        });
+    }
+
     pub fn get_state(&self) -> &State {
         return &self.state;
     }
@@ -257,7 +303,7 @@ mod tests {
 
     #[test]
     fn select_next_event_should_return_unique_outcome() {
-        let engine = Engine::new("", PseudoRandomGenerator {});
+        let engine = Engine::new(vec![], PseudoRandomGenerator {});
 
         let next = engine.select_next_event(&vec![Next {
             event: "unique_outcome".to_string(),
@@ -277,7 +323,7 @@ mod tests {
     #[test]
     fn select_next_event_should_return_a_random_outcome_respecting_weight() {
         let engine = Engine::new(
-            "",
+            vec![],
             TestRandomGenerator {
                 expected_min: 0,
                 expected_max: 4,
@@ -316,7 +362,7 @@ mod tests {
     #[test]
     fn select_next_event_should_use_1_as_the_default_weight() {
         let engine = Engine::new(
-            "",
+            vec![],
             TestRandomGenerator {
                 expected_min: 0,
                 expected_max: 2,

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::engine::state::State;
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub struct Effect {
     pub(crate) description: Option<String>,
     pub(crate) operation: ChangeOperation,
@@ -13,14 +13,14 @@ pub struct Effect {
     pub(crate) effect_type: EffectType,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub(crate) enum ChangeOperation {
     Add,
     Subtract,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub(crate) enum ChangeTarget {
     Population,
@@ -28,7 +28,7 @@ pub(crate) enum ChangeTarget {
     Money,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub(crate) enum EffectType {
     Instant,
