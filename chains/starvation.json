@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "title": "starvation",
-  "cooldown": 5,
+  "cooldown": 10,
   "trigger": {
     "comparator": "gt",
     "target": "population",
