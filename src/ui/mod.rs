@@ -54,24 +54,26 @@ impl Component for App {
                         <p>{ "money: " }{ self.game.get_state().money}</p>
                     </div>
                 </div>
-                <div class="game-board">
-                    <h2>{ "Entry logs" }</h2>
                     {
                         match &self.view_model{
-                            ViewModel::InGame(in_game_view) => {  self.view_event(in_game_view)},
-                            ViewModel::EndOfGame(end_of_game_view) => { self.view_end_of_game(end_of_game_view)},
+                            ViewModel::InGame(in_game_view) => {
+                                html!{
+                                    <>
+                                        <div class="game-board">
+                                            <h2>{ "Entry logs" }</h2>
+                                            { self.view_event(in_game_view) }
+                                        </div>
+                                        <div class="game-board">
+                                            <h2>{ "Control panel" }</h2>
+                                            {self.view_choices(ctx.link(), in_game_view)}
+                                        </div>
+                                    </>}
+                            },
+                            ViewModel::EndOfGame(end_of_game_view) => {
+                                self.view_end_of_game(end_of_game_view)
+                            },
                         }
                     }
-                </div>
-                <div class="game-board">
-                    <h2>{ "Control panel" }</h2>
-                    {
-                        match &self.view_model{
-                            ViewModel::InGame(in_game_view) => self.view_choices(ctx.link(), in_game_view),
-                            ViewModel::EndOfGame(end_of_game_view) => { self.view_end_of_game(end_of_game_view)},
-                        }
-                    }
-                </div>
             </div>
         };
     }
@@ -143,8 +145,21 @@ impl App {
     }
     fn view_end_of_game(&self, end_of_game_view: &EndOfGameView) -> Html {
         return html! {
-             <div class="log-entry">
-                { end_of_game_view.is_victory }
+             <div class="game-board">
+                {
+                    if end_of_game_view.is_victory {
+                       {"You have won, good job !"}
+                    } else {
+                       {"You have lost !"}
+                    }
+                }
+                <button id="toto" type="button" onclick={
+                        move |_| web_sys::window()
+                        .unwrap()
+                        .location()
+                        .reload()
+                        .expect("Failed to reload")
+                    }>{"Play again"}</button>
              </div>
         };
     }
