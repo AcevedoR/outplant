@@ -1,7 +1,7 @@
 {
   "$schema": "../chains/schema.json",
   "title": "toxic rain",
-  "cooldown": 2,
+  "cooldown": 10,
   "events": {
     "start": {
       "text": "Your ship's sensors detect an incoming small meteorite",

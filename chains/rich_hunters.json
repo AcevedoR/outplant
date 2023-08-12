@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "title": "rich hunters",
-  "cooldown": 5,
+  "cooldown": 999,
   "trigger": {
     "comparator": "gt",
     "target": "population",

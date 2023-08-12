@@ -1,7 +1,7 @@
 {
   "$schema": "../event_chains/schema.json",
   "title": "missing form",
-  "cooldown": 5,
+  "cooldown": 999,
   "events": {
     "start": {
       "text": "On a unusually calm Tuesday morning, you read through your spacemails and find one from an obscure administration you've never heard about - the PETTEE (Planetoid and Exoplanet Tenaciously Tactical Executive Embassy).",
