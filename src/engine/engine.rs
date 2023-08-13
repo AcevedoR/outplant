@@ -3,19 +3,31 @@ use std::collections::{HashMap, HashSet};
 use serde::{Deserialize, Serialize};
 
 use crate::engine::{
-    event::{ChoiceOutcome, Event, Next},
     chain_store::ChainStore,
+    effect::{Effect, EffectType},
+    event::{ChoiceOutcome, Event, Next},
     random::RandomGenerator,
     state::State,
-    effect::{EffectType, Effect},
 };
 use crate::log;
 
 #[derive(Clone, Debug)]
-pub struct ViewModel {
-    pub lines: Vec<String>,
-    pub choices: Vec<String>,
+pub enum ViewModel {
+    InGame(InGameView),
+    EndOfGame(EndOfGameView),
 }
+
+#[derive(Clone, Debug)]
+pub struct InGameView {
+    pub(crate) lines: Vec<String>,
+    pub(crate) choices: Vec<String>,
+}
+
+#[derive(Clone, Debug)]
+pub struct EndOfGameView {
+    pub(crate) is_victory: bool,
+}
+
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct OngoingEventChain {
@@ -67,11 +79,15 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         // Test for win and lose condition
         if self.has_won() {
             log!("Bravo!");
-            panic!("you won");
+            return ViewModel::EndOfGame {
+                0: EndOfGameView { is_victory: true }
+            };
         }
         if self.has_lost() {
             log!("Loser! Not bravo");
-            panic!("you lost");
+            return ViewModel::EndOfGame {
+                0: EndOfGameView { is_victory: false }
+            };
         }
 
         // Queue new chains
@@ -142,15 +158,17 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                 // We encountered a choice the player has to make
                 self.events_to_resolve_this_turn
                     .push(event_to_play.clone());
-                return ViewModel {
-                    lines,
-                    choices: event_to_play
-                        .event
-                        .choices
-                        .unwrap()
-                        .iter()
-                        .map(|choice| choice.clone().text)
-                        .collect(),
+                return ViewModel::InGame {
+                    0: InGameView {
+                        lines,
+                        choices: event_to_play
+                            .event
+                            .choices
+                            .unwrap()
+                            .iter()
+                            .map(|choice| choice.clone().text)
+                            .collect(),
+                    }
                 };
             }
 
@@ -176,9 +194,11 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         }
 
         // We resolved every event that could be during this turn;
-        return ViewModel {
-            lines,
-            choices: vec![],
+        return ViewModel::InGame {
+            0: InGameView {
+                lines,
+                choices: vec![],
+            }
         };
     }
 
@@ -276,7 +296,6 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             effect.apply(&mut self.state);
             self.ongoing_permanent_effects.insert(effect.clone());
             self.just_applied_permanent_effects.insert(effect);
-
         }
 
         let effect_deactivations = effects.iter()

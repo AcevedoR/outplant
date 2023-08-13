@@ -1,7 +1,7 @@
 use yew::html::Scope;
 use yew::prelude::*;
 
-use crate::engine::engine::{Engine, ViewModel};
+use crate::engine::engine::{EndOfGameView, Engine, InGameView, ViewModel};
 use crate::engine::random::PseudoRandomGenerator;
 use crate::log;
 
@@ -22,9 +22,11 @@ impl Component for App {
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
             game: Engine::new(vec![], PseudoRandomGenerator {}),
-            view_model: ViewModel {
-                lines: vec!["Welcome to unnamed game".to_string()],
-                choices: vec![],
+            view_model: ViewModel::InGame {
+                0: InGameView {
+                    lines: vec!["Welcome to unnamed game".to_string()],
+                    choices: vec![],
+                }
             },
         }
     }
@@ -52,28 +54,40 @@ impl Component for App {
                         <p>{ "money: " }{ self.game.get_state().money}</p>
                     </div>
                 </div>
-                <div class="game-board">
-                    <h2>{ "Entry logs" }</h2>
-                    {self.view_event()}
-                </div>
-                <div class="game-board">
-                    <h2>{ "Control panel" }</h2>
-                    {self.view_choices(ctx.link())}
-                </div>
+                    {
+                        match &self.view_model{
+                            ViewModel::InGame(in_game_view) => {
+                                html!{
+                                    <>
+                                        <div class="game-board">
+                                            <h2>{ "Entry logs" }</h2>
+                                            { self.view_event(in_game_view) }
+                                        </div>
+                                        <div class="game-board">
+                                            <h2>{ "Control panel" }</h2>
+                                            {self.view_choices(ctx.link(), in_game_view)}
+                                        </div>
+                                    </>}
+                            },
+                            ViewModel::EndOfGame(end_of_game_view) => {
+                                self.view_end_of_game(end_of_game_view)
+                            },
+                        }
+                    }
             </div>
         };
     }
 }
 
 impl App {
-    fn view_event(&self) -> Html {
-        log!(format!("debug view_model : {:?}", self.view_model));
+    fn view_event(&self, in_game_view: &InGameView) -> Html {
+        log!(format!("debug view_model : {:?}", in_game_view));
 
-        return if !!!self.view_model.lines.is_empty() {
+        return if !!!in_game_view.lines.is_empty() {
             html! {
                 <div class="event">
                     <ul class="log-entries">
-                        {for self.view_model.lines.clone().iter().map(|log_entry| self.view_one_log_entry(log_entry))}
+                        {for in_game_view.lines.clone().iter().map(|log_entry| self.view_one_log_entry(log_entry))}
                     </ul>
                 </div>
             }
@@ -90,13 +104,13 @@ impl App {
         };
     }
 
-    fn view_choices(&self, link: &Scope<Self>) -> Html {
-        return if !!!self.view_model.choices.is_empty() {
+    fn view_choices(&self, link: &Scope<Self>, in_game_view: &InGameView) -> Html {
+        return if !!!in_game_view.choices.is_empty() {
             html! {
                 <div class="choices">
                     <h3>{"What is your response?"}</h3>
                     <ul class="choices">
-                        {for self.view_model.choices.clone().iter().enumerate().map(|(index, choice)| self.view_one_choice(choice, index, link))}
+                        {for in_game_view.choices.clone().iter().enumerate().map(|(index, choice)| self.view_one_choice(choice, index, link))}
                     </ul>
                 </div>
             }
@@ -127,6 +141,26 @@ impl App {
                 onclick={link.callback(|_| AppEvent::WaitOneCycle)}
             > {"Wait until next cycle"}</button>
         </div>
+        };
+    }
+    fn view_end_of_game(&self, end_of_game_view: &EndOfGameView) -> Html {
+        return html! {
+             <div class="game-board">
+                {
+                    if end_of_game_view.is_victory {
+                       {"You have won, good job !"}
+                    } else {
+                       {"You have lost !"}
+                    }
+                }
+                <button id="toto" type="button" onclick={
+                        move |_| web_sys::window()
+                        .unwrap()
+                        .location()
+                        .reload()
+                        .expect("Failed to reload")
+                    }>{"Play again"}</button>
+             </div>
         };
     }
 }

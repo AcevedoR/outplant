@@ -25,3 +25,4 @@ wasm-bindgen = "0.2.83"
 
 rust-embed = { version = "6.7.0", features = ["debug-embed", "include-exclude"] }
 simple-error = "0.2"
+web-sys = "0.3.64"
