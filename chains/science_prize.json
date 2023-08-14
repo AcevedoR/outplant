@@ -139,7 +139,7 @@
         "pay_for_invite": {
             "text": "You pay the small fee.",
             "effects": {
-                "pay_invitation_fee": true
+                "pay_for_invite": true
             },
             "next": [
                 {
