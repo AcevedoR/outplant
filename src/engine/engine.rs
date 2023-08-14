@@ -147,7 +147,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                 continue;
             }
 
-            lines.push(event_to_play.event.text.clone());
+            if !event_to_play.event.text.is_empty() {
+                lines.push(event_to_play.event.text.clone());
+            }
 
             // Apply effects, if any
             if event_to_play.event.effects.is_some() {
