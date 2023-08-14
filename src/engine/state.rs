@@ -7,6 +7,7 @@ pub struct State {
     pub population: u32,
     pub ecology: u32,
     pub money: u32,
+    pub turn_counter: u32,
 }
 
 impl State {
@@ -15,6 +16,7 @@ impl State {
             population: 0,
             ecology: 0,
             money: 0,
+            turn_counter: 1,
         };
         instance.set_population(population);
         instance.set_ecology(ecology);
@@ -52,6 +54,9 @@ impl State {
         if self.ecology == 0 && self.population > 0 {
             self.population = self.population - 1;
         }
+
+        self.turn_counter += 1;
+
         log!(format!("state after evolve: {:?}", self));
     }
 }

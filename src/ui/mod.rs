@@ -52,6 +52,7 @@ impl Component for App {
                         <p>{ "population: " } { self.game.get_state().population}</p>
                         <p>{ "ecology: " }{ self.game.get_state().ecology}</p>
                         <p>{ "money: " }{ self.game.get_state().money}</p>
+                        <p>{ "turn " }{ self.game.get_state().turn_counter}</p>
                     </div>
                 </div>
                     {
