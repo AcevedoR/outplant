@@ -45,6 +45,7 @@ pub struct Engine<Rng> {
     ongoing_permanent_effects: HashSet<Effect>,
     just_applied_permanent_effects: HashSet<Effect>,
     random_generator: Rng,
+    cooling_down_chains: HashMap<String, u32>
 }
 
 impl<Rng: RandomGenerator> Engine<Rng> {
@@ -58,6 +59,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             ongoing_permanent_effects: Default::default(),
             just_applied_permanent_effects: Default::default(),
             random_generator,
+            cooling_down_chains: Default::default(),
         };
     }
 
@@ -65,6 +67,16 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         if !self.events_to_resolve_this_turn.is_empty() {
             panic!("next_cycle called when some events of current turn were waiting to be resolved");
         }
+
+        // Apply chain cooldowns
+        for (chain, timer) in self.cooling_down_chains.clone() {
+            if timer == 0 {
+                self.cooling_down_chains.remove(&chain);
+            } else {
+                self.cooling_down_chains.insert(chain, timer - 1);
+            }
+        }
+
 
         // Apply "natural" effects
         self.state.evolve();
@@ -190,6 +202,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     event: next_event,
                     chain: chain_of_next_event,
                 });
+            } else {
+                let chain = self.chain_store.clone().get_by_name(event_to_play.chain).unwrap();
+                self.cooling_down_chains.insert(chain.title, chain.cooldown);
             }
         }
 
@@ -229,6 +244,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             .iter()
             .filter(|chain| {
                 chain.trigger.is_none() || chain.trigger.as_ref().unwrap().is_satisfied(&self.state)
+            })
+            .filter(|chain| {
+                !!!self.cooling_down_chains.contains_key(&chain.title)
             })
             .filter(|chain| {
                 !!!self
