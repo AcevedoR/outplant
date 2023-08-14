@@ -9,7 +9,6 @@ use crate::engine::{
     random::RandomGenerator,
     state::State,
 };
-use crate::log;
 
 #[derive(Clone, Debug)]
 pub enum ViewModel {
@@ -64,7 +63,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
     pub fn next_cycle(&mut self) -> ViewModel {
         if !self.events_to_resolve_this_turn.is_empty() {
-            panic!("next_cycle called when some events of current turn were waiting to be resolved")
+            panic!("next_cycle called when some events of current turn were waiting to be resolved");
         }
 
         // Apply "natural" effects
@@ -76,31 +75,17 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         ongoing_effects_to_apply.for_each(|effect| effect.apply(&mut self.state));
         self.just_applied_permanent_effects.clear();
 
-        // Test for win and lose condition
-        if self.has_won() {
-            log!("Bravo!");
-            return ViewModel::EndOfGame {
-                0: EndOfGameView { is_victory: true }
-            };
-        }
-        if self.has_lost() {
-            log!("Loser! Not bravo");
-            return ViewModel::EndOfGame {
-                0: EndOfGameView { is_victory: false }
-            };
-        }
-
         // Queue new chains
         let mut new_chains = self.select_chains();
         while !!!new_chains.is_empty() {
             self.events_to_resolve_this_turn
-                .push(new_chains.pop().unwrap())
+                .push(new_chains.pop().unwrap());
         }
 
         // Queue ongoing chains
         while !!!self.events_to_resolve_later.is_empty() {
             self.events_to_resolve_this_turn
-                .push(self.events_to_resolve_later.pop().unwrap())
+                .push(self.events_to_resolve_later.pop().unwrap());
         }
 
         return self.unstack_events_to_resolve_this_turn();
@@ -108,7 +93,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
     pub fn make_choice(&mut self, index: usize) -> ViewModel {
         if self.events_to_resolve_this_turn.is_empty() {
-            panic!("make_choice called when no events of current turn were waiting to be resolved")
+            panic!("make_choice called when no events of current turn were waiting to be resolved");
         }
 
         self.just_applied_permanent_effects.clear();
@@ -160,6 +145,19 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                 // We encountered a choice the player has to make
                 self.events_to_resolve_this_turn
                     .push(event_to_play.clone());
+
+                // Test for win and lose conditions
+                if self.has_won() {
+                    return ViewModel::EndOfGame {
+                        0: EndOfGameView { is_victory: true }
+                    };
+                }
+                if self.has_lost() {
+                    return ViewModel::EndOfGame {
+                        0: EndOfGameView { is_victory: false }
+                    };
+                }
+
                 return ViewModel::InGame {
                     0: InGameView {
                         lines,
@@ -195,7 +193,19 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             }
         }
 
-        // We resolved every event that could be during this turn;
+        // We resolved every event that could be during this turn
+        // Test for win and lose conditions
+        if self.has_won() {
+            return ViewModel::EndOfGame {
+                0: EndOfGameView { is_victory: true }
+            };
+        }
+        if self.has_lost() {
+            return ViewModel::EndOfGame {
+                0: EndOfGameView { is_victory: false }
+            };
+        }
+
         return ViewModel::InGame {
             0: InGameView {
                 lines,
