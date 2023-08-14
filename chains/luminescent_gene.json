@@ -42,7 +42,7 @@
       ]
     },
     "drone_spotted_glow": {
-      "text": "Right after the end of a particularly and needlessly long meeting with your boss, you absent-mindedly decide to take a look at the video feed from one of your surveillance drone which is currently following a group of specimens from afar.At first glance everything looks normal, but then you notice something: some sort of halo surrounds the specimens. It's like light's coming out of them, for whatever reason. You'd better find out why - you know for sure that wasn't part of your original design specs...",
+      "text": "Right after the end of a particularly and needlessly long meeting with your boss, you absent-mindedly decide to take a look at the video feed from one of your surveillance drone which is currently following a group of specimens from afar. At first glance everything looks normal, but then you notice something: some sort of halo surrounds the specimens. It's like light's coming out of them, for whatever reason. You'd better find out why - you know for sure that wasn't part of your original design specs...",
       "next": [
         {
           "event": "try_to_study_glow"
