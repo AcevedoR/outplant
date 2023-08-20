@@ -24,7 +24,9 @@ impl Component for App {
             game: Engine::new(vec![], PseudoRandomGenerator {}),
             view_model: ViewModel::InGame {
                 0: InGameView {
-                    lines: vec!["Welcome to unnamed game".to_string()],
+                    lines: vec!["Welcome. You are a scientist on orbit around an uninhabited planet, and your job is to implement a new species. The end goal is to study how this species adapts to its environment, and as well find new evolutionary traits that your company could patent and sell !".to_string(),
+                                "You have just implemented the first subjects that you previously created in your lab. You are eager to watch them grow, and, hopefully, survive and adapt !".to_string(),
+                                "You are not sure to what extent it is wise that you physically intervene with them, so, for now, you try to let them as much possible on their own.".to_string()],
                     choices: vec![],
                 }
             },
