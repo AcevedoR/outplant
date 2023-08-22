@@ -16,7 +16,7 @@ impl State {
             population: 0,
             ecology: 0,
             money: 0,
-            turn_counter: 1,
+            turn_counter: 0,
         };
         instance.set_population(population);
         instance.set_ecology(ecology);

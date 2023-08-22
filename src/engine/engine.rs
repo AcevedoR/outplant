@@ -36,7 +36,6 @@ pub struct OngoingEventChain {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Engine<Rng> {
-    turn: u32,
     state: State,
     chain_store: ChainStore,
     events_to_resolve_this_turn: Vec<OngoingEventChain>,
@@ -50,7 +49,6 @@ pub struct Engine<Rng> {
 impl<Rng: RandomGenerator> Engine<Rng> {
     pub fn new(chains_files: Vec<String>, random_generator: Rng) -> Engine<Rng> {
         return Engine {
-            turn: 1,
             state: State::new(1, 12, 1000),
             chain_store: ChainStore::new(chains_files),
             events_to_resolve_this_turn: Default::default(),
