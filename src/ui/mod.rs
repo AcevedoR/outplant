@@ -46,7 +46,7 @@ impl Component for App {
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
-        html! {
+        html! {<>
             <header>
                 <ul class="variable-dashboard">
                     <li class="variable-dashboard__item">{ "Pop: " }{ self.game.get_state().population}</li>
@@ -59,6 +59,7 @@ impl Component for App {
                         }
                     }</li>
                 </ul>
+                </header>
                 {
                     match &self.view_model{
                         ViewModel::InGame(in_game_view) => {
@@ -73,8 +74,15 @@ impl Component for App {
                         },
                     }
                 }
-            </header>
-        }
+                <div class="background">
+                    <div class="background__stars"/>
+                    <div class="background__stars"/>
+                    <div class="background__stars"/>
+                    <div class="background__stars"/>
+                    <div class="background__stars"/>
+                </div>
+
+        </>}
     }
 }
 
