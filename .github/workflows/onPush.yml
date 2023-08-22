@@ -1,5 +1,7 @@
 name: on-push
-on: [push]
+on:
+  - push
+  - workflow_dispatch
 
 permissions:
   contents: write
@@ -26,14 +28,14 @@ jobs:
       - name: Build
         run: trunk --config ./Trunk.itch_io.toml build --release --features wasm-logging
       - name: Install butler
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
         run: |
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
           ./butler -V
       - name: Release on itch.io
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-        run: ./butler push dist remieven/greatancientsimulator:web --if-changed
+        run: ./butler push dist remieven/${{ github.ref == 'refs/heads/main' && 'outplant' || 'outplant-dev' }}:web --if-changed
