@@ -1,5 +1,5 @@
 {
-  "$schema": "../chains/schema.json",
+  "$schema": "./schema.json",
   "title": "luminescent gene",
   "cooldown": 999,
   "events": {

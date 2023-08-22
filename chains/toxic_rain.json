@@ -1,5 +1,5 @@
 {
-  "$schema": "../chains/schema.json",
+  "$schema": "./schema.json",
   "title": "toxic rain",
   "cooldown": 10,
   "events": {
