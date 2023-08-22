@@ -292,7 +292,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     .find(|e| e.chain == chain.title)
                     .is_some()
             })
-            .filter(|_chain| self.random_generator.generate(0, 100) < 80)
+            .filter(|_chain| self.random_generator.generate(0, 100) < 20)
             .map(|chain| OngoingEventChain {
                 timer: 0,
                 chain: chain.title.clone(),
