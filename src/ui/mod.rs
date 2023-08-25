@@ -102,14 +102,16 @@ impl Component for App {
                         },
                     }
                 }
-                <div class="background">
-                    <div class="background__stars"/>
-                    <div class="background__stars"/>
-                    <div class="background__stars"/>
-                    <div class="background__stars"/>
-                    <div class="background__stars"/>
-                </div>
-
+            <div class="background">
+                <div class="background__stars"/>
+                <div class="background__stars"/>
+                <div class="background__stars"/>
+                <div class="background__stars"/>
+                <div class="background__stars"/>
+            </div>
+            <audio controls=true autoplay=false loop=true>
+                <source src="https://soundimage.org/wp-content/uploads/2014/02/Blazing-Stars.mp3" alt="https://soundimage.org/sci-fi/"/>
+            </audio>
         </>}
     }
 }

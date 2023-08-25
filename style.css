@@ -205,6 +205,10 @@ section {
     }
 }
 
+audio {
+    margin: 1em auto;
+}
+
 /* RESET CSS */
 ul {
     list-style: none;
