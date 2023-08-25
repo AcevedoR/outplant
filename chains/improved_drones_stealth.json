@@ -50,7 +50,7 @@
       }
     },
     "minor_drone_upgrade": {
-      "text": "The drone stealth upgrade arrived, you start deploying it, right after spending hours fighting with the installation manual - The ecology is getting better, but you're not sure why",
+      "text": "The drone stealth upgrade arrived, you start deploying it, right after spending hours fighting with the installation manual - The ecology is getting better, but you're not sure why.",
       "effects": {
         "minor_ecology_impact_reduction": true
       }
