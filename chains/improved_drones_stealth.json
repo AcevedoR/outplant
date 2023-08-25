@@ -36,7 +36,7 @@
           }
         },
         {
-          "text": "“I'm not sure the simulation is even well calibrated, better spend money elsewhere“",
+          "text": "“I'm not sure the simulation is even well calibrated, better spend money elsewhere.“",
           "next": [{
             "event": "no_drone_upgrade"
           }]
