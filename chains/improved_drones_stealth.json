@@ -7,7 +7,7 @@
       "text": "Your 'Ecology balance simulation' shows that the current balance in the area of your species is lower than estimated. - You think that your deployed drones are disturbing local wildlife, maybe a stealth upgrade for the drones could be a good idea. You could order it right away and hope for a fast delivery.",
       "choices": [
         {
-          "text": "“Oh, there is a discount on the MIL-SPEC model ! This module is even invisible to most sensors and emits customizable noise-canceling waves“ [300 €€€]",
+          "text": "“Oh, there is a discount on the MIL-SPEC model! This module is even invisible to most sensors and emits customizable noise-canceling waves!“ [300 €€€]",
           "next": [
             {
               "event": "major_drone_upgrade",
