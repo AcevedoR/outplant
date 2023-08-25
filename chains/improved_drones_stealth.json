@@ -59,7 +59,7 @@
       "text": "You do not try to upgrade your drones."
     },
     "minor_drone_upgrade_failed": {
-      "text": "The drone stealth upgrade arrived, the installation manual is covered with some unknown fluids, and the module stops working after only 10 hours being deployed “These damn space scammers !!“"
+      "text": "The drone stealth upgrade arrived, the installation manual is covered with some unknown fluids, and the module stops working after only 10 hours being deployed. “These damn space scammers!!“"
     }
   },
   "effects": {
