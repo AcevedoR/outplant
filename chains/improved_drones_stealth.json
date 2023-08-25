@@ -19,7 +19,7 @@
           }
         },
         {
-          "text": "“WHAT?! All that money for a basic sound emitter and a smart holographic display, this is a scam! The cheapest one, used, on a weird discount platform, will do just fine“ [95 €€€]",
+          "text": "“WHAT?! All that money for a basic sound emitter and a smart holographic display, this is a scam! The cheapest one, used, on a weird discount platform, will do just fine.“ [95 €€€]",
           "next": [
             {
               "event": "minor_drone_upgrade",
