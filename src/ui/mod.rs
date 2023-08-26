@@ -1,9 +1,13 @@
+use stylist::css;
+use stylist::yew::Global;
 use yew::html::Scope;
 use yew::prelude::*;
 
 use crate::engine::engine::{EndOfGameView, Engine, InGameView, ViewModel};
 use crate::engine::random::PseudoRandomGenerator;
 use crate::log;
+
+mod theme;
 
 pub enum AppEvent {
     MakeChoice(usize),
@@ -45,9 +49,26 @@ impl Component for App {
         return true;
     }
 
+    #[allow(non_upper_case_globals)]
     fn view(&self, ctx: &Context<Self>) -> Html {
         html! {<>
-            <header>
+            <Global css={
+                let selected_theme = theme::Theme::AtrociousPurpleTheme;
+
+                css!(
+                r#"
+                    body {
+                        --background-color: #141414;
+                        --main-color: ${main_color};
+                        --main-color-light: ${main_color_light};
+                        --main-color-dark: ${main_color_dark};
+                    }
+                "#,
+                main_color = selected_theme.value().main_color,
+                main_color_light = selected_theme.value().main_color_light,
+                main_color_dark = selected_theme.value().main_color_dark,
+            )} />
+            <header classes="magnificent-blue-theme">
                 <ul class="variable-dashboard">
                     <li class="variable-dashboard__item">{ "Pop: " }{ self.game.get_state().population}</li>
                     <li class="variable-dashboard__item">{ "Eco: " }{ self.game.get_state().ecology}</li>
@@ -59,7 +80,7 @@ impl Component for App {
                         }
                     }</li>
                 </ul>
-                </header>
+            </header>
                 {
                     match &self.view_model{
                         ViewModel::InGame(in_game_view) => {
