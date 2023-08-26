@@ -72,17 +72,23 @@
                 },
                 {
                     "text": "“I'm not a fan of how they worded their invite but you should never judge a book by its cover. I'll go!”",
+                    "effects": {
+                        "pay_for_invite": true
+                    },
                     "next": [
                         {
-                            "event": "pay_for_invite"
+                            "event": "invite_accepted"
                         }
                     ]
                 },
                 {
                     "text": "“They seem laid back and friendly! I'll be happy to go!”",
+                    "effects": {
+                        "pay_for_invite": true
+                    },
                     "next": [
                         {
-                            "event": "pay_for_invite"
+                            "event": "invite_accepted"
                         }
                     ]
                 },
@@ -135,17 +141,6 @@
         },
         "mail_deleted": {
             "text": "You delete the spacemail."
-        },
-        "pay_for_invite": {
-            "text": "You pay the small fee.",
-            "effects": {
-                "pay_for_invite": true
-            },
-            "next": [
-                {
-                    "event": "invite_accepted"
-                }
-            ]
         },
         "invite_accepted": {
             "text": "",

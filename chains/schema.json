@@ -70,12 +70,19 @@
                       "items": {
                         "$ref": "#/definitions/Outcome"
                       }
+                    },
+                    "effects": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      }
                     }
                   },
                   "required": [
                     "text",
                     "next"
-                  ]
+                  ],
+                  "additionalProperties": false
                 }
               },
               "next": {
@@ -152,8 +159,15 @@
         "weight": {
           "type": "number",
           "exclusiveMinimum": 0
+        },
+        "effects": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
         }
       },
+      "additionalProperties": false,
       "required": [
         "event"
       ]

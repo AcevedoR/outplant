@@ -27,7 +27,6 @@ pub struct EndOfGameView {
     pub(crate) is_victory: bool,
 }
 
-
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct OngoingEventChain {
     timer: u32,
@@ -45,7 +44,7 @@ pub struct Engine<Rng> {
     ongoing_permanent_effects: HashSet<Effect>,
     just_applied_permanent_effects: HashSet<Effect>,
     random_generator: Rng,
-    cooling_down_chains: HashMap<String, u32>
+    cooling_down_chains: HashMap<String, u32>,
 }
 
 impl<Rng: RandomGenerator> Engine<Rng> {
@@ -65,7 +64,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
     pub fn next_cycle(&mut self) -> ViewModel {
         if !self.events_to_resolve_this_turn.is_empty() {
-            panic!("next_cycle called when some events of current turn were waiting to be resolved");
+            panic!(
+                "next_cycle called when some events of current turn were waiting to be resolved"
+            );
         }
 
         // Apply chain cooldowns
@@ -77,12 +78,13 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             }
         }
 
-
         // Apply "natural" effects
         self.state.evolve();
 
         // Apply ongoing effects
-        let ongoing_effects_to_apply = self.ongoing_permanent_effects.iter()
+        let ongoing_effects_to_apply = self
+            .ongoing_permanent_effects
+            .iter()
             .filter(|effect| !self.just_applied_permanent_effects.contains(effect));
         ongoing_effects_to_apply.for_each(|effect| effect.apply(&mut self.state));
         self.just_applied_permanent_effects.clear();
@@ -116,13 +118,37 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
         let outcome = self.select_choice_outcome(&next.next);
 
+        let chain_title = self
+            .chain_store
+            .clone()
+            .get_containing_event(outcome.clone().event)
+            .unwrap()
+            .title;
+
+        match next.clone().effects {
+            Some(effects) => self.apply_effects(&effects, &chain_title),
+            None => {}
+        }
+
+        match outcome.clone().effects {
+            Some(effects) => {
+                self.apply_effects(&effects, &chain_title);
+            }
+            None => {}
+        }
+
         let next_event = self
             .chain_store
             .clone()
             .get_event(outcome.clone().event)
             .expect(format!("Could not find outcome event '{}' in chain_store, this means the chain definition is invalid", outcome.clone().event).as_str());
 
-        let chain_of_next_event = self.chain_store.clone().get_containing_event(outcome.event).unwrap().title;
+        let chain_of_next_event = self
+            .chain_store
+            .clone()
+            .get_containing_event(outcome.event)
+            .unwrap()
+            .title;
         self.events_to_resolve_this_turn.push(OngoingEventChain {
             timer: outcome.timer.unwrap_or_default(),
             event: next_event,
@@ -150,23 +176,25 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
             // Apply effects, if any
             if event_to_play.event.effects.is_some() {
-                self.apply_effects(&event_to_play.event.effects.clone().unwrap(), &event_to_play.chain);
+                self.apply_effects(
+                    &event_to_play.event.effects.clone().unwrap(),
+                    &event_to_play.chain,
+                );
             }
 
             if event_to_play.event.choices.is_some() {
                 // We encountered a choice the player has to make
-                self.events_to_resolve_this_turn
-                    .push(event_to_play.clone());
+                self.events_to_resolve_this_turn.push(event_to_play.clone());
 
                 // Test for win and lose conditions
                 if self.has_won() {
                     return ViewModel::EndOfGame {
-                        0: EndOfGameView { is_victory: true }
+                        0: EndOfGameView { is_victory: true },
                     };
                 }
                 if self.has_lost() {
                     return ViewModel::EndOfGame {
-                        0: EndOfGameView { is_victory: false }
+                        0: EndOfGameView { is_victory: false },
                     };
                 }
 
@@ -180,12 +208,13 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                             .iter()
                             .map(|choice| choice.clone().text)
                             .collect(),
-                    }
+                    },
                 };
             }
 
             if event_to_play.event.next.is_some() {
                 let next = self.select_next_event(&event_to_play.event.next.unwrap());
+
                 let next_event = self
                     .chain_store
                     .clone()
@@ -197,13 +226,25 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     .get_containing_event(next.clone().event)
                     .unwrap()
                     .title;
+
+                match next.clone().effects {
+                    Some(effects) => {
+                        self.apply_effects(&effects, &chain_of_next_event);
+                    }
+                    None => {}
+                }
+
                 self.events_to_resolve_this_turn.push(OngoingEventChain {
                     timer: next.timer.unwrap_or_default(),
                     event: next_event,
                     chain: chain_of_next_event,
                 });
             } else {
-                let chain = self.chain_store.clone().get_by_name(event_to_play.chain).unwrap();
+                let chain = self
+                    .chain_store
+                    .clone()
+                    .get_by_name(event_to_play.chain)
+                    .unwrap();
                 self.cooling_down_chains.insert(chain.title, chain.cooldown);
             }
         }
@@ -212,12 +253,12 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         // Test for win and lose conditions
         if self.has_won() {
             return ViewModel::EndOfGame {
-                0: EndOfGameView { is_victory: true }
+                0: EndOfGameView { is_victory: true },
             };
         }
         if self.has_lost() {
             return ViewModel::EndOfGame {
-                0: EndOfGameView { is_victory: false }
+                0: EndOfGameView { is_victory: false },
             };
         }
 
@@ -225,7 +266,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             0: InGameView {
                 lines,
                 choices: vec![],
-            }
+            },
         };
     }
 
@@ -245,9 +286,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             .filter(|chain| {
                 chain.trigger.is_none() || chain.trigger.as_ref().unwrap().is_satisfied(&self.state)
             })
-            .filter(|chain| {
-                !!!self.cooling_down_chains.contains_key(&chain.title)
-            })
+            .filter(|chain| !!!self.cooling_down_chains.contains_key(&chain.title))
             .filter(|chain| {
                 !!!self
                     .events_to_resolve_later
@@ -305,10 +344,20 @@ impl<Rng: RandomGenerator> Engine<Rng> {
     }
 
     fn apply_effects(&mut self, effects: &HashMap<String, bool>, chain_id: &String) {
-        let effect_activations = effects.iter()
+        let effect_activations = effects
+            .iter()
             .filter(|(_, activate)| **activate)
             .map(|(effect_name, _)| effect_name)
-            .map(|effect| self.chain_store.clone().get_by_name(chain_id.clone()).unwrap().effects.get(effect).unwrap().to_owned());
+            .map(|effect| {
+                self.chain_store
+                    .clone()
+                    .get_by_name(chain_id.clone())
+                    .unwrap()
+                    .effects
+                    .get(effect)
+                    .unwrap()
+                    .to_owned()
+            });
 
         let activated_instant_effects = effect_activations
             .clone()
@@ -320,7 +369,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         let newly_activated_permanent_effects = effect_activations
             .clone()
             .filter(|effect| effect.effect_type == EffectType::Permanent)
-            .filter(|permanent_effect: &Effect| !cloned_ongoing_permanent_effects.contains(&permanent_effect));
+            .filter(|permanent_effect: &Effect| {
+                !cloned_ongoing_permanent_effects.contains(&permanent_effect)
+            });
 
         for effect in newly_activated_permanent_effects {
             effect.apply(&mut self.state);
@@ -328,10 +379,20 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             self.just_applied_permanent_effects.insert(effect);
         }
 
-        let effect_deactivations = effects.iter()
+        let effect_deactivations = effects
+            .iter()
             .filter(|(_, activate)| !**activate)
             .map(|(effect_name, _)| effect_name)
-            .map(|effect| self.chain_store.clone().get_by_name(chain_id.clone()).unwrap().effects.get(effect).unwrap().to_owned());
+            .map(|effect| {
+                self.chain_store
+                    .clone()
+                    .get_by_name(chain_id.clone())
+                    .unwrap()
+                    .effects
+                    .get(effect)
+                    .unwrap()
+                    .to_owned()
+            });
         effect_deactivations.for_each(|effect| {
             self.ongoing_permanent_effects.remove(&effect);
         });
@@ -358,6 +419,7 @@ mod tests {
             event: "unique_outcome".to_string(),
             timer: None,
             weight: Some(4),
+            effects: Default::default(),
         }]);
         assert_eq!(
             next,
@@ -365,6 +427,7 @@ mod tests {
                 event: "unique_outcome".to_string(),
                 timer: None,
                 weight: Some(4),
+                effects: Default::default(),
             }
         );
     }
@@ -385,16 +448,19 @@ mod tests {
                 event: "first_outcome".to_string(),
                 timer: None,
                 weight: Some(1),
+                effects: Default::default(),
             },
             Next {
                 event: "second_outcome".to_string(),
                 timer: None,
                 weight: Some(1),
+                effects: Default::default(),
             },
             Next {
                 event: "third_outcome".to_string(),
                 timer: None,
                 weight: Some(2),
+                effects: Default::default(),
             },
         ]);
 
@@ -404,6 +470,7 @@ mod tests {
                 event: "third_outcome".to_string(),
                 timer: None,
                 weight: Some(2),
+                effects: Default::default(),
             }
         );
     }
@@ -424,11 +491,13 @@ mod tests {
                 event: "first_outcome".to_string(),
                 timer: None,
                 weight: None,
+                effects: Default::default(),
             },
             Next {
                 event: "second_outcome".to_string(),
                 timer: None,
                 weight: None,
+                effects: Default::default(),
             },
         ]);
 
@@ -438,6 +507,7 @@ mod tests {
                 event: "first_outcome".to_string(),
                 timer: None,
                 weight: None,
+                effects: Default::default(),
             }
         );
     }
