@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::engine::{embed::get_chains, event::Event, chain::Chain};
+use crate::engine::{chain::Chain, embed::get_chains, event::Event};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct ChainStore {
@@ -35,9 +35,9 @@ impl ChainStore {
     pub fn get_by_name(self, chain_name: String) -> Option<Chain> {
         for chain in self.chains {
             if chain.title == chain_name {
-                return Some(chain)
+                return Some(chain);
             }
         }
-        return None
+        return None;
     }
 }

@@ -14,6 +14,7 @@ pub struct Event {
 pub struct Choice {
     pub(crate) text: String,
     pub(crate) next: Vec<ChoiceOutcome>,
+    pub(crate) effects: Option<HashMap<String, bool>>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -22,6 +23,7 @@ pub struct ChoiceOutcome {
     #[serde(rename = "in")]
     pub(crate) timer: Option<u32>,
     pub(crate) weight: Option<u32>,
+    pub(crate) effects: Option<HashMap<String, bool>>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
@@ -30,4 +32,5 @@ pub struct Next {
     #[serde(rename = "in")]
     pub(crate) timer: Option<u32>,
     pub(crate) weight: Option<u32>,
+    pub(crate) effects: Option<HashMap<String, bool>>,
 }
