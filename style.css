@@ -53,14 +53,17 @@ section {
     max-width: 800px;
 }
 
-.log-displayer__entry {
-    text-align: justify;
-    margin-bottom: 1em;
-    line-height: 1.6;
+.log-displayer__entry-group {
+    margin-bottom: 2em;
 }
 
-.log-displayer__entry:last-of-type {
+.log-displayer__entry-group:last-of-type {
     margin-bottom: 0em;
+}
+
+.log-displayer__entry {
+    text-align: justify;
+    line-height: 1.6;
 }
 
 .choice-displayer__entries {

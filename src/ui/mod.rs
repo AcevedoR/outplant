@@ -1,5 +1,7 @@
+use std::collections::HashMap;
 use stylist::css;
 use stylist::yew::Global;
+
 use yew::html::Scope;
 use yew::prelude::*;
 
@@ -28,9 +30,14 @@ impl Component for App {
             game: Engine::new(vec![], PseudoRandomGenerator {}),
             view_model: ViewModel::InGame {
                 0: InGameView {
-                    lines: vec!["Welcome. You are a scientist on orbit around an uninhabited planet, and your job is to implement a new species. The end goal is to study how this species adapts to its environment, and as well as finding new evolutionary traits that your company could patent and sell!".to_string(),
-                                "You have just implemented the first subjects that you previously created in your lab. You are eager to watch them grow, and, hopefully, survive and adapt!".to_string(),
-                                "You are not sure to what extent it is wise that you physically intervene with them, so, for now, you try to let them as much possible on their own.".to_string()],
+                    events_by_chain: HashMap::from(
+                        [(
+                            "Introduction".to_string(),
+                            vec!["Welcome. You are a scientist on orbit around an uninhabited planet, and your job is to implement a new species. The end goal is to study how this species adapts to its environment, and as well find new evolutionary traits that your company could patent and sell!".to_string(),
+                                    "You have just implemented the first subjects that you previously created in your lab. You are eager to watch them grow, and, hopefully, survive and adapt!".to_string(),
+                                    "You are not sure to what extent it is wise that you physically intervene with them, so, for now, you try to let them as much possible on their own.".to_string()]
+                        )]
+                    ),
                     choices: vec![],
                 }
             },
@@ -111,34 +118,48 @@ impl App {
     fn log_displayer(&self, in_game_view: &InGameView) -> Html {
         log!(format!("debug view_model : {:?}", in_game_view));
 
-
-        return if !!!in_game_view.lines.is_empty() {
+        if !!!in_game_view.events_by_chain.is_empty() {
             html! {
-                <section class="log-displayer">
-                    <ul class="log-displayer__entries">
-                        {for in_game_view.lines.clone().iter().map(|log_entry| self.log_displayer_entry(log_entry))}
+                <section>
+                    <ul>
+                        {for in_game_view.events_by_chain.clone().iter().map(|events_for_chain| self.log_displayer_entry_group(events_for_chain)) }
                     </ul>
                 </section>
             }
         } else {
             html! {}
-        };
+        }
+    }
+
+    fn log_displayer_entry_group(&self, events_for_chain: (&String, &Vec<String>)) -> Html {
+        html! {
+            <li class="log-displayer__entry-group">
+                <ul>
+                    {for events_for_chain.1.iter().map(|event| self.log_displayer_entry(event))}
+                </ul>
+            </li>
+        }
     }
 
     fn log_displayer_entry(&self, log_entry: &String) -> Html {
         html! {
-             <li class="log-displayer__entry">
+            <li class="log-displayer__entry">
                 { log_entry }
-             </li>
+            </li>
         }
     }
 
-    fn choice_displayer(&self, link: &Scope<Self>, in_game_view: &InGameView, game_start: bool) -> Html {
+    fn choice_displayer(
+        &self,
+        link: &Scope<Self>,
+        in_game_view: &InGameView,
+        game_start: bool,
+    ) -> Html {
         html!(
             <section class="choice-displayer">{
                 if !!!in_game_view.choices.is_empty() {
                     html!(<>
-                        <h3 class="choice-displayer__cta">{ "What's your response?" }</h3>
+                        <p class="choice-displayer__cta">{ "What's your response?" }</p>
                         <ul class="choice-displayer__entries">
                             {for in_game_view.choices.clone().iter().enumerate().map(|(index, choice)| self.choice_displayer_entry(choice, index, link))}
                         </ul>
@@ -159,7 +180,7 @@ impl App {
     }
 
     fn choice_displayer_entry(&self, choice: &String, index: usize, link: &Scope<Self>) -> Html {
-        return html! {
+        html! {
              <li>
                 <button
                     type="button"
@@ -167,26 +188,26 @@ impl App {
                     onclick={link.callback(move |_| AppEvent::MakeChoice(index))}
                 > { choice } </button>
              </li>
-        };
+        }
     }
 
     fn choice_displayer_next_cycle(&self, link: &Scope<Self>) -> Html {
-        return html! {
+        html! {
         <>
-            <h3>{"There is nothing to do for you right now."}</h3>
+            <p class="choice-displayer__cta">{"There is nothing to do for you right now."}</p>
             <button
                 type="button"
                 class="choice-displayer__button"
                 onclick={link.callback(|_| AppEvent::WaitOneCycle)}
             > {"Wait until next cycle"}</button>
         </>
-        };
+        }
     }
 
     fn end_of_game(&self, end_of_game_view: &EndOfGameView) -> Html {
-        return html! {
+        html! {
              <section class="end-of-game-section">
-                <p>{
+                <p class="choice-displayer__cta">{
                     if end_of_game_view.is_victory {
                        {"You have won, good job!"}
                     } else {
@@ -201,7 +222,7 @@ impl App {
                         .expect("Failed to reload")
                     }>{"Play again"}</button>
              </section>
-        };
+        }
     }
 }
 
