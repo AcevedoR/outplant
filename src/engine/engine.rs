@@ -18,7 +18,7 @@ pub enum ViewModel {
 
 #[derive(Clone, Debug)]
 pub struct InGameView {
-    pub(crate) lines: Vec<String>,
+    pub(crate) events_by_chain: HashMap<String, Vec<String>>,
     pub(crate) choices: Vec<String>,
 }
 
@@ -157,7 +157,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
     }
 
     fn unstack_events_to_resolve_this_turn(&mut self) -> ViewModel {
-        let mut lines = vec![];
+        let mut events_by_chain: HashMap<String, Vec<String>> = HashMap::new();
 
         while !!!self.events_to_resolve_this_turn.is_empty() {
             let mut event_to_play = self.events_to_resolve_this_turn.pop().unwrap();
@@ -169,7 +169,13 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             }
 
             if !event_to_play.event.text.is_empty() {
-                lines.push(event_to_play.event.text.clone());
+                if !events_by_chain.contains_key(&event_to_play.chain) {
+                    events_by_chain.insert(event_to_play.chain.clone(), vec![]);
+                }
+                events_by_chain
+                    .get_mut(&event_to_play.chain)
+                    .unwrap()
+                    .append(&mut vec![event_to_play.event.text.clone()]);
             }
 
             // Apply effects, if any
@@ -198,7 +204,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
                 return ViewModel::InGame {
                     0: InGameView {
-                        lines,
+                        events_by_chain,
                         choices: event_to_play
                             .event
                             .choices
@@ -262,7 +268,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
         return ViewModel::InGame {
             0: InGameView {
-                lines,
+                events_by_chain,
                 choices: vec![],
             },
         };
