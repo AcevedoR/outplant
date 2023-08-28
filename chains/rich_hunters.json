@@ -12,15 +12,21 @@
       "text": "You're contacted by some employees of very, very wealthy people. Their bosses are avid hunters and would be willing to pay loads of cash to be the first hunters of the species you're taking care of.",
       "choices": [
         {
-          "text": "I guess just a fewer specimens won't hurt in the long run.",
+          "text": "“I guess just a fewer specimens won't hurt in the long run.”",
+          "effects": {
+            "base_payment_received": true
+          },
           "next": [
             {
-              "event": "base_payment_received"
+              "event": "successful_hunt"
+            },
+            {
+              "event": "unsuccessful_hunt"
             }
           ]
         },
         {
-          "text": "What? Who do they think they are? I won't let them undo all my hard work!",
+          "text": "“What? Who do they think they are? I won't let them undo all my hard work!”",
           "next": [
             {
               "event": "no_news_from_hunters",
@@ -33,36 +39,8 @@
         }
       ]
     },
-    "base_payment_received":{
-      "text": "You receive 100 credits.",
-      "effects": {
-        "base_payment_received": true
-      },
-      "next": [
-        {
-          "event": "successful_hunt"
-        },
-        {
-          "event": "unsuccessful_hunt"
-        }
-      ]
-    },
-    "double_payment_received": {
-      "text": "You receive 200 credits.",
-      "effects": {
-        "double_payment_received": true
-      },
-      "next": [
-        {
-          "event": "successful_hunt"
-        },
-        {
-          "event": "unsuccessful_hunt"
-        }
-      ]
-    },
     "successful_hunt": {
-      "text": "A few days pass before the hunters get on the planet and successfully hunt down 10 specimens of your species.",
+      "text": "You receive the payment. A few days pass before the hunters get on the planet and successfully hunt down 10 specimens of your species.",
       "effects": {
         "hunted_species": true
       },
@@ -76,7 +54,7 @@
       ]
     },
     "unsuccessful_hunt": {
-      "text": "You receive 100 credits. A few days pass before the hunters get on the planet. It turns out they aren’t as good hunters as they think they are - they couldn’t capture even juvenile specimens and some of them are actually wounded.",
+      "text": "You receive the payment. A few days pass before the hunters get on the planet. It turns out they aren't as good hunters as they think they are - they couldn't capture even juvenile specimens and some of them are actually wounded.",
       "effects": {
         "base_payment_received": true
       },
@@ -121,15 +99,21 @@
       "text": "They immediately get back to you with an offer twice as generous.",
       "choices": [
         {
-          "text": "On second thought...",
+          "text": "“On second thought...”",
+          "effects": {
+            "double_payment_received": true
+          },
           "next": [
             {
-              "event": "double_payment_received"
+              "event": "successful_hunt"
+            },
+            {
+              "event": "unsuccessful_hunt"
             }
           ]
         },
         {
-          "text": "Typical rich people reaction. Throwing money at the problem won’t help them here though.",
+          "text": "“Typical rich people reaction. Throwing money at the problem won't help them here though.”",
           "next": [
             {
               "event": "no_news_from_hunters"
