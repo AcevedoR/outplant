@@ -1,0 +1,176 @@
+{
+    "$schema": "./schema.json",
+    "title": "plans",
+    "autoSelect": true,
+    "cooldown": 5,
+    "events": {
+        "start": {
+            "text": "It's time to define a focus for the next few months.",
+            "effects": {
+                "pop_instant_up": false,
+                "pop_continuous_up": false,
+                "pop_instant_down": false,
+                "eco_instant_up": false,
+                "eco_continuous_up": false,
+                "eco_instant_down": false,
+                "money_up": false,
+                "money_up_a_lot": false
+            },
+            "choices": [
+                {
+                    "text": "Conduct an in-depth study of the planet geography and ecosystems, then guide the species to places that will lead to maximised population growth.",
+                    "effects": {
+                        "pop_instant_up": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                },
+                {
+                    "text": "Heavily invest into cloning new specimens, to boost population growth to unprecedented levels.",
+                    "effects": {
+                        "pop_continuous_up": true,
+                        "money_instant_down": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                },
+                {
+                    "text": "Hunt predators of your species - its members must be protected, even if it creates ecological imbalance.",
+                    "effects": {
+                        "eco_instant_down": true,
+                        "pop_continuous_up": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                },
+                {
+                    "text": "Conduct a meta-study about the direct and indirect impacts on the biosphere the species implementation has had.",
+                    "effects": {
+                        "eco_instant_up": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                },
+                {
+                    "text": "Launch a new and ambitious plan to reinsert other species that were driven to extinction following the arrival of your species.",
+                    "effects": {
+                        "eco_continuous_up": true,
+                        "money_instant_down": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                },
+                {
+                    "text": "Organize a large scale population control program, using hunter drones - the species has been developing far beyond a sustainable pace.",
+                    "effects": {
+                        "pop_instant_down": true,
+                        "eco_continuous_up": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                },
+                {
+                    "text": "Restrict spending to a minimum - finances aren't looking that great.",
+                    "effects": {
+                        "money_up": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                },
+                {
+                    "text": "Cut down most expenses, even important ones - bankruptcy is looming.",
+                    "effects": {
+                        "money_up_a_lot": true,
+                        "eco_instant_down": true,
+                        "pop_instant_down": true
+                    },
+                    "next": [
+                        {
+                            "event": "end"
+                        }
+                    ]
+                }
+            ]
+        },
+        "end": {
+            "text": ""
+        }
+    },
+    "effects": {
+        "pop_instant_up": {
+            "type": "instant",
+            "target": "population",
+            "operation": "add",
+            "value": 2
+        },
+        "pop_continuous_up": {
+            "type": "permanent",
+            "target": "population",
+            "operation": "add",
+            "value": 1
+        },
+        "pop_instant_down": {
+            "type": "instant",
+            "target": "population",
+            "operation": "subtract",
+            "value": 2
+        },
+        "eco_instant_up": {
+            "type": "instant",
+            "target": "ecology",
+            "operation": "add",
+            "value": 2
+        },
+        "eco_continuous_up": {
+            "type": "permanent",
+            "target": "ecology",
+            "operation": "add",
+            "value": 1
+        },
+        "eco_instant_down": {
+            "type": "instant",
+            "target": "ecology",
+            "operation": "subtract",
+            "value": 2
+        },
+        "money_instant_down": {
+            "type": "instant",
+            "target": "money",
+            "operation": "subtract",
+            "value": 400
+        },
+        "money_up": {
+            "type": "permanent",
+            "target": "money",
+            "operation": "add",
+            "value": 50
+        },
+        "money_up_a_lot": {
+            "type": "permanent",
+            "target": "money",
+            "operation": "add",
+            "value": 150
+        }
+    }
+}

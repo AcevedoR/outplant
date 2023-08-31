@@ -43,6 +43,10 @@
             "value"
           ]
         },
+        "autoSelect": {
+          "type": "boolean",
+          "description": "when set to true, this chain will be selected as soon as its trigger is satisfied"
+        },
         "events": {
           "type": "object",
           "additionalProperties": {

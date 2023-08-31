@@ -112,9 +112,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
         let event_with_choice = self.events_to_resolve_this_turn.pop().unwrap().event;
         let binding = event_with_choice.choices.unwrap();
-        let next = binding.get(index).unwrap();
+        let choice = binding.get(index).unwrap();
 
-        let outcome = self.select_choice_outcome(&next.next);
+        let outcome = self.select_choice_outcome(&choice.next);
 
         let chain_title = self
             .chain_store
@@ -123,7 +123,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             .unwrap()
             .title;
 
-        match next.clone().effects {
+        match choice.clone().effects {
             Some(effects) => self.apply_effects(&effects, &chain_title),
             None => {}
         }
@@ -298,7 +298,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     .find(|e| e.chain == chain.title)
                     .is_some()
             })
-            .filter(|_chain| self.random_generator.generate(0, 100) < 20)
+            .filter(|chain| self.random_generator.generate(0, 100) < 20 || chain.clone().auto_select.is_some_and(|auto_select| auto_select) )
             .map(|chain| OngoingEventChain {
                 timer: 0,
                 chain: chain.title.clone(),
