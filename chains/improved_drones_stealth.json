@@ -73,7 +73,7 @@
       "type": "instant",
       "target": "money",
       "operation": "subtract",
-      "value": 90
+      "value": 95
     },
     "major_ecology_impact_reduction": {
       "type": "permanent",
