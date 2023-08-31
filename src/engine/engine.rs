@@ -18,7 +18,7 @@ pub enum ViewModel {
 
 #[derive(Clone, Debug)]
 pub struct InGameView {
-    pub(crate) events_by_chain: HashMap<String, Vec<String>>,
+    pub(crate) events_by_chain: Vec<(String, Vec<String>)>,
     pub(crate) choices: Vec<String>,
 }
 
@@ -157,7 +157,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
     }
 
     fn unstack_events_to_resolve_this_turn(&mut self) -> ViewModel {
-        let mut events_by_chain: HashMap<String, Vec<String>> = HashMap::new();
+        let mut events_by_chain: Vec<(String, Vec<String>)> = vec![];
 
         while !!!self.events_to_resolve_this_turn.is_empty() {
             let mut event_to_play = self.events_to_resolve_this_turn.pop().unwrap();
@@ -169,12 +169,18 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             }
 
             if !event_to_play.event.text.is_empty() {
-                if !events_by_chain.contains_key(&event_to_play.chain) {
-                    events_by_chain.insert(event_to_play.chain.clone(), vec![]);
+                if !events_by_chain
+                    .iter()
+                    .any(|(chain_title, _)| chain_title == &event_to_play.chain)
+                {
+                    events_by_chain.push((event_to_play.chain.clone(), vec![]));
                 }
                 events_by_chain
-                    .get_mut(&event_to_play.chain)
+                    .iter_mut()
+                    .filter(|(chain_title, _)| &event_to_play.chain == chain_title)
+                    .nth(0)
                     .unwrap()
+                    .1
                     .append(&mut vec![event_to_play.event.text.clone()]);
             }
 
@@ -298,7 +304,13 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     .find(|e| e.chain == chain.title)
                     .is_some()
             })
-            .filter(|chain| self.random_generator.generate(0, 100) < 20 || chain.clone().auto_select.is_some_and(|auto_select| auto_select) )
+            .filter(|chain| {
+                self.random_generator.generate(0, 100) < 20
+                    || chain
+                        .clone()
+                        .auto_select
+                        .is_some_and(|auto_select| auto_select)
+            })
             .map(|chain| OngoingEventChain {
                 timer: 0,
                 chain: chain.title.clone(),

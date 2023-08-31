@@ -1,7 +1,5 @@
-use std::collections::HashMap;
 use stylist::css;
 use stylist::yew::Global;
-
 use yew::html::Scope;
 use yew::prelude::*;
 
@@ -30,14 +28,14 @@ impl Component for App {
             game: Engine::new(vec![], PseudoRandomGenerator {}),
             view_model: ViewModel::InGame {
                 0: InGameView {
-                    events_by_chain: HashMap::from(
-                        [(
+                    events_by_chain: vec![
+                        (
                             "Introduction".to_string(),
                             vec!["Welcome. You are a scientist on orbit around an uninhabited planet, and your job is to implement a new species. The end goal is to study how this species adapts to its environment, and as well find new evolutionary traits that your company could patent and sell!".to_string(),
-                                    "You have just implemented the first subjects that you previously created in your lab. You are eager to watch them grow, and, hopefully, survive and adapt!".to_string(),
-                                    "You are not sure to what extent it is wise that you physically intervene with them, so, for now, you try to let them as much possible on their own.".to_string()]
-                        )]
-                    ),
+                                 "You have just implemented the first subjects that you previously created in your lab. You are eager to watch them grow, and, hopefully, survive and adapt!".to_string(),
+                                 "You are not sure to what extent it is wise that you physically intervene with them, so, for now, you try to let them as much possible on their own.".to_string()]
+                        )
+                    ],
                     choices: vec![],
                 }
             },
@@ -133,7 +131,7 @@ impl App {
         }
     }
 
-    fn log_displayer_entry_group(&self, events_for_chain: (&String, &Vec<String>)) -> Html {
+    fn log_displayer_entry_group(&self, events_for_chain: &(String, Vec<String>)) -> Html {
         html! {
             <li class="log-displayer__entry-group">
                 <ul>
