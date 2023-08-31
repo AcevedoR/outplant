@@ -279,7 +279,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
     }
 
     fn has_won(&self) -> bool {
-        self.state.population == 8
+        self.state.population >= 8
     }
 
     fn select_chains(&self) -> Vec<OngoingEventChain> {
