@@ -1,3 +1,4 @@
+use std::ops::Not;
 use stylist::css;
 use stylist::yew::Global;
 use yew::html::Scope;
@@ -126,7 +127,7 @@ impl App {
         if !!!in_game_view.events_by_chain.is_empty() {
             html! {
                 <section>
-                    <ul>
+                    <ul class={classes!(in_game_view.choices.is_empty().not().then(|| in_game_view.events_by_chain.len().gt(&1).then(|| Some("highlight-chain-with-choice"))))}>
                         {for in_game_view.events_by_chain.clone().iter().map(|events_for_chain| self.log_displayer_entry_group(events_for_chain)) }
                     </ul>
                 </section>
