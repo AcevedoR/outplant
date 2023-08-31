@@ -77,11 +77,11 @@ impl Component for App {
             )} />
             <header classes="magnificent-blue-theme">
                 <ul class="variable-dashboard">
-                    <li class="variable-dashboard__item">{ "Pop: " }{ self.game.get_state().population}</li>
-                    <li class="variable-dashboard__item">{ "Eco: " }{ self.game.get_state().ecology}</li>
-                    <li class="variable-dashboard__item">{ "€€€: " }{ self.game.get_state().money}</li>
+                    <li class="variable-dashboard__item">{ "Pop: " }{ self.game.get_state().population() }</li>
+                    <li class="variable-dashboard__item">{ "Eco: " }{ self.game.get_state().ecology() }</li>
+                    <li class="variable-dashboard__item">{ "€€€: " }{ self.game.get_state().money() }</li>
                     <li class="variable-dashboard__item">{
-                        match self.game.get_state().turn_counter {
+                        match self.game.get_state().turn_counter() {
                             0 => "New game".to_owned(),
                             x => "Turn ".to_owned() + &x.to_string(),
                         }
@@ -94,7 +94,7 @@ impl Component for App {
                             html!{
                                 <>
                                     { self.log_displayer(in_game_view) }
-                                    { self.choice_displayer(ctx.link(), in_game_view, self.game.get_state().turn_counter == 0) }
+                                    { self.choice_displayer(ctx.link(), in_game_view, self.game.get_state().turn_counter() == &0) }
                                 </>}
                         },
                         ViewModel::EndOfGame(end_of_game_view) => {
