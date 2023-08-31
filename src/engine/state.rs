@@ -1,45 +1,65 @@
+use std::cmp::{min, max};
+
 use serde::{Deserialize, Serialize};
 
 use crate::log;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct State {
-    pub population: u32,
-    pub ecology: u32,
-    pub money: u32,
-    pub turn_counter: u32,
+    population: u32,
+    ecology: u32,
+    money: u32,
+    turn_counter: u32,
 }
 
 impl State {
     pub fn new(population: u32, ecology: u32, money: u32) -> State {
-        let mut instance = State {
-            population: 0,
-            ecology: 0,
-            money: 0,
+        State {
+            population,
+            ecology,
+            money,
             turn_counter: 0,
-        };
-        instance.set_population(population);
-        instance.set_ecology(ecology);
-        instance.set_money(money);
-        return instance;
-    }
-
-    fn set_population(&mut self, new: u32) {
-        if new > 12 {
-            panic!();
         }
-        self.population = new;
     }
 
-    fn set_ecology(&mut self, new: u32) {
-        if new > 12 {
-            panic!();
-        }
-        self.ecology = new;
+    pub fn population(&self) -> &u32 {
+        return &self.population
     }
 
-    fn set_money(&mut self, new: u32) {
-        self.money = new;
+    pub fn add_population(&mut self, value: u32) {
+        self.population = min(self.population + value, 8);
+    }
+
+    pub fn subtract_population(&mut self, value: u32) {
+        self.population = max(self.population - value, 0);
+    }
+
+    pub fn ecology(&self) -> &u32 {
+        return &self.ecology
+    }
+
+    pub fn add_ecology(&mut self, value: u32) {
+        self.ecology = min(self.ecology + value, 12);
+    }
+
+    pub fn subtract_ecology(&mut self, value: u32) {
+        self.ecology = max(self.ecology - value, 0);
+    }
+
+    pub fn money(&self) -> &u32 {
+        return &self.money
+    }
+
+    pub fn add_money(&mut self, value: u32) {
+        self.money = self.money + value;
+    }
+
+    pub fn subtract_money(&mut self, value: u32) {
+        self.money = max(self.money - value, 0);
+    }
+
+    pub fn turn_counter(&self) -> &u32 {
+        return &self.turn_counter
     }
 
     pub fn evolve(&mut self) {

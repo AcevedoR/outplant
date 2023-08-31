@@ -12,16 +12,16 @@ pub struct Trigger {
 impl Trigger {
     pub fn is_satisfied(&self, state: &State) -> bool {
         let actual_value = match self.target {
-            TriggerTarget::Population => state.population,
-            TriggerTarget::Ecology => state.ecology,
-            TriggerTarget::Money => state.money,
+            TriggerTarget::Population => state.population(),
+            TriggerTarget::Ecology => state.ecology(),
+            TriggerTarget::Money => state.money(),
         };
         return match self.comparator {
-            TriggerComparator::Lt => actual_value < self.value,
-            TriggerComparator::Lte => actual_value <= self.value,
-            TriggerComparator::Eq => actual_value == self.value,
-            TriggerComparator::Gte => actual_value >= self.value,
-            TriggerComparator::Gt => actual_value > self.value,
+            TriggerComparator::Lt => actual_value < &self.value,
+            TriggerComparator::Lte => actual_value <= &self.value,
+            TriggerComparator::Eq => actual_value == &self.value,
+            TriggerComparator::Gte => actual_value >= &self.value,
+            TriggerComparator::Gt => actual_value > &self.value,
         };
     }
 }

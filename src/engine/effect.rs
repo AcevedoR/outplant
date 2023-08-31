@@ -37,23 +37,34 @@ pub(crate) enum EffectType {
 
 impl Effect {
     pub fn apply(self: &Effect, state: &mut State) {
-        let mut value: i32 = self.value as i32;
         log!(format!("applying effect {:?}", self));
+
         match self.operation {
-            ChangeOperation::Add => {}
+            ChangeOperation::Add => {
+                match self.target {
+                    ChangeTarget::Population => {
+                        state.add_population(self.value);
+                    }
+                    ChangeTarget::Ecology => {
+                        state.add_ecology(self.value);
+                    }
+                    ChangeTarget::Money => {
+                        state.add_money(self.value);
+                    }
+                }
+            }
             ChangeOperation::Subtract => {
-                value = 0 - value;
-            }
-        }
-        match self.target {
-            ChangeTarget::Population => {
-                state.population = state.population.saturating_add_signed(value);
-            }
-            ChangeTarget::Ecology => {
-                state.ecology = state.ecology.saturating_add_signed(value);
-            }
-            ChangeTarget::Money => {
-                state.money = state.money.saturating_add_signed(value);
+                match self.target {
+                    ChangeTarget::Population => {
+                        state.subtract_population(self.value);
+                    }
+                    ChangeTarget::Ecology => {
+                        state.subtract_ecology(self.value);
+                    }
+                    ChangeTarget::Money => {
+                        state.subtract_money(self.value);
+                    }
+                }
             }
         }
     }

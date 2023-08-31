@@ -275,11 +275,11 @@ impl<Rng: RandomGenerator> Engine<Rng> {
     }
 
     fn has_lost(&self) -> bool {
-        return self.state.money <= 0 || self.state.population == 0;
+        return self.state.money() <= &0 || self.state.population() == &0;
     }
 
     fn has_won(&self) -> bool {
-        self.state.population >= 8
+        self.state.population() >= &8
     }
 
     fn select_chains(&self) -> Vec<OngoingEventChain> {
