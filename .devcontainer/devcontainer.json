@@ -1,0 +1,21 @@
+{
+	"name": "Debian",
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "lts",
+			"nvmVersion": "latest"
+		},
+		"ghcr.io/devcontainers/features/rust:1": {
+			"version": "latest",
+			"profile": "minimal"
+		}
+	},
+	"onCreateCommand": {
+		"installWasm": "rustup target add wasm32-unknown-unknown",
+		"installYew": "cargo install --locked trunk"
+	},
+	"forwardPorts": [
+		8080
+	]
+}
