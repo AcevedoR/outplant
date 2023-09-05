@@ -31,9 +31,14 @@ impl Component for App {
                     events_by_chain: vec![
                         (
                             "Introduction".to_string(),
-                            vec!["Welcome. You are a scientist on orbit around an uninhabited planet, and your job is to implement a new species. The end goal is to study how this species adapts to its environment, and as well find new evolutionary traits that your company could patent and sell!".to_string(),
-                                 "You have just implemented the first subjects that you previously created in your lab. You are eager to watch them grow, and, hopefully, survive and adapt!".to_string(),
-                                 "You are not sure to what extent it is wise that you physically intervene with them, so, for now, you try to let them as much possible on their own.".to_string()]
+                            vec!["Hello, I'm Aude, your personal AI that you created a while ago to help you and to remind you of your tasks.
+We are currently orbiting around an uninhabited planet, and your job is to introduce a new species on it. The end goal is to study how this species adapts to its environment, as well as finding new evolutionary traits that your company could patent and sell!
+You have just implemented the first subjects that you previously created in your lab. You told me that you were eager to watch them grow, and, hopefully, survive and adapt!
+You did not seem too sure to what extent it is wise for you to physically intervene with them, so, for now, you would try to let them be as much possible on their own.".to_string(),
+                                 "I will report to you events that you need to be aware of, and, for some of them, to react to.
+Your current goal is for you species to develop enough to reach 8 'Pop' (Population), and it would be a catastrophic failure if it went down to 0.".to_string(),
+                                 "Additionally, the 'Eco' (Ecology) represents the stability of the current biome your species is in, the maximum value is 12 and means the biome is stable and is in a perfect state for you species to grow in! Obviously, the more it goes down, the more you will have issues.".to_string(),
+                                 "You better start emerging soon from you sleep and get to work, go grab a coffee!".to_string()]
                         )
                     ],
                     choices: vec![],
