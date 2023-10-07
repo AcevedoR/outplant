@@ -4,10 +4,10 @@
   "cooldown": 10,
   "events": {
     "start": {
-      "text": "Your ship's sensors detect an incoming small meteorite",
+      "text": "Your ship's sensors detect an incoming small meteorite #mm4mn8",
       "choices": [
         {
-          "text": "“Probably a false positive again... Maybe one day I'll fix that damn sensor...” [ignore it]",
+          "text": "“Probably a false positive again... Maybe one day I'll fix that damn sensor...” [ignore it] #09ef1z",
           "next": [
             {
               "event": "no_meteorite",
@@ -25,7 +25,7 @@
           ]
         },
         {
-          "text": "“Alright, I will look at it, but only this one last time!!”",
+          "text": "“Alright, I will look at it, but only this one last time!!” #i3wplb",
           "next": [
             {
               "event": "no_meteorite"
@@ -41,7 +41,7 @@
       ]
     },
     "meteorite_not_dangerous_spotted": {
-      "text": "The meteorite is little and composed of rock and ice, it will disintegrate in the atmosphere, nothing to worry about. - You're not sure if the planetary collision-detection system should filter out these harmless objets. You don't remember how you configured it back in the time, and of course this is not documented.",
+      "text": "The meteorite is little and composed of rock and ice, it will disintegrate in the atmosphere, nothing to worry about. - You're not sure if the planetary collision-detection system should filter out these harmless objets. You don't remember how you configured it back in the time, and of course this is not documented. #ewdh0r",
       "next": [
         {
           "event": "meteorite_not_dangerous"
@@ -49,10 +49,10 @@
       ]
     },
     "toxic_meteorite_spotted": {
-      "text": "The meteorite is in reality a chemicals container ! - Some company probably rocketed it to the sky instead of paying to destroy it safely",
+      "text": "The meteorite is in reality a chemicals container ! - Some company probably rocketed it to the sky instead of paying to destroy it safely #g4ri5x",
       "choices": [
         {
-          "text": "Try to guide the population to a safe area",
+          "text": "Try to guide the population to a safe area #wn0js2",
           "next": [
             {
               "event": "population_saved"
@@ -63,7 +63,7 @@
           ]
         },
         {
-          "text": "“They'll be fine“ [do nothing]",
+          "text": "“They'll be fine“ [do nothing] #iu508m",
           "next": [
             {
               "event": "toxic_rain"
@@ -73,7 +73,7 @@
       ]
     },
     "toxic_meteorite": {
-      "text": "The meteorite seems to be a toxic container, we have an issue!",
+      "text": "The meteorite seems to be a toxic container, we have an issue! #hf45zz",
       "next": [
         {
           "event": "toxic_rain"
@@ -81,23 +81,23 @@
       ]
     },
     "no_meteorite": {
-      "text": "“No meteorite in sight eh? I'm losing my time with these sensors...“"
+      "text": "“No meteorite in sight eh? I'm losing my time with these sensors...“ #kec5jv"
     },
     "meteorite_not_dangerous": {
-      "text": "The meteorite disintegrates while entering the atmosphere."
+      "text": "The meteorite disintegrates while entering the atmosphere. #wy6op2"
     },
     "toxic_rain": {
-      "text": "When reaching the atmosphere, the container disintegrates, causing a toxic rain.",
+      "text": "When reaching the atmosphere, the container disintegrates, causing a toxic rain. #a2sqrm",
       "effects": {
         "toxic_rain_hits_vegetation": true,
         "toxic_rain_kills_specimens": true
       }
     },
     "population_saved": {
-      "text": "Your population followed your path and dodged the toxic rain"
+      "text": "Your population followed your path and dodged the toxic rain #bcy1ze"
     },
     "population_saved_failed": {
-      "text": "Unfortunately, your population did not follow your path to dodge the toxic rain",
+      "text": "Unfortunately, your population did not follow your path to dodge the toxic rain #an4d3l",
       "effects": {
         "toxic_rain_hits_vegetation": true,
         "toxic_rain_kills_specimens": true

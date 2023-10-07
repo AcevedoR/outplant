@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::engine::{chain::Chain, embed::get_chains, event::Event};
+use crate::engine::{chain::Chain, embed_chains::get_chains, event::Event};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct ChainStore {

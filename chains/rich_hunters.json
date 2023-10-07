@@ -9,10 +9,10 @@
   },
   "events": {
     "start": {
-      "text": "You're contacted by some employees of very, very wealthy people. Their bosses are avid hunters and would be willing to pay loads of cash to be the first hunters of the species you're taking care of.",
+      "text": "You're contacted by some employees of very, very wealthy people. Their bosses are avid hunters and would be willing to pay loads of cash to be the first hunters of the species you're taking care of. #7kv2vq",
       "choices": [
         {
-          "text": "“I guess just a fewer specimens won't hurt in the long run.”",
+          "text": "“I guess just a fewer specimens won't hurt in the long run.” #fbxjd0",
           "effects": {
             "base_payment_received": true
           },
@@ -26,7 +26,7 @@
           ]
         },
         {
-          "text": "“What? Who do they think they are? I won't let them undo all my hard work!”",
+          "text": "“What? Who do they think they are? I won't let them undo all my hard work!” #nmzvao",
           "next": [
             {
               "event": "no_news_from_hunters",
@@ -40,7 +40,7 @@
       ]
     },
     "successful_hunt": {
-      "text": "You receive the payment. A few days pass before the hunters get on the planet and successfully hunt down 10 specimens of your species.",
+      "text": "You receive the payment. A few days pass before the hunters get on the planet and successfully hunt down 10 specimens of your species. #785iko",
       "effects": {
         "hunted_species": true
       },
@@ -54,13 +54,13 @@
       ]
     },
     "unsuccessful_hunt": {
-      "text": "You receive the payment. A few days pass before the hunters get on the planet. It turns out they aren't as good hunters as they think they are - they couldn't capture even juvenile specimens and some of them are actually wounded.",
+      "text": "You receive the payment. A few days pass before the hunters get on the planet. It turns out they aren't as good hunters as they think they are - they couldn't capture even juvenile specimens and some of them are actually wounded. #3cic55",
       "effects": {
         "base_payment_received": true
       },
       "choices": [
         {
-          "text": "Pretend nothing has happened while they shamefully enter the medical bay",
+          "text": "Pretend nothing has happened while they shamefully enter the medical bay #nthjmx",
           "next": [
             {
               "event": "no_news_from_hunters"
@@ -68,7 +68,7 @@
           ]
         },
         {
-          "text": "Praise them for being so skilled at “tactical retreat”",
+          "text": "Praise them for being so skilled at “tactical retreat” #4nz2up",
           "next": [
             {
               "event": "no_news_from_hunters"
@@ -76,7 +76,7 @@
           ]
         },
         {
-          "text": "Try to blackmail them - either they become “generous donators” or everybody will know about just how poor hunters they are",
+          "text": "Try to blackmail them - either they become “generous donators” or everybody will know about just how poor hunters they are #sykd2f",
           "next": [
             {
               "event": "blackmail_success",
@@ -90,16 +90,16 @@
       ]
     },
     "no_news_from_hunters": {
-      "text": "You never hear of the hunters again."
+      "text": "You never hear of the hunters again. #gbpskd"
     },
     "hunters_want_to_hunt_again": {
-      "text": "The rich hunters tell you how they'd like to hunt your species again."
+      "text": "The rich hunters tell you how they'd like to hunt your species again. #vifsix"
     },
     "counter_offer_after_refusal": {
-      "text": "They immediately get back to you with an offer twice as generous.",
+      "text": "They immediately get back to you with an offer twice as generous. #7u9jw6",
       "choices": [
         {
-          "text": "“On second thought...”",
+          "text": "“On second thought...” #m8zohf",
           "effects": {
             "double_payment_received": true
           },
@@ -113,7 +113,7 @@
           ]
         },
         {
-          "text": "“Typical rich people reaction. Throwing money at the problem won't help them here though.”",
+          "text": "“Typical rich people reaction. Throwing money at the problem won't help them here though.” #dmjohd",
           "next": [
             {
               "event": "no_news_from_hunters"
@@ -123,13 +123,13 @@
       ]
     },
     "blackmail_success": {
-      "text": "They're so worried about appearing manly that they accept. You get another 100 credits.",
+      "text": "They're so worried about appearing manly that they accept. You get another 100 credits. #yq9ox0",
       "effects": {
         "blackmail_payment_received": true
       }
     },
     "blackmail_failure": {
-      "text": "As soon as you finish insinuating your intentions, a lawyer appears and offers you a detailed explanation of how that would be a very, very bad idea for you."
+      "text": "As soon as you finish insinuating your intentions, a lawyer appears and offers you a detailed explanation of how that would be a very, very bad idea for you. #4tfjer"
     }
   },
   "effects": {

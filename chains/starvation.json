@@ -9,13 +9,13 @@
   },
   "events": {
     "start": {
-      "text": "Your species is starving.",
+      "text": "Your species is starving. #yumt26",
       "effects": {
         "reduce_growth": true
       },
       "choices": [
         {
-          "text": "Do nothing. Let the strongest survive.",
+          "text": "Do nothing. Let the strongest survive. #6f07dh",
           "next": [
             {
               "event": "choice_strongest",
@@ -24,7 +24,7 @@
           ]
         },
         {
-          "text": "Show them how to hunt bigger prey, and so, climb the food chain.",
+          "text": "Show them how to hunt bigger prey, and so, climb the food chain. #p9n0wu",
           "next": [
             {
               "event": "choice_hunt_success",
@@ -40,7 +40,7 @@
       ]
     },
     "choice_strongest": {
-      "text": "You watch as your species is starving, but slowly adapting to the situation afterwards.",
+      "text": "You watch as your species is starving, but slowly adapting to the situation afterwards. #0sxx18",
       "next": [
         {
           "event": "choice_strongest_end"
@@ -48,19 +48,19 @@
       ]
     },
     "choice_strongest_end": {
-      "text": "The famine has ended as a lot of members died.",
+      "text": "The famine has ended as a lot of members died. #8ripkx",
       "effects": {
         "reduce_growth": false
       }
     },
     "choice_hunt_success": {
-      "text": "They are better hunters now.",
+      "text": "They are better hunters now. #r3tl7p",
       "effects": {
         "better_hunting": true
       }
     },
     "choice_hunt_failure": {
-      "text": "Your species is dying while trying to hunt.",
+      "text": "Your species is dying while trying to hunt. #k67y76",
       "effects": {
         "decrease_in_food_chain": true
       }

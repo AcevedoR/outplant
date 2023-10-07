@@ -4,7 +4,7 @@
   "cooldown": 999,
   "events": {
     "start": {
-      "text": "Temperature sensors on the planet show the climate has been unusually cold lately. Not enough to threaten the livelihood of your species though (or any of the endemic species for that matter), but the next few Winters will probably be harsher than usual on the whole ecosystem.",
+      "text": "Temperature sensors on the planet show the climate has been unusually cold lately. Not enough to threaten the livelihood of your species though (or any of the endemic species for that matter), but the next few Winters will probably be harsher than usual on the whole ecosystem. #ucaryb",
       "next": [
         {
           "event": "intern_spotted_glow",
@@ -20,10 +20,10 @@
       }
     },
     "intern_spotted_glow": {
-      "text": "One of the interns in your team comes to you. They want to explain you something they saw and they're not sure whether it's normal - they seem pretty nervous. They go on to tell you how they were watching a group of specimens in playing in the snow, using a pair of advanced binoculars they took from your lab, and how they noticed the specimens emitted a light glow around them.",
+      "text": "One of the interns in your team comes to you. They want to explain you something they saw and they're not sure whether it's normal - they seem pretty nervous. They go on to tell you how they were watching a group of specimens in playing in the snow, using a pair of advanced binoculars they took from your lab, and how they noticed the specimens emitted a light glow around them. #kvyxp6",
       "choices": [
         {
-          "text": "“That's preposterous. Next time, make sure to disable the thermic overlay of the binoculars before using them and then waste everyone's time.” The intern doesn't try to argue with you and leaves.",
+          "text": "“That's preposterous. Next time, make sure to disable the thermic overlay of the binoculars before using them and then waste everyone's time.” The intern doesn't try to argue with you and leaves. #72cqkp",
           "next": [
             {
               "event": "drone_spotted_glow",
@@ -32,7 +32,7 @@
           ]
         },
         {
-          "text": "“That's odd. Our species definitely isn't supposed to emit light. And I've never seen a specimen glow, even faintly.Thanks for bringing that up to my attention, I'll take care of it.”",
+          "text": "“That's odd. Our species definitely isn't supposed to emit light. And I've never seen a specimen glow, even faintly.Thanks for bringing that up to my attention, I'll take care of it.” #0rru3p",
           "next": [
             {
               "event": "try_to_study_glow"
@@ -42,7 +42,7 @@
       ]
     },
     "drone_spotted_glow": {
-      "text": "Right after the end of a particularly and needlessly long meeting with your boss, you absent-mindedly decide to take a look at the video feed from one of your surveillance drone which is currently following a group of specimens from afar. At first glance everything looks normal, but then you notice something: some sort of halo surrounds the specimens. It's like light's coming out of them, for whatever reason. You'd better find out why - you know for sure that wasn't part of your original design specs...",
+      "text": "Right after the end of a particularly and needlessly long meeting with your boss, you absent-mindedly decide to take a look at the video feed from one of your surveillance drone which is currently following a group of specimens from afar. At first glance everything looks normal, but then you notice something: some sort of halo surrounds the specimens. It's like light's coming out of them, for whatever reason. You'd better find out why - you know for sure that wasn't part of your original design specs... #ea6t4e",
       "next": [
         {
           "event": "try_to_study_glow"
@@ -50,10 +50,10 @@
       ]
     },
     "try_to_study_glow": {
-      "text": "“What could be the cause of this?”",
+      "text": "“What could be the cause of this?” #rfc0sn",
       "choices": [
         {
-          "text": "Search if something has changed in the food the specimens consume",
+          "text": "Search if something has changed in the food the specimens consume #3jtisi",
           "next": [
             {
               "event": "try_to_study_food",
@@ -62,7 +62,7 @@
           ]
         },
         {
-          "text": "Search in the genetic code of the species if something in their DNA is causing the glowing",
+          "text": "Search in the genetic code of the species if something in their DNA is causing the glowing #4z5ddm",
           "next": [
             {
               "event": "try_to_study_dna",
@@ -71,7 +71,7 @@
           ]
         },
         {
-          "text": "“Now that I think of it, that looks like regular evolution to me. With colder temperatures come fewer sources of food. Creating your own light means you can search for food even in the dark, which gives a huge edge over specimens without that mutation.”",
+          "text": "“Now that I think of it, that looks like regular evolution to me. With colder temperatures come fewer sources of food. Creating your own light means you can search for food even in the dark, which gives a huge edge over specimens without that mutation.” #x9lbom",
           "next": [
             {
               "event": "laisser-faire",
@@ -82,10 +82,10 @@
       ]
     },
     "try_to_study_food": {
-      "text": "Your research to find out whether anything had changed in the food sources of your species has been frustratingly inconclusive. Nothing in your results can even begin to explain why the specimens of your species now randomly emit light.",
+      "text": "Your research to find out whether anything had changed in the food sources of your species has been frustratingly inconclusive. Nothing in your results can even begin to explain why the specimens of your species now randomly emit light. #e4a94q",
       "choices": [
         {
-          "text": "Search in the genetic code of the species if something in their DNA is causing the glowing",
+          "text": "Search in the genetic code of the species if something in their DNA is causing the glowing #imaxpb",
           "next": [
             {
               "event": "try_to_study_dna",
@@ -94,7 +94,7 @@
           ]
         },
         {
-          "text": "“Now that I think of it, that looks like regular evolution to me. With colder temperatures come fewer sources of food. Creating your own light means you can search for food even in the dark, which gives a huge edge over specimens without that mutation.”",
+          "text": "“Now that I think of it, that looks like regular evolution to me. With colder temperatures come fewer sources of food. Creating your own light means you can search for food even in the dark, which gives a huge edge over specimens without that mutation.” #ynl247",
           "next": [
             {
               "event": "laisser-faire",
@@ -105,16 +105,16 @@
       ]
     },
     "laisser-faire": {
-      "text": "The climate has finally stopped to be colder than usual. The ecosystem will probably benefit from it. Reports about glowing specimens have stopped. Maybe it wasn't that much of an advantage from an evolutionary point of view in the end.",
+      "text": "The climate has finally stopped to be colder than usual. The ecosystem will probably benefit from it. Reports about glowing specimens have stopped. Maybe it wasn't that much of an advantage from an evolutionary point of view in the end. #1jo1ba",
       "effects": {
         "slowed_growth": false
       }
     },
     "try_to_study_dna": {
-      "text": "A first pass on your species's DNA doesn't give any result - there's no gene coding for a protein that would emit light. However, one scientist of your team suggests to do another, more thorough pass, and to not skip any portion of the DNA. Their intuition turns out to be fruitful: somewhere in the “filler” DNA, you find a portion coding for a luminescent protein. It's hard to tell why this section is enabled though. It's on a chromosome that's been provided by a third party private sector company, and trying to understand their obfuscated DNA is like trying to untangle a plate of spaghetti.",
+      "text": "A first pass on your species's DNA doesn't give any result - there's no gene coding for a protein that would emit light. However, one scientist of your team suggests to do another, more thorough pass, and to not skip any portion of the DNA. Their intuition turns out to be fruitful: somewhere in the “filler” DNA, you find a portion coding for a luminescent protein. It's hard to tell why this section is enabled though. It's on a chromosome that's been provided by a third party private sector company, and trying to understand their obfuscated DNA is like trying to untangle a plate of spaghetti. #sc1t7p",
       "choices": [
         {
-          "text": "“Whatever. I'll find a way to fix that, there's no genome able to resist me and some CRISPR-Cas9”",
+          "text": "“Whatever. I'll find a way to fix that, there's no genome able to resist me and some CRISPR-Cas9” #wxorjj",
           "next": [
             {
               "event": "self_fix"
@@ -122,7 +122,7 @@
           ]
         },
         {
-          "text": "“No way I'm the first one who runs into that problem. I'm sure there's already a fix somewhere on the Spacenet”",
+          "text": "“No way I'm the first one who runs into that problem. I'm sure there's already a fix somewhere on the Spacenet” #i7giwp",
           "next": [
             {
               "event": "opensource_fix"
@@ -130,7 +130,7 @@
           ]
         },
         {
-          "text": "“That company is going to hear from me. We pay them a fortune and all we get is a sub-par product.”",
+          "text": "“That company is going to hear from me. We pay them a fortune and all we get is a sub-par product.” #suxi3m",
           "next": [
             {
               "event": "private_company_fix"
@@ -140,7 +140,7 @@
       ]
     },
     "self_fix": {
-      "text": "You simply delete the portion of the DNA. Hopefully that won't have any side effect.",
+      "text": "You simply delete the portion of the DNA. Hopefully that won't have any side effect. #hz9wvr",
       "next": [
         {
           "event": "fix_deployed",
@@ -149,10 +149,10 @@
       ]
     },
     "opensource_fix": {
-      "text": "After a couple hours browsing online you finally find something useful - a blog article from a genome reseller explaining they recently received a lot of complains from their own clients, like one farmer who woke up in the middle of the night and found all of her spacecows glowing in the dark. The reseller then goes on to explain how they isolated the root cause of the issue - the culprit is the same chromosome you found the luminescent gene in. Turns out the company who created that chromosome hasn't been super thorough during their QA phase, and whenever the temperatures go below a certain threshold, the bioluminescent gene on this chromosome gets activated. The article ends with a link to download a patched version of the chromosome.",
+      "text": "After a couple hours browsing online you finally find something useful - a blog article from a genome reseller explaining they recently received a lot of complains from their own clients, like one farmer who woke up in the middle of the night and found all of her spacecows glowing in the dark. The reseller then goes on to explain how they isolated the root cause of the issue - the culprit is the same chromosome you found the luminescent gene in. Turns out the company who created that chromosome hasn't been super thorough during their QA phase, and whenever the temperatures go below a certain threshold, the bioluminescent gene on this chromosome gets activated. The article ends with a link to download a patched version of the chromosome. #ekwcan",
       "choices": [
         {
-          "text": "“How nice of them to share a patch! I'll use it, that will save us lots of time and money.”",
+          "text": "“How nice of them to share a patch! I'll use it, that will save us lots of time and money.” #t9ysvz",
           "next": [
             {
               "event": "fix_deployed",
@@ -161,7 +161,7 @@
           ]
         },
         {
-          "text": "“That sounds like a plausible explanation. No way I'm using a genome patch from some random blog though. I'll delete the gene myself.”",
+          "text": "“That sounds like a plausible explanation. No way I'm using a genome patch from some random blog though. I'll delete the gene myself.” #6h5suv",
           "next": [
             {
               "event": "self_fix"
@@ -171,13 +171,13 @@
       ]
     },
     "fix_deployed": {
-      "text": "The new updated version of your species genome is deployed to the specimens on the planet, using drones dropping targeted enzymes. In just over a week, virtually all specimens are now treated. Some of the enzymes might have influenced other parts of the ecosystem, but you can't get high rewards without high risks, right?",
+      "text": "The new updated version of your species genome is deployed to the specimens on the planet, using drones dropping targeted enzymes. In just over a week, virtually all specimens are now treated. Some of the enzymes might have influenced other parts of the ecosystem, but you can't get high rewards without high risks, right? #4wg7r1",
       "effects": {
         "slowed_growth": false
       }
     },
     "private_company_fix": {
-      "text": "You call the company who created the faulty DNA. After waiting for almost an hour, listening to an aggravating music supposed to prevent you from growing too impatient, someone on the other end finally picks up the phone. You spend another hour trying to explain the problem, but it's pretty clear that it's an issue beyond the employee's paygrade - it takes some convincing to get them to call their supervisor. Once they come, the supervisor immediately tries to deescalate the situation. They obviously don't want the public to hear news about how they screwed up a gene - they offer to send you a patched version of the gene, accept to pay for the deployment of this version to all of your specimens using specialized drones, and even propose to give you some more money as an apology.",
+      "text": "You call the company who created the faulty DNA. After waiting for almost an hour, listening to an aggravating music supposed to prevent you from growing too impatient, someone on the other end finally picks up the phone. You spend another hour trying to explain the problem, but it's pretty clear that it's an issue beyond the employee's paygrade - it takes some convincing to get them to call their supervisor. Once they come, the supervisor immediately tries to deescalate the situation. They obviously don't want the public to hear news about how they screwed up a gene - they offer to send you a patched version of the gene, accept to pay for the deployment of this version to all of your specimens using specialized drones, and even propose to give you some more money as an apology. #86wp0b",
       "next": [
         {
           "event": "fix_deployed",
