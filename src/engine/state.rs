@@ -1,4 +1,4 @@
-use std::cmp::{min, max};
+use std::cmp::{max, min};
 
 use serde::{Deserialize, Serialize};
 
@@ -23,7 +23,7 @@ impl State {
     }
 
     pub fn population(&self) -> &u32 {
-        return &self.population
+        return &self.population;
     }
 
     pub fn add_population(&mut self, value: u32) {
@@ -35,7 +35,7 @@ impl State {
     }
 
     pub fn ecology(&self) -> &u32 {
-        return &self.ecology
+        return &self.ecology;
     }
 
     pub fn add_ecology(&mut self, value: u32) {
@@ -47,7 +47,7 @@ impl State {
     }
 
     pub fn money(&self) -> &u32 {
-        return &self.money
+        return &self.money;
     }
 
     pub fn add_money(&mut self, value: u32) {
@@ -59,7 +59,7 @@ impl State {
     }
 
     pub fn turn_counter(&self) -> &u32 {
-        return &self.turn_counter
+        return &self.turn_counter;
     }
 
     pub fn evolve(&mut self) {

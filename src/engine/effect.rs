@@ -40,32 +40,28 @@ impl Effect {
         log!(format!("applying effect {:?}", self));
 
         match self.operation {
-            ChangeOperation::Add => {
-                match self.target {
-                    ChangeTarget::Population => {
-                        state.add_population(self.value);
-                    }
-                    ChangeTarget::Ecology => {
-                        state.add_ecology(self.value);
-                    }
-                    ChangeTarget::Money => {
-                        state.add_money(self.value);
-                    }
+            ChangeOperation::Add => match self.target {
+                ChangeTarget::Population => {
+                    state.add_population(self.value);
                 }
-            }
-            ChangeOperation::Subtract => {
-                match self.target {
-                    ChangeTarget::Population => {
-                        state.subtract_population(self.value);
-                    }
-                    ChangeTarget::Ecology => {
-                        state.subtract_ecology(self.value);
-                    }
-                    ChangeTarget::Money => {
-                        state.subtract_money(self.value);
-                    }
+                ChangeTarget::Ecology => {
+                    state.add_ecology(self.value);
                 }
-            }
+                ChangeTarget::Money => {
+                    state.add_money(self.value);
+                }
+            },
+            ChangeOperation::Subtract => match self.target {
+                ChangeTarget::Population => {
+                    state.subtract_population(self.value);
+                }
+                ChangeTarget::Ecology => {
+                    state.subtract_ecology(self.value);
+                }
+                ChangeTarget::Money => {
+                    state.subtract_money(self.value);
+                }
+            },
         }
     }
 }

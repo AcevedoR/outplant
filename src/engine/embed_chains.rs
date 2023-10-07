@@ -11,6 +11,7 @@ use crate::engine::chain::Chain;
 #[derive(RustEmbed)]
 #[folder = "chains/"]
 #[exclude = "schema.json"]
+#[exclude = "*.tsv"]
 struct EmbeddedChains;
 
 pub fn get_chains(chain_files: Vec<String>) -> Vec<Chain> {

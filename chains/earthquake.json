@@ -9,7 +9,7 @@
   },
   "events": {
     "start": {
-      "text": "You're heading back to your personal quarters when a glaring red light along with a loud siren interrupt you. Sounds like your nap will have to be postponed once again.",
+      "text": "You're heading back to your personal quarters when a glaring red light along with a loud siren interrupt you. Sounds like your nap will have to be postponed once again. #8t4wl9",
       "next": [
         {
           "event": "start2"
@@ -17,7 +17,7 @@
       ]
     },
     "start2": {
-      "text": "Back to the control center, you see that the alarm going off is the earthquake one.",
+      "text": "Back to the control center, you see that the alarm going off is the earthquake one. #6cu6ji",
       "next": [
         {
           "event": "small_earthquake",
@@ -30,7 +30,7 @@
       ]
     },
     "small_earthquake": {
-      "text": "Thankfully, it seems the amplitude of it is relatively limited, and that the epicenter is away from any region hosting your species. The effects on the biosphere at large will be small, although probably long-lasting.",
+      "text": "Thankfully, it seems the amplitude of it is relatively limited, and that the epicenter is away from any region hosting your species. The effects on the biosphere at large will be small, although probably long-lasting. #b7cxqa",
       "next": [
         {
           "event": "install_better_seismometers_choice"
@@ -38,10 +38,10 @@
       ]
     },
     "install_better_seismometers_choice": {
-      "text": "Perhaps it's a good idea to install better seismometers?",
+      "text": "Perhaps it's a good idea to install better seismometers? #c5hwlk",
       "choices": [
         {
-          "text": "“And get even more alarms about events that small? I'd rather be able to nap in peace, thank you very much.”",
+          "text": "“And get even more alarms about events that small? I'd rather be able to nap in peace, thank you very much.” #wns6e3",
           "next": [
             {
               "event": "earthquake_end"
@@ -49,7 +49,7 @@
           ]
         },
         {
-          "text": "“Better safe than sorry - that's always been my motto.”",
+          "text": "“Better safe than sorry - that's always been my motto.” #s69qzr",
           "next": [
             {
               "event": "earthquake_end"
@@ -57,7 +57,7 @@
           ]
         },
         {
-          "text": "“There are more urgent matters that also need what we'd spend. The risk isn't that high. I think.”",
+          "text": "“There are more urgent matters that also need what we'd spend. The risk isn't that high. I think.” #sqwskl",
           "next": [
             {
               "event": "earthquake_end"
@@ -73,7 +73,7 @@
       },
       "choices": [
         {
-          "text": "“Oh ∑#§øΩ*! That's a big one!”",
+          "text": "“Oh ∑#§øΩ*! That's a big one!” #kimyqq",
           "next": [
             {
               "event": "big_earthquake2"
@@ -83,7 +83,7 @@
       ]
     },
     "big_earthquake2": {
-      "text": "The effects on your species and even the ecosystem overall are hard to estimate.",
+      "text": "The effects on your species and even the ecosystem overall are hard to estimate. #olhlxk",
       "next": [
         {
           "event": "earthquake_reports"
@@ -91,7 +91,7 @@
       ]
     },
     "earthquake_reports": {
-      "text": "Once the earthquake is finished, you begin to get reports left and right. Most are either good news about groups of your species members being very disoriented but fine, or news so bad that it's too late to do anything.",
+      "text": "Once the earthquake is finished, you begin to get reports left and right. Most are either good news about groups of your species members being very disoriented but fine, or news so bad that it's too late to do anything. #viwzfw",
       "next": [
         {
           "event": "report_catches_attention"
@@ -102,7 +102,7 @@
       ]
     },
     "report_catches_attention": {
-      "text": "One report catches your attention though:",
+      "text": "One report catches your attention though: #5mdho6",
       "next": [
         {
           "event": "report_about_stuck_specimens"
@@ -113,10 +113,10 @@
       ]
     },
     "report_about_stuck_specimens": {
-      "text": "It's about a pack of your species members stuck below a pile of rocks. You could actually help improve the situation here.",
+      "text": "It's about a pack of your species members stuck below a pile of rocks. You could actually help improve the situation here. #wwwdmw",
       "choices": [
         {
-          "text": "“Let natural selection do its job here. The species will do better without specimens idiotic enough to get themselves into that kind of situation.”",
+          "text": "“Let natural selection do its job here. The species will do better without specimens idiotic enough to get themselves into that kind of situation.” #fukm7f",
           "effects": {
             "specimens_under_rocks_die": true
           },
@@ -127,7 +127,7 @@
           ]
         },
         {
-          "text": "“Let's go right now! Every minute counts!”",
+          "text": "“Let's go right now! Every minute counts!” #hlux9j",
           "next": [
             {
               "event": "go_help_stuck_specimens_too_late",
@@ -139,7 +139,7 @@
           ]
         },
         {
-          "text": "“We can't risk focusing our help and attention to a single pack like that in these dire times. What if something happens at the global level?”",
+          "text": "“We can't risk focusing our help and attention to a single pack like that in these dire times. What if something happens at the global level?” #1pyowv",
           "next": [
             {
               "event": "earthquake_end"
@@ -149,7 +149,7 @@
       ]
     },
     "go_help_stuck_specimens_too_late": {
-      "text": "You arrive at the site but it seems like it's too late. You're barely able to rescue a couple specimens.",
+      "text": "You arrive at the site but it seems like it's too late. You're barely able to rescue a couple specimens. #ie3xj7",
       "effects": {
         "specimens_under_rocks_die": true
       },
@@ -164,16 +164,16 @@
       ]
     },
     "scavengers_come": {
-      "text": "As if trying to recover from the earthquake direct consequences wasn't hard enough as it is, scavengers have been spotted near the site where you failed to rescue specimens buried under rocks after the earthquake. They're heavily disrupting the food chain in the area - it will take a while to retrieve a balanced a balance environment again.",
+      "text": "As if trying to recover from the earthquake direct consequences wasn't hard enough as it is, scavengers have been spotted near the site where you failed to rescue specimens buried under rocks after the earthquake. They're heavily disrupting the food chain in the area - it will take a while to retrieve a balanced a balance environment again. #p23m00",
       "effects": {
         "scavengers_come": true
       }
     },
     "go_help_stuck_specimens_in_time": {
-      "text": "You arrive at the site and while the task of rescuing the specimens proves to be very hard, you manage to save each and every one of them.",
+      "text": "You arrive at the site and while the task of rescuing the specimens proves to be very hard, you manage to save each and every one of them. #yes8c0",
       "choices": [
         {
-          "text": "“That will be one of my most prized memories! We did something great today!”",
+          "text": "“That will be one of my most prized memories! We did something great today!” #oo56hn",
           "next": [
             {
               "event": "earthquake_end"
@@ -181,7 +181,7 @@
           ]
         },
         {
-          "text": "“What we did today, that's a story worth sharing. Call journalists, we can sell it!”",
+          "text": "“What we did today, that's a story worth sharing. Call journalists, we can sell it!” #f9isxa",
           "effects": {
             "sell_story_to_journalists": true
           },
@@ -194,7 +194,7 @@
       ]
     },
     "report_about_destroyed_shelters": {
-      "text": "It's about a pack of your species members: the primitive shelters they had built have collapsed and can't protect them anymore. You could actually help improve the situation here.",
+      "text": "It's about a pack of your species members: the primitive shelters they had built have collapsed and can't protect them anymore. You could actually help improve the situation here. #c49c8p",
       "next": [
         {
           "event": "destroyed_shelters_choice"
@@ -202,10 +202,10 @@
       ]
     },
     "destroyed_shelters_choice": {
-      "text": "When you finally get to the area, you and your team sedate the disoriented specimens and come up with three possible solutions:",
+      "text": "When you finally get to the area, you and your team sedate the disoriented specimens and come up with three possible solutions: #3nkhip",
       "choices": [
         {
-          "text": "Try to repair the collapsed shelters in a way to minimize your influence",
+          "text": "Try to repair the collapsed shelters in a way to minimize your influence #wmffix",
           "next": [
             {
               "event": "shelters_completed"
@@ -213,7 +213,7 @@
           ]
         },
         {
-          "text": "Build sturdy shelters from scratch with good materials, then paint and cover them with some remains of the collapsed shelters to make it less obvious",
+          "text": "Build sturdy shelters from scratch with good materials, then paint and cover them with some remains of the collapsed shelters to make it less obvious #hg5kvl",
           "next": [
             {
               "event": "use_new_materials_for_shelters"
@@ -221,7 +221,7 @@
           ]
         },
         {
-          "text": "Move the specimens to a new, more welcoming region, so they won't need shelters as much",
+          "text": "Move the specimens to a new, more welcoming region, so they won't need shelters as much #06o1so",
           "next": [
             {
               "event": "move_specimens"
@@ -231,7 +231,7 @@
       ]
     },
     "move_specimens": {
-      "text": "The operation takes a while to complete, but the trip goes remarkably well.",
+      "text": "The operation takes a while to complete, but the trip goes remarkably well. #48wk3e",
       "next": [
         {
           "event": "move_successful"
@@ -242,10 +242,10 @@
       ]
     },
     "move_successful": {
-      "text": "Later observations show the specimens have gotten well adapted to their new home. The impact on the ecosystem around them will be noticeable but ultimately limited."
+      "text": "Later observations show the specimens have gotten well adapted to their new home. The impact on the ecosystem around them will be noticeable but ultimately limited. #q2ldvy"
     },
     "move_fail": {
-      "text": "Later observations show the specimens have some trouble adapting to their new home though. They've been disrupting the ecosystem around them quite a bit.",
+      "text": "Later observations show the specimens have some trouble adapting to their new home though. They've been disrupting the ecosystem around them quite a bit. #scrhgr",
       "effects": {
         "move_fail": true
       }
@@ -262,10 +262,10 @@
       ]
     },
     "shelters_completed": {
-      "text": "Just as you finish taking care of the last shelter, some of the specimens begin to show signs of waking up.",
+      "text": "Just as you finish taking care of the last shelter, some of the specimens begin to show signs of waking up. #0y3xer",
       "choices": [
         {
-          "text": "“Time for us to go!”",
+          "text": "“Time for us to go!” #51eawn",
           "next": [
             {
               "event": "shelters_successful"
@@ -278,16 +278,16 @@
       ]
     },
     "shelters_successful": {
-      "text": "Later observations show the specimens really like their new shelters."
+      "text": "Later observations show the specimens really like their new shelters. #r463u1"
     },
     "shelters_fail": {
-      "text": "Later observations show the specimens dislike their new shelters and end up avoiding them altogether. One pile of big cardboard boxes you've forgotten near the area seems to have gotten really popular though.",
+      "text": "Later observations show the specimens dislike their new shelters and end up avoiding them altogether. One pile of big cardboard boxes you've forgotten near the area seems to have gotten really popular though. #4nxxw4",
       "effects": {
         "shelters_fail": true
       }
     },
     "nothing_can_be_done": {
-      "text": "There's nothing significant you can do, but wait and see how the situation sorts itself out.",
+      "text": "There's nothing significant you can do, but wait and see how the situation sorts itself out. #ccg7uh",
       "next": [
         {
           "event": "mountain_flattened",
@@ -299,10 +299,10 @@
       ]
     },
     "mountain_flattened": {
-      "text": "It's been a while since the earthquake struck, but you still get some reports now and then about consequences of it, as can be expected from a big event like that. One day, you read one mentioning how the earthquake managed to level one small mountain. It proves how powerful the earthquake was, but more interestingly, it opens a new area for your species, who was so far unable to go over the mountain.",
+      "text": "It's been a while since the earthquake struck, but you still get some reports now and then about consequences of it, as can be expected from a big event like that. One day, you read one mentioning how the earthquake managed to level one small mountain. It proves how powerful the earthquake was, but more interestingly, it opens a new area for your species, who was so far unable to go over the mountain. #b2gedj",
       "choices": [
         {
-          "text": "“We should encourage them to go explore that new territory! Let's use some baits to lure them there over time.”",
+          "text": "“We should encourage them to go explore that new territory! Let's use some baits to lure them there over time.” #l70huj",
           "effects": {
             "create_trail": true
           },
@@ -317,7 +317,7 @@
           ]
         },
         {
-          "text": "“They'll figure out there's a new area now open for them soon enough, on their own. No need to force what can happen organically.”",
+          "text": "“They'll figure out there's a new area now open for them soon enough, on their own. No need to force what can happen organically.” #at7omk",
           "next": [
             {
               "event": "no_trails"
@@ -327,7 +327,7 @@
       ]
     },
     "create_trails_success": {
-      "text": "Your efforts are fruitful - a lot of specimens follow the trails you've created.",
+      "text": "Your efforts are fruitful - a lot of specimens follow the trails you've created. #5wm24k",
       "next": [
         {
           "event": "big_migration_successful",
@@ -340,19 +340,19 @@
       ]
     },
     "big_migration_successful": {
-      "text": "And it's good news, since they they seem to really enjoy their new home - food is plentiful and there's no one higher on the food chain than them there.",
+      "text": "And it's good news, since they they seem to really enjoy their new home - food is plentiful and there's no one higher on the food chain than them there. #j51h2j",
       "effects": {
         "big_migration_successful": true
       }
     },
     "big_migration_fail": {
-      "text": "You soon realize what an error that was, when most of your specimens are caught by apex predators they aren't used to fight off, as the mountain used to protect your species from them.",
+      "text": "You soon realize what an error that was, when most of your specimens are caught by apex predators they aren't used to fight off, as the mountain used to protect your species from them. #jxxiz1",
       "effects": {
         "big_migration_successful": false
       }
     },
     "create_trails_fail": {
-      "text": "Your efforts aren't really paying off. Only a few specimens follow the trails you've created.",
+      "text": "Your efforts aren't really paying off. Only a few specimens follow the trails you've created. #c1iy9e",
       "next": [
         {
           "event": "small_migration_successful",
@@ -365,7 +365,7 @@
       ]
     },
     "no_trails": {
-      "text": "Your non-intervention leads to only a few, bold specimens to go explore the newly accessible land.",
+      "text": "Your non-intervention leads to only a few, bold specimens to go explore the newly accessible land. #htaq7s",
       "next": [
         {
           "event": "small_migration_successful",
@@ -378,10 +378,10 @@
       ]
     },
     "small_migration_successful": {
-      "text": "It's too bad, since they seem to really enjoy their new home - food is plentiful and there's no one higher on the food chain than them there."
+      "text": "It's too bad, since they seem to really enjoy their new home - food is plentiful and there's no one higher on the food chain than them there. #dbnx57"
     },
     "small_migration_fail": {
-      "text": "It's probably for the best though - your species looks awfully inadapted to the fauna there, and very few specimens escape the apex predators of the area."
+      "text": "It's probably for the best though - your species looks awfully inadapted to the fauna there, and very few specimens escape the apex predators of the area. #ql5ioa"
     },
     "earthquake_end": {
       "text": ""

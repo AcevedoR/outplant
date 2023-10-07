@@ -8,6 +8,7 @@ use crate::engine::{
     event::{ChoiceOutcome, Event, Next},
     random::RandomGenerator,
     state::State,
+    translator::Translator,
 };
 
 #[derive(Clone, Debug)]
@@ -34,7 +35,7 @@ pub struct OngoingEventChain {
     pub(crate) chain: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub struct Engine<Rng> {
     state: State,
     chain_store: ChainStore,
@@ -44,6 +45,7 @@ pub struct Engine<Rng> {
     just_applied_permanent_effects: HashSet<Effect>,
     random_generator: Rng,
     cooling_down_chains: HashMap<String, u32>,
+    translator: Translator,
 }
 
 impl<Rng: RandomGenerator> Engine<Rng> {
@@ -57,6 +59,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             just_applied_permanent_effects: Default::default(),
             random_generator,
             cooling_down_chains: Default::default(),
+            translator: Translator::new(),
         };
     }
 
@@ -181,7 +184,10 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     .nth(0)
                     .unwrap()
                     .1
-                    .append(&mut vec![event_to_play.event.text.clone()]);
+                    .append(&mut vec![self.translator.clone().translate(
+                        event_to_play.event.text.clone(),
+                        crate::engine::translator::LOCALE_EN_US.to_string(),
+                    )]);
             }
 
             // Apply effects, if any
@@ -216,7 +222,12 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                             .choices
                             .unwrap()
                             .iter()
-                            .map(|choice| choice.clone().text)
+                            .map(|choice| {
+                                self.translator.clone().translate(
+                                    choice.clone().text,
+                                    crate::engine::translator::LOCALE_EN_US.to_string(),
+                                )
+                            })
                             .collect(),
                     },
                 };
@@ -306,10 +317,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             })
             .filter(|chain| {
                 self.random_generator.generate(0, 100) < 20
-                    || chain
-                        .clone()
-                        .auto_select
-                        .is_some_and(|auto_select| auto_select)
+                    || chain.auto_select.is_some_and(|auto_select| auto_select)
             })
             .map(|chain| OngoingEventChain {
                 timer: 0,

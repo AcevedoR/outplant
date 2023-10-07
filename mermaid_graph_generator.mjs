@@ -4,7 +4,7 @@ import { exit } from 'node:process';
 // This script reads an event chain json file and outputs a mermaid flowchart based on it
 
 if (process.argv.length !== 3) {
-    console.error("example usage: node mermaid_graph_generator.mjs event_chains/rich_hunters.json");
+    console.error("example usage: node mermaid_graph_generator.mjs chains/rich_hunters.json");
     exit(1);
 }
 
