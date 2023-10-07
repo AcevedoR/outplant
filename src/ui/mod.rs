@@ -113,9 +113,6 @@ Your current goal is for you species to develop enough to reach 8 'Pop' (Populat
                 <div class="background__stars"/>
                 <div class="background__stars"/>
             </div>
-            <audio controls=true autoplay=false loop=true>
-                <source src="https://soundimage.org/wp-content/uploads/2014/02/Blazing-Stars.mp3" alt="https://soundimage.org/sci-fi/"/>
-            </audio>
         </>}
     }
 }
