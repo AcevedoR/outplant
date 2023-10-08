@@ -26,7 +26,7 @@ impl Component for App {
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            game: Engine::new(vec![], PseudoRandomGenerator {}),
+            game: Engine::new(vec![], None, PseudoRandomGenerator {}),
             view_model: ViewModel::InGame {
                 0: InGameView {
                     events_by_chain: vec![

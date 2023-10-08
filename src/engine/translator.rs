@@ -2,26 +2,23 @@ use std::collections::HashMap;
 
 use crate::engine::embed_translations::get_translations;
 
-pub const LOCALE_EN_US: &str = "en_US";
-pub const LOCALE_FR_FR: &str = "fr_FR";
-
 #[derive(Clone, Debug)]
 pub struct Translator {
     translations: HashMap<String, HashMap<String, String>>,
 }
 
 impl Translator {
-    pub fn new() -> Translator {
+    pub fn new(translation_override_directory_path: Option<&str>) -> Translator {
         return Translator {
-            translations: get_translations(),
+            translations: get_translations(translation_override_directory_path),
         };
     }
 
-    pub fn translate(self, line: String, locale: String) -> String {
+    pub fn translate(self, line: String, locale: &str) -> String {
         match extract_tag(line.clone()) {
             Some(tag) => self
                 .translations
-                .get(&locale)
+                .get(locale)
                 .and_then(|locale_translations| locale_translations.get(&tag))
                 .map(|text| text.to_string())
                 .unwrap_or(remove_tag(line)),

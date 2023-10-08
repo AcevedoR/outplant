@@ -2,6 +2,7 @@ use std::collections::{HashMap, HashSet};
 
 use serde::{Deserialize, Serialize};
 
+use crate::engine::language::Language;
 use crate::engine::{
     chain_store::ChainStore,
     effect::{Effect, EffectType},
@@ -46,20 +47,26 @@ pub struct Engine<Rng> {
     random_generator: Rng,
     cooling_down_chains: HashMap<String, u32>,
     translator: Translator,
+    language: Language,
 }
 
 impl<Rng: RandomGenerator> Engine<Rng> {
-    pub fn new(chains_files: Vec<String>, random_generator: Rng) -> Engine<Rng> {
+    pub fn new(
+        chain_files_override_paths: Vec<String>,
+        translation_override_directory_path: Option<&str>,
+        random_generator: Rng,
+    ) -> Engine<Rng> {
         return Engine {
             state: State::new(1, 12, 1000),
-            chain_store: ChainStore::new(chains_files),
+            chain_store: ChainStore::new(chain_files_override_paths),
             events_to_resolve_this_turn: Default::default(),
             events_to_resolve_later: Default::default(),
             ongoing_permanent_effects: Default::default(),
             just_applied_permanent_effects: Default::default(),
             random_generator,
             cooling_down_chains: Default::default(),
-            translator: Translator::new(),
+            translator: Translator::new(translation_override_directory_path),
+            language: Language::LocaleEnUs,
         };
     }
 
@@ -159,6 +166,10 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         return self.unstack_events_to_resolve_this_turn();
     }
 
+    pub fn change_language(&mut self, locale: Language) {
+        self.language = locale;
+    }
+
     fn unstack_events_to_resolve_this_turn(&mut self) -> ViewModel {
         let mut events_by_chain: Vec<(String, Vec<String>)> = vec![];
 
@@ -186,7 +197,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                     .1
                     .append(&mut vec![self.translator.clone().translate(
                         event_to_play.event.text.clone(),
-                        crate::engine::translator::LOCALE_EN_US.to_string(),
+                        self.language.as_str(),
                     )]);
             }
 
@@ -223,10 +234,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                             .unwrap()
                             .iter()
                             .map(|choice| {
-                                self.translator.clone().translate(
-                                    choice.clone().text,
-                                    crate::engine::translator::LOCALE_EN_US.to_string(),
-                                )
+                                self.translator
+                                    .clone()
+                                    .translate(choice.clone().text, self.language.as_str())
                             })
                             .collect(),
                     },
@@ -437,7 +447,7 @@ mod tests {
 
     #[test]
     fn select_next_event_should_return_unique_outcome() {
-        let engine = Engine::new(vec![], PseudoRandomGenerator {});
+        let engine = Engine::new(vec![], None, PseudoRandomGenerator {});
 
         let next = engine.select_next_event(&vec![Next {
             event: "unique_outcome".to_string(),
@@ -460,6 +470,7 @@ mod tests {
     fn select_next_event_should_return_a_random_outcome_respecting_weight() {
         let engine = Engine::new(
             vec![],
+            None,
             TestRandomGenerator {
                 expected_min: 0,
                 expected_max: 4,
@@ -503,6 +514,7 @@ mod tests {
     fn select_next_event_should_use_1_as_the_default_weight() {
         let engine = Engine::new(
             vec![],
+            None,
             TestRandomGenerator {
                 expected_min: 0,
                 expected_max: 2,

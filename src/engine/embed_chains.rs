@@ -14,15 +14,16 @@ use crate::engine::chain::Chain;
 #[exclude = "*.tsv"]
 struct EmbeddedChains;
 
-pub fn get_chains(chain_files: Vec<String>) -> Vec<Chain> {
+pub fn get_chains(chain_files_override_paths: Vec<String>) -> Vec<Chain> {
     let mut chains: Vec<Chain> = Vec::new();
 
-    if chain_files.is_empty() {
+    if chain_files_override_paths.is_empty() {
         for file in EmbeddedChains::iter() {
             chains.push(read_embedded_chain(file.into_owned()).unwrap());
         }
     } else {
-        for chain_file in chain_files.iter() {
+        // this is in reality only used for integration tests
+        for chain_file in chain_files_override_paths.iter() {
             let file = fs::read_to_string(chain_file);
             let chain: Chain = serde_json::from_str(&*file.unwrap()).unwrap();
             chains.push(chain);
