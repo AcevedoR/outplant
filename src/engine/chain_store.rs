@@ -8,9 +8,9 @@ pub struct ChainStore {
 }
 
 impl ChainStore {
-    pub fn new(chain_files: Vec<String>) -> ChainStore {
+    pub fn new(chain_files_override_paths: Vec<String>) -> ChainStore {
         return ChainStore {
-            chains: get_chains(chain_files),
+            chains: get_chains(chain_files_override_paths),
         };
     }
 
