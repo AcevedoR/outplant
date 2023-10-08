@@ -19,13 +19,13 @@ pub enum ViewModel {
 
 #[derive(Clone, Debug)]
 pub struct InGameView {
-    pub(crate) events_by_chain: Vec<(String, Vec<String>)>,
-    pub(crate) choices: Vec<String>,
+    pub events_by_chain: Vec<(String, Vec<String>)>,
+    pub choices: Vec<String>,
 }
 
 #[derive(Clone, Debug)]
 pub struct EndOfGameView {
-    pub(crate) is_victory: bool,
+    pub is_victory: bool,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
