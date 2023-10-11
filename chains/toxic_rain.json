@@ -41,7 +41,7 @@
       ]
     },
     "meteorite_not_dangerous_spotted": {
-      "text": "The meteorite is little and composed of rock and ice, it will disintegrate in the atmosphere, nothing to worry about. - You're not sure if the planetary collision-detection system should filter out these harmless objets. You don't remember how you configured it back in the time, and of course this is not documented. #ewdh0r",
+      "text": "The meteorite is little and composed of rock and ice, it will disintegrate in the atmosphere, nothing to worry about. - You're not sure if the planetary collision-detection system should filter out these harmless objects. You don't remember how you configured it back in the time, and of course this is not documented. #ewdh0r",
       "next": [
         {
           "event": "meteorite_not_dangerous"
