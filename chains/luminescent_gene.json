@@ -32,7 +32,7 @@
           ]
         },
         {
-          "text": "“That's odd. Our species definitely isn't supposed to emit light. And I've never seen a specimen glow, even faintly.Thanks for bringing that up to my attention, I'll take care of it.” #0rru3p",
+          "text": "“That's odd. Our species definitely isn't supposed to emit light. And I've never seen a specimen glow, even faintly. Thanks for bringing that up to my attention, I'll take care of it.” #0rru3p",
           "next": [
             {
               "event": "try_to_study_glow"
