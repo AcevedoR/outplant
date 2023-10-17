@@ -157,7 +157,7 @@
           ]
         },
         {
-          "text": "“It would take time, but I could plant more flowers with drones“ #b3cfd2",
+          "text": "“It would take time, but I could plant more flowers with drones” #b3cfd2",
           "next": [
             {
               "event": "flower_planted",
