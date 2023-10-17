@@ -38,7 +38,7 @@
       "text": "The flora decrease issue is still present. #na8nzq",
       "choices": [
         {
-          "text": "“I guess I'm forced to look into it..“ #ho86yx",
+          "text": "“I guess I'm forced to look into it...” #ho86yx",
           "next": [
             {
               "event": "investigation_finds_bees_issue"
