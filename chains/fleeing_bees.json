@@ -113,7 +113,7 @@
       "text": "After intense reflexions, staring at the mirror about this flora/bees issue, no easy solution seems to appear.. #bwn3lb",
       "choices": [
         {
-          "text": "Do nothing and hope for the best. “Go Go bees! hum..“ #0z0z87",
+          "text": "Do nothing and hope for the best. “Go Go bees! Hum...” #0z0z87",
           "next": [
             {
               "event": "bees_issue_still_present",
