@@ -13,7 +13,7 @@
       "text": "An alert is rising: the local flora is rapidly decreasing. #kv9yhr",
       "choices": [
         {
-          "text": "“These plants will be grow back, no need to worry“ #ppdyq4",
+          "text": "“These plants will grow back, no need to worry” #ppdyq4",
           "next": [
             {
               "event": "issue_ignored",
