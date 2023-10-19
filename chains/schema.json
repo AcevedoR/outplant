@@ -110,9 +110,6 @@
           "additionalProperties": {
             "type": "object",
             "properties": {
-              "description": {
-                "type": "string"
-              },
               "operation": {
                 "type": "string",
                 "enum": [

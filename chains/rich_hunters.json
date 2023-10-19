@@ -134,28 +134,24 @@
   },
   "effects": {
     "base_payment_received": {
-      "description": "You received a payment.",
       "type": "instant",
       "operation": "add",
       "target": "money",
       "value": 100
     },
     "double_payment_received": {
-      "description": "You received a payment.",
       "type": "instant",
       "operation": "add",
       "target": "money",
       "value": 200
     },
     "blackmail_payment_received": {
-      "description": "You received a payment.",
       "type": "instant",
       "operation": "add",
       "target": "money",
       "value": 100
     },
     "hunted_species": {
-      "description": "Hunters have killed members of the species.",
       "type": "instant",
       "operation": "subtract",
       "target": "population",

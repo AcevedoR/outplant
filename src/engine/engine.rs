@@ -12,6 +12,8 @@ use crate::engine::{
     translator::Translator,
 };
 
+use super::chain_store::extract_chain_title;
+
 #[derive(Clone, Debug)]
 pub enum ViewModel {
     InGame(InGameView),
@@ -126,41 +128,27 @@ impl<Rng: RandomGenerator> Engine<Rng> {
 
         let outcome = self.select_choice_outcome(&choice.next);
 
-        let chain_title = self
-            .chain_store
-            .clone()
-            .get_containing_event(outcome.clone().event)
-            .unwrap()
-            .title;
+        let chain_title = extract_chain_title(&outcome.clone().event);
 
-        match choice.clone().effects {
-            Some(effects) => self.apply_effects(&effects, &chain_title),
-            None => {}
+        if let Some(effects) = choice.clone().effects {
+            self.apply_effects(&effects);
         }
 
-        match outcome.clone().effects {
-            Some(effects) => {
-                self.apply_effects(&effects, &chain_title);
-            }
-            None => {}
+        if let Some(effects) = outcome.clone().effects {
+            self.apply_effects(&effects);
         }
 
         let next_event = self
             .chain_store
             .clone()
-            .get_event(outcome.clone().event)
-            .expect(format!("Could not find outcome event '{}' in chain_store, this means the chain definition is invalid", outcome.clone().event).as_str());
+            .get_event(outcome.clone().event);
 
-        let chain_of_next_event = self
-            .chain_store
-            .clone()
-            .get_containing_event(outcome.event)
-            .unwrap()
-            .title;
+        let chain_of_next_event = extract_chain_title(&outcome.event);
+
         self.events_to_resolve_this_turn.push(OngoingEventChain {
             timer: outcome.timer.unwrap_or_default(),
             event: next_event,
-            chain: chain_of_next_event,
+            chain: chain_of_next_event.to_string(),
         });
 
         return self.unstack_events_to_resolve_this_turn();
@@ -205,7 +193,6 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             if event_to_play.event.effects.is_some() {
                 self.apply_effects(
                     &event_to_play.event.effects.clone().unwrap(),
-                    &event_to_play.chain,
                 );
             }
 
@@ -249,33 +236,22 @@ impl<Rng: RandomGenerator> Engine<Rng> {
                 let next_event = self
                     .chain_store
                     .clone()
-                    .get_event(next.event.clone())
-                    .expect(format!("Could not find event '{}' in chain_store, this means the chain definition is invalid", next.event.clone()).as_str());
-                let chain_of_next_event = self
-                    .chain_store
-                    .clone()
-                    .get_containing_event(next.clone().event)
-                    .unwrap()
-                    .title;
+                    .get_event(next.event.clone());
 
-                match next.clone().effects {
-                    Some(effects) => {
-                        self.apply_effects(&effects, &chain_of_next_event);
-                    }
-                    None => {}
+                if let Some(effects) = next.clone().effects {
+                    self.apply_effects(&effects);
                 }
 
                 self.events_to_resolve_this_turn.push(OngoingEventChain {
                     timer: next.timer.unwrap_or_default(),
                     event: next_event,
-                    chain: chain_of_next_event,
+                    chain: extract_chain_title(&next.clone().event).to_string(),
                 });
             } else {
                 let chain = self
                     .chain_store
                     .clone()
-                    .get_by_name(event_to_play.chain)
-                    .unwrap();
+                    .get_chain(event_to_play.chain);
                 self.cooling_down_chains.insert(chain.title, chain.cooldown);
             }
         }
@@ -312,8 +288,9 @@ impl<Rng: RandomGenerator> Engine<Rng> {
     fn select_chains(&self) -> Vec<OngoingEventChain> {
         return self
             .chain_store
-            .chains
-            .iter()
+            .clone()
+            .get_chains()
+            .map(|(_, chain)| chain)
             .filter(|chain| {
                 chain.trigger.is_none() || chain.trigger.as_ref().unwrap().is_satisfied(&self.state)
             })
@@ -327,12 +304,12 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             })
             .filter(|chain| {
                 self.random_generator.generate(0, 100) < 20
-                    || chain.auto_select.is_some_and(|auto_select| auto_select)
+                    || chain.auto_select
             })
             .map(|chain| OngoingEventChain {
                 timer: 0,
                 chain: chain.title.clone(),
-                event: chain.events.get("start").unwrap().clone(),
+                event: self.chain_store.clone().get_event(chain.title.clone() + "/start"),
             })
             .collect::<Vec<OngoingEventChain>>();
     }
@@ -377,7 +354,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         return nexts.first().unwrap().clone(); // should never happen
     }
 
-    fn apply_effects(&mut self, effects: &HashMap<String, bool>, chain_id: &String) {
+    fn apply_effects(&mut self, effects: &HashMap<String, bool>) {
         let effect_activations = effects
             .iter()
             .filter(|(_, activate)| **activate)
@@ -385,11 +362,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             .map(|effect| {
                 self.chain_store
                     .clone()
-                    .get_by_name(chain_id.clone())
-                    .unwrap()
-                    .effects
-                    .get(effect)
-                    .unwrap()
+                    .get_effect(effect.to_string())
                     .to_owned()
             });
 
@@ -401,7 +374,6 @@ impl<Rng: RandomGenerator> Engine<Rng> {
         let cloned_ongoing_permanent_effects = self.ongoing_permanent_effects.clone();
 
         let newly_activated_permanent_effects = effect_activations
-            .clone()
             .filter(|effect| effect.effect_type == EffectType::Permanent)
             .filter(|permanent_effect: &Effect| {
                 !cloned_ongoing_permanent_effects.contains(&permanent_effect)
@@ -420,11 +392,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             .map(|effect| {
                 self.chain_store
                     .clone()
-                    .get_by_name(chain_id.clone())
-                    .unwrap()
-                    .effects
-                    .get(effect)
-                    .unwrap()
+                    .get_effect(effect.to_string())
                     .to_owned()
             });
         effect_deactivations.for_each(|effect| {

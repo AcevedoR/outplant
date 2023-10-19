@@ -5,7 +5,6 @@ use crate::engine::state::State;
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub struct Effect {
-    pub(crate) description: Option<String>,
     pub(crate) operation: ChangeOperation,
     pub(crate) target: ChangeTarget,
     pub(crate) value: u32,

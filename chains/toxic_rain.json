@@ -106,14 +106,12 @@
   },
   "effects": {
     "toxic_rain_hits_vegetation": {
-      "description": "The toxic rain affects local vegetation",
       "operation": "subtract",
       "target": "ecology",
       "value": 1,
       "type": "permanent"
     },
     "toxic_rain_kills_specimens": {
-      "description": "Some of your specimens don't survive the rain",
       "operation": "subtract",
       "target": "population",
       "value": 1,

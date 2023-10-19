@@ -11,3 +11,4 @@ mod embed_translations;
 mod event;
 mod translator;
 mod trigger;
+mod utils;
