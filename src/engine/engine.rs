@@ -290,6 +290,7 @@ impl<Rng: RandomGenerator> Engine<Rng> {
             .chain_store
             .clone()
             .get_chains()
+            .iter()
             .map(|(_, chain)| chain)
             .filter(|chain| {
                 chain.trigger.is_none() || chain.trigger.as_ref().unwrap().is_satisfied(&self.state)

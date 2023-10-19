@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use std::collections::{HashMap, hash_map::Iter};
+use std::collections::{HashMap};
 
 use crate::engine::{chain::Chain, embed_chains::get_chains, event::Event, effect::Effect};
 
@@ -20,12 +20,12 @@ impl ChainStore {
         let mut effects: HashMap<String, Effect> = Default::default();
 
         for mut json_chain in get_chains(chain_files_override_paths) {
-            chains.insert(json_chain.title, json_chain.to_chain());
+            chains.insert(json_chain.title.clone(), json_chain.to_chain());
 
             let mut chain_events = prefix_all_keys(&mut json_chain.events, &(json_chain.title.clone() + "/"));
 
-            for (_, event) in chain_events.iter() {
-                event.set_namespace(json_chain.title)
+            for (_, event) in chain_events.iter_mut() {
+                event.set_namespace(json_chain.title.clone())
             }
 
             events.extend(chain_events);
@@ -57,8 +57,8 @@ impl ChainStore {
             .clone();
     }
 
-    pub fn get_chains(self) -> Iter<'static, String, Chain> {
-        self.chains.clone().iter()
+    pub fn get_chains(&self) -> &HashMap<String, Chain> {
+        &self.chains
     }
 }
 

@@ -14,17 +14,17 @@ pub struct Event {
 
 impl Event {
     pub fn set_namespace(&mut self, namespace: String) {
-        if let Some(mut nexts) = self.next {
-            for next in &mut nexts {
+        if let Some( nexts) = &mut self.next {
+            for next in nexts {
                 next.set_namespace(namespace.clone());
             }
         }
 
-        if let Some(effects) = &self.effects {
+        if let Some(effects) = &mut self.effects {
             self.effects = Some(utils::prefix_all_keys(&mut effects.clone(), &namespace))
         }
 
-        if let Some(choices) = &self.choices {
+        if let Some(choices) = &mut self.choices {
             for choice in choices {
                 choice.set_namespace(namespace.clone());
             }
@@ -32,7 +32,7 @@ impl Event {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct Choice {
     pub(crate) text: String,
     pub(crate) next: Vec<ChoiceOutcome>,
@@ -51,7 +51,7 @@ impl Choice {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct ChoiceOutcome {
     pub(crate) event: String,
     #[serde(rename = "in")]
