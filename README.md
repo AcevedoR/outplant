@@ -4,30 +4,16 @@ A simple text game POC.
 
 ## requirements
 
-- rust
-- cargo
-- do Yem and WASM setup https://yew.rs/docs/getting-started/introduction
+- node
 
-## start
+## start (dev)
 
 ```
-trunk serve --features wasm-logging
-```
-
-## format
-
-```
-cargo fmt
+npm run dev
 ```
 
 ## test
 
 ```
-cargo test
-```
-
-To display logs and full stacktrace:
-
-```
-export RUST_BACKTRACE=1 && cargo test -- --nocapture
+npm run test
 ```
