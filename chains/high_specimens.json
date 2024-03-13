@@ -1,0 +1,138 @@
+{
+  "$schema": "./schema.json",
+  "title": "high specimens",
+  "cooldown": 999,
+  "events": {
+    "start": {
+      "text": "You get a notification from your AI assistant, AUDE. “Several drones have picked up signs of specimens behaving erratically around a specific area. Standard Protocols require you review the recorded videos.” #szmpyr",
+      "choices": [
+        {
+          "text": "“I'll take a look!” #c2dj38",
+          "next": [
+            {
+              "event": "review_abnormal_behavior"
+            }
+          ]
+        }
+      ]
+    },
+    "review_abnormal_behavior": {
+      "text": "When you watch the videos, you do witness some clearly strange behaviors. Many specimens, more than usual, seems to be taking naps constantly. The ones who are awake aren't doing that much better, as they either waddle in what can't, in good faith, be called a straight line, or appear really aggressive - the number of fights is rampant. #fnb9kf",
+      "choices": [
+        {
+          "text": "“Haha, look at that one, he tries to climb that tree but he's so clumsy he just falls everytime! I gotta share this on the SpaceInternet.” #t2pxo2",
+          "next": [
+            {
+              "event": "video_uploaded",
+              "in": 1
+            }
+          ]
+        },
+        {
+          "text": "“I can't spend time on each group that displays some slightly deviant aspects here and there. AUDE, file these vids to the archives.” #5w41he",
+          "next": [
+            {
+              "event": "specimens_die",
+              "in": 2
+            }
+          ]
+        },
+        {
+          "text": "“That's disturbing. We should begin to study this, and understand what's the root cause of all this.” #o94cbf",
+          "next": [
+            {
+              "event": "study_started"
+            }
+          ]
+        }
+      ]
+    },
+    "video_uploaded": {
+      "text": "The videos you uploaded that feature falling and sleepy specimens of your species are doing very well on the SpaceInternet, one in particular has reached meme status. You get some money from all the ad revenue. #mm1ojv",
+      "next": [
+        {
+          "event": "specimens_die",
+          "in": 2
+        }
+      ],
+      "effects": {
+        "video_uploaded": true
+      }
+    },
+    "specimens_die": {
+      "text": "A new report from AUDE indicates that most specimens from the group that displayed abnormal behaviors have died. #gj64uk",
+      "effects": {
+        "specimens_die": true
+      }
+    },
+    "study_started": {
+      "text": "A team is assembled and is given the task to get to the bottom of that phenomenon. #ojlmk1",
+      "next": [
+        {
+          "event": "study_result",
+          "in": 1
+        }
+      ]
+    },
+    "study_result": {
+      "text": "The team you sent to study the abnormal behaviors of some group of your studies has reported its first conclusion: the change is to be blamed on spores that are released by the trees of that area. #pezzzk",
+      "choices": [
+        {
+          "text": "“If trees are a problem, then cut the trees, and there won't be a problem anymore.” #2pu7qx",
+          "next": [
+            {
+              "event": "trees_cut"
+            }
+          ]
+        },
+        {
+          "text": "“Interesting. I'll let the exobotanists know they've got something wrong, once again.” #srx3kv",
+          "next": [
+            {
+              "event": "specimens_die",
+              "in": 1
+            }
+          ]
+        },
+        {
+          "text": "“I think further study is needed. The spores cause the problem, but what causes the spores?” #f5b83d",
+          "next": [
+            {
+              "event": "energy_drink_found",
+              "in": 1
+            }
+          ]
+        }
+      ]
+    },
+    "trees_cut": {
+      "text": "All the forests in the areas where specimens were behaving strangely are destroyed, thus removing their spores from the ecosystem. Of course, negative side effects on the environment as a whole are also to be expected. #p7btve",
+      "effects": {
+        "trees_cut": true
+      }
+    },
+    "energy_drink_found": {
+      "text": "While the team is picking up more samples for their tests about the strange behaviors witnessed in specimens around the area, they discover a pile of crates full of energy drinks - one of them is leaking and the drinks are spilling into an underground water lake. The ingredient list shows that it contains the same chemical component that was found in the spores causing the behavorial issues. Your team makes bet on whether the exogeologists or the exobotanists are to blame, then removes the crates. A few days later, all the specimens are behaving normally again. #7tg990"
+    }
+  },
+  "effects": {
+    "specimens_die": {
+      "type": "instant",
+      "target": "population",
+      "operation": "subtract",
+      "value": 1
+    },
+    "video_uploaded": {
+      "type": "instant",
+      "target": "money",
+      "operation": "add",
+      "value": 50
+    },
+    "trees_cut": {
+      "type": "instant",
+      "target": "ecology",
+      "operation": "subtract",
+      "value": 1
+    }
+  }
+}
