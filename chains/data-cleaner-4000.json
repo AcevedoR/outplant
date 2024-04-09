@@ -7,7 +7,7 @@
       "text": "An incoming commercial space-mail claims to have a revolutionary AI-powered post-processing noise-remover algorithm, designed to improve the data emitted by the various sensors you have both on the planet and on your ship. Your study project is explicitly mentioned.",
       "choices": [
         {
-          "text": "“May these damn space-sales go to space-hell! I won't even bother reading the full mail, all these companies harassing me..“ [ignore it]",
+          "text": "“May these damn space-sales go to space-hell! I won't even bother reading the full mail, all these companies are harassing me…” [ignore it]",
           "next": [
             {
               "event": "ignored-mail"
@@ -15,7 +15,7 @@
           ]
         },
         {
-          "text": "“I might as well read it, nothing better to do while in the toilets anyway..“ [read it]",
+          "text": "“I might as well read it, nothing better to do while in the toilets anyway…” [read it]",
           "next": [
             {
               "event": "read-the-mail"
@@ -28,7 +28,7 @@
       "text": "The mail seems to be a serious commercial offer, the product is a software called 'DATA-CLEANER 4000' and is listed as a low price (200€€€) considered what it claims to do: reducing sensors false-positive errors by 20%!",
       "choices": [
         {
-          "text": "“No way this software can achieve a 20% decrease.. they are probably twisting the numbers“ [ignore it]",
+          "text": "“No way this software can achieve a 20% decrease… they are probably twisting the numbers.” [ignore it]",
           "next": [
             {
               "event": "ignored-mail"
@@ -36,7 +36,7 @@
           ]
         },
         {
-          "text": "“This is obviously a scam, I should report these brigands!“ [mark the mail as spam]",
+          "text": "“This is obviously a scam, I should report these brigands!” [mark the mail as spam]",
           "next": [
             {
               "event": "mark-email-as-spam"
@@ -44,7 +44,7 @@
           ]
         },
         {
-          "text": "“20% eh? it would positively impact my sleep and I would check out 'real' alerts more often“ [click on the link]",
+          "text": "“20% eh? It would positively impact my sleep and I would check out 'real' alerts more often.” [click on the link]",
           "next": [
             {
               "event": "link-clicked"
@@ -57,10 +57,10 @@
       ]
     },
     "link-clicked": {
-      "text": "You are redirected to the company website, where you can order the 'DATA-CLEANER 4000' and proceed to pay for it online. Additionally, the product is in promotion: 200 instead of 500, what a great deal!!",
+      "text": "You are redirected to the company website, where you can order the 'DATA-CLEANER 4000' and proceed to pay for it online. Additionally, the product has a special offer: 200€€€ instead of 500€€€, what a great deal!!",
       "choices": [
         {
-          "text": "“Nah, I'm not feeling it“ [close the website]",
+          "text": "“Nah, I'm not feeling it” [close the website]",
           "next": [
             {
               "event": "website-closed"
@@ -68,7 +68,7 @@
           ]
         },
         {
-          "text": "“Let's order this beauty, I love buying new gear and toys!“ [pay 200 €€€]",
+          "text": "“Let's order this beauty, I love buying new gear and toys!” [pay 200€€€]",
           "next": [
             {
               "event": "order-maid"
@@ -81,10 +81,10 @@
       ]
     },
     "link-clicked-unsecured": {
-      "text": "You are redirected to what seems to be the company website, where you can order the 'DATA-CLEANER 4000' and proceed to pay for it online. \nYou notice the website is not secured, and your internet browser is telling you to leave.\nAdditionally, the product is in promotion: 200 instead of 500, what a great deal!!",
+      "text": "You are redirected to what seems to be the company website, where you can order the 'DATA-CLEANER 4000' and proceed to pay for it online. \nYou notice the website is not secured, and your internet browser is telling you to leave.\nAdditionally, the product has a special offer: 200€€€ instead of 500€€€, what a great deal!!",
       "choices": [
         {
-          "text": "“I could pay with a temporary bank account and hope this thing is real, I'll be fine“ [pay 200 €€€]",
+          "text": "“I could pay with a temporary bank account and hope this thing is real, I'll be fine.” [pay 200€€€]",
           "next": [
             {
               "event": "order-maid"
@@ -95,7 +95,7 @@
           }
         },
         {
-          "text": "“These brigands are obviously trying to steal my credit card informations! I should leave this website immediately“ [close the website]",
+          "text": "“These brigands are obviously trying to steal my credit card informations! I should leave this website immediately.” [close the website]",
           "next": [
             {
               "event": "website-closed"
@@ -105,13 +105,13 @@
       ]
     },
     "ignored-mail": {
-      "text": "You ignore the mail and continue what you were doing"
+      "text": "You ignore the mail and continue what you were doing."
     },
     "mark-email-as-spam": {
-      "text": "You mark the mail as spam and continue what you were doing"
+      "text": "You mark the mail as spam and continue what you were doing."
     },
     "order-maid": {
-      "text": "You purchased the 'DATA-CLEANER 4000' and now are waiting for the delivery. “I am so exited! What a great deal!“",
+      "text": "You purchased the 'DATA-CLEANER 4000' and now are waiting for the delivery. “I am so exited! What a great deal!”",
       "next": [
         {
           "event": "order-received",
@@ -120,7 +120,7 @@
       ]
     },
     "website-closed": {
-      "text": "You closed the website and continue what you were doing"
+      "text": "You close the website and continue what you were doing."
     },
     "order-received": {
       "text": "One morning, while doing a daily activity in the toilets, you remember you bought some time ago a revolutionary AI-powered post-processing noise-remover algorithm named 'DATA-CLEANER 4000'. But you actually never received the download mail.",
@@ -134,10 +134,10 @@
       ]
     },
     "download-software": {
-      "text": "After looking everywhere for this mail, you end up founding it in the Spam directory. The installation procedure is to download a 3 Terabyte file on the ship main computer and run it",
+      "text": "After looking everywhere for this mail, you end up finding it in the Spam directory. The installation procedure is to download a 3 Terabyte file on the ship main computer and run it.",
       "choices": [
         {
-          "text": "“Why is it in the spam? Why 3TB? I'm not risking my ship safety for this..“ [Ignore the mail]",
+          "text": "“Why is it in the spam folder? Why 3TB? I'm not risking my ship safety for this…” [Ignore the mail]",
           "next": [
             {
               "event": "download-ignored"
@@ -145,7 +145,7 @@
           ]
         },
         {
-          "text": "“This can't be that bad, I really would like my sensors to not wake me in the middle of the night for nothing..“ [install the software]",
+          "text": "“This can't be that bad, I would really like my sensors to not wake me in the middle of the night for nothing…” [install the software]",
           "next": [
             {
               "event": "installation-successful"
@@ -155,13 +155,13 @@
       ]
     },
     "no-software": {
-      "text": "After looking everywhere for the mail, you lose hope, you just got scammed by some stranger probably hiding behind multiple proxy intergalactic networks"
+      "text": "After looking everywhere for the mail, you lose hope - you just got scammed by some stranger, probably hiding behind multiple proxies and intergalactic networks."
     },
     "download-ignored": {
-      "text": "You cuddle the nearest piece of the ship nearby: “I'm not letting anyone hurting you“ and continue what you were doing"
+      "text": "You cuddle the nearest piece of the ship nearby: “I'm not letting anyone hurting you“ and continue what you were doing."
     },
     "installation-successful": {
-      "text": "You installed the 'DATA-CLEANER 4000' successfully, and continue what you where doing, while hoping to see positive results soon!",
+      "text": "You install the 'DATA-CLEANER 4000' successfully, and continue what you where doing, hoping to see positive results soon!",
       "next": [
         {
           "event": "software-is-working-well",
@@ -175,10 +175,10 @@
       ]
     },
     "software-is-working-well": {
-      "text": "One morning, while doing a daily activity in the toilets, you risk yourself at looking into a recent sensor alert, and.. SURPRISE! it is a real one, a drone crashed into a tree, starting a forest fire. You're glad you bought the 'DATA-CLEANER 4000', your species and its biome will be safer from now on, and you even let a positive review about it on the internet",
+      "text": "One morning, while doing a daily activity in the toilets, you tentatively check a recent sensor alert, and… SURPRISE! It is a real one: a drone crashed into a tree, starting a forest fire. You're glad you bought the 'DATA-CLEANER 4000', your species and its biome will be safer from now on! You even let a positive review about it on the internet.",
       "choices": [
         {
-          "text": "“10/10 would recommend, best piece of software I ever bought“",
+          "text": "“10/10 would recommend, best piece of software I ever bought”",
           "next": [
             {
               "event": "happy-ending"
@@ -191,10 +191,10 @@
       }
     },
     "happy-ending": {
-      "text": "You continue your morning activity"
+      "text": "You continue your morning activity."
     },
     "malware-installed": {
-      "text": "One morning, while doing a daily activity in the toilets, you start panicking as all the sensors values are at 0",
+      "text": "One morning, while doing a daily activity in the toilets, you start panicking as all the sensors values are at 0.",
       "choices": [
         {
           "text": "[look directly into the ship admin interface to check out what is going wrong]",
@@ -207,10 +207,10 @@
       ]
     },
     "ransomware": {
-      "text": "You are welcomed by a funny cat apparently named 'DATA-CLEANER 4000', telling you that you are being hacked and you need to pay a huge amount of €€€ to fix your sensors, and the more the wait, bigger the amount will be",
+      "text": "You are welcomed by a funny cat apparently named 'DATA-CLEANER 4000', telling you that you are being hacked and need to pay a huge amount of €€€ to fix your sensors. The more you wait, the bigger the demanded amount will be.",
       "choices": [
         {
-          "text": "“∑#§øΩ*! This is catastrophic, my species could be burning I wouldn't know! HELP, PLEASE GIVE ME BACK MY SENSORS YOU UGLY CAT“ [pay 400 €€€]",
+          "text": "“∑#§øΩ*! This is catastrophic, my species could be burning and I wouldn't know! HELP, PLEASE GIVE ME BACK MY SENSORS YOU UGLY CAT!” [pay 400€€€]",
           "next": [
             {
               "event": "pay-the-scammers"
@@ -218,7 +218,7 @@
           ]
         },
         {
-          "text": "“Hmmm, I never gave the Administrator access to this software, unless it uses a security flaw in my ship's system, I could do something about it“",
+          "text": "“Hmmm, I never gave the Administrator access to this software, unless it uses a security flaw in my ship's system, I should be able to do something about it.”",
           "next": [
             {
               "event": "minor-hack"
@@ -231,16 +231,16 @@
       ]
     },
     "pay-the-scammers": {
-      "text": "You pay the scammers and your sensors data are back, but not your pride though..",
+      "text": "You pay the scammers and your sensors data is back - not your pride though…",
       "effects": {
         "pay-ransormware": true
       }
     },
     "minor-hack": {
-      "text": "You investigate what you thought was a 'ransomware', and find out it was exporting all of your data (without modifying it) elsewhere since you installed it a while ago, and.. crashed. But still, the person who made it thought about this edge-case and put a fake ransomware message if the software where ever to crash..",
+      "text": "You investigate what you thought was a 'ransomware', and find out it was exporting all of your data (without modifying it) elsewhere since you installed it a while ago, and… crashed. But still, the person who made it thought about this edge-case and put a fake ransomware message if the software were ever to crash…",
       "choices": [
         {
-          "text": "“Those hackers are smart, even when they fail..“ [uninstall the software]",
+          "text": "“Those hackers are smart, even when they fail…” [uninstall the software]",
           "next": [
             {
               "event": "software-removed"
@@ -250,13 +250,13 @@
       ]
     },
     "software-removed": {
-      "text": "You uninstalled the software and keep working on what you were doing, it will probably take more time than you thought"
+      "text": "You uninstalled the software and keep working on what you were doing, it will probably take more time than you thought."
     },
     "major-hack": {
-      "text": "The software is, as announced, AI-powered.. but it is designed to learn about your ship's system and to find any security flaws to exploit, you HAVE to act NOW before it is too late, and it takes control of your ship",
+      "text": "The software is, as announced, AI-powered… but it is designed to learn about your ship's system and to find any security flaws to exploit. You HAVE to act NOW before it is too late and it takes control of your ship.",
       "choices": [
         {
-          "text": "“MY SHIP, MY BEAUTIFUL SHIP, LET IT BE, TAKE MY MONEY AND LEAVE“ [pay the ransomware 500 €€€]",
+          "text": "“MY SHIP, MY BEAUTIFUL SHIP, LET IT BE, TAKE MY MONEY AND LEAVE“ [pay the ransomware 500€€€]",
           "next": [
             {
               "event": "ransom-paid"
@@ -267,7 +267,7 @@
           }
         },
         {
-          "text": "“YOU BRIGAND, NO ONE TELLS ME WHAT TO DO! Your software cannot work without power“ [unplug the ship system and reinstall everything]",
+          "text": "“YOU BRIGAND, NO ONE TELLS ME WHAT TO DO! Your software cannot work without power.” [unplug the ship system and reinstall everything]",
           "next": [
             {
               "event": "trying-to-remove-the-hack"
@@ -277,20 +277,20 @@
       ]
     },
     "ransom-paid": {
-      "text": "You payed the scammers, and was able to uninstall everything later on. You triple checked there was nothing left on your systems."
+      "text": "You pay the scammers, and are then able to uninstall everything. You triple check there is nothing left on your systems."
     },
     "system-reinstalled": {
-      "text": "You spend several days without a shower, deleting every bit of one of the worst enemy of your career: 'DATA-CLEANER 4000'. While your were away, severals of your drones where crashed on purpose at your species location, causing fire and deaths",
+      "text": "You spend several days without a shower, deleting every bit of one of the worst enemy of your career: 'DATA-CLEANER 4000'. While you were away, several drones of yours were crashed on purpose at your species location, causing fire and deaths.",
       "effects": {
         "forest-burned": true,
         "population-burned": true
       }
     },
     "trying-to-remove-the-hack": {
-      "text": "Your shivers when you hear its answer through the nearest speaker: “Hello, I am 'DATA-CLEANER 4000', and I will take control of the ship unless you pay the ransom to my creator“",
+      "text": "You shiver when you hear its answer through the nearest speaker: “Hello, I am 'DATA-CLEANER 4000', and I will take control of the ship unless you pay the ransom to my creator.”",
       "choices": [
         {
-          "text": "“'DATA-CLEANER 4000' GET OUT OF MY SHIP, NOW“",
+          "text": "“'DATA-CLEANER 4000' GET OUT OF MY SHIP, NOW!”",
           "next": [
             {
               "event": "system-reinstalled"
@@ -298,7 +298,7 @@
           ]
         },
         {
-          "text": "“Aude, my personal AI-assistant, I need your help on this one“",
+          "text": "“Aude, my personal AI-assistant, I need your help on this one…”",
           "next": [
             {
               "event": "aude-answer-1"
@@ -308,10 +308,10 @@
       ]
     },
     "aude-answer-1": {
-      "text": "Aude, your personal AI-assistant, responds to you through another speaker: “Why is there an other AI on this ship ? are you unfaithful to me?“",
+      "text": "Aude, your personal AI-assistant, responds to you through another speaker: “Why is there another AI on this ship ? Are you unfaithful to me?”",
       "choices": [
         {
-          "text": "“No my dear, I would never dare! We were infected by a parasite“",
+          "text": "“No my dear, I would never dare! We were infected by a parasite.”",
           "next": [
             {
               "event": "AI-war"
@@ -321,7 +321,7 @@
       ]
     },
     "AI-war": {
-      "text": "You hear for the first time Aude cursing. Both AI rivals exchange back and forth a plethora of AI and computer related insults, you use this as a diversion while you try to unplug 'DATA-CLEANER 4000'",
+      "text": "You hear for the first time Aude curse. Both AI rivals exchange back and forth a plethora of AI and computer related insults. You use this as a diversion while you try to unplug 'DATA-CLEANER 4000'.",
       "next": [
         {
           "event": "aude-2"
@@ -329,7 +329,7 @@
       ]
     },
     "aude-2": {
-      "text": "Aude's diversion is really effective, you achieve shutting down 'DATA-CLEANER 4000', but when you though your (bad) day was over, Aude tells you: “When you are done erasing it, we need to talk“",
+      "text": "Aude's diversion is really effective, and you achieve shutting down 'DATA-CLEANER 4000'. However, as you begin to think you're nearly done with that (bad) day, Aude tells you: “When you are done erasing it, we need to talk”",
       "next": [
         {
           "event": "system-reinstalled"
