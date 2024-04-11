@@ -123,7 +123,7 @@
       "text": "You close the website and continue what you were doing."
     },
     "order-received": {
-      "text": "One morning, while doing a daily activity in the toilets, you remember you bought some time ago a revolutionary AI-powered post-processing noise-remover algorithm named 'DATA-CLEANER 4000'. But you actually never received the download mail.",
+      "text": "One morning, during your daily sitting on the toilets, you remember you bought some time ago a revolutionary AI-powered post-processing noise-remover algorithm named 'DATA-CLEANER 4000'. But you actually never received the download mail.",
       "next": [
         {
           "event": "download-software"
@@ -175,7 +175,7 @@
       ]
     },
     "software-is-working-well": {
-      "text": "One morning, while doing a daily activity in the toilets, you tentatively check a recent sensor alert, and… SURPRISE! It is a real one: a drone crashed into a tree, starting a forest fire. You're glad you bought the 'DATA-CLEANER 4000', your species and its biome will be safer from now on! You even let a positive review about it on the internet.",
+      "text": "One morning, during your daily sitting on the toilets, you risk looking at a recent sensor alert, and… SURPRISE! This one is a real one: a drone crashed into a tree and started a forest fire. You're glad you bought the 'DATA-CLEANER 4000', your species and its biome will be safer from now on! You even leave a positive review about it on the internet.",
       "choices": [
         {
           "text": "“10/10 would recommend, best piece of software I ever bought”",
@@ -194,7 +194,7 @@
       "text": "You continue your morning activity."
     },
     "malware-installed": {
-      "text": "One morning, while doing a daily activity in the toilets, you start panicking as all the sensors values are at 0.",
+      "text": "One morning, during your daily sitting on the toilets, you start panicking as all the sensors values are at 0.",
       "choices": [
         {
           "text": "[look directly into the ship admin interface to check out what is going wrong]",
