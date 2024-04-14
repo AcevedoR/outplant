@@ -16,17 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
-      - name: Install Trunk
-        uses: jetli/trunk-action@v0.4.0
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Check code
+        run: npm run check
       - name: Run tests
-        run: cargo test
+        run: npm run test
       - name: Build
-        run: trunk --config ./Trunk.itch_io.toml build --release --features wasm-logging
+        run: npm run build
       - name: Install butler
         if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
         run: |
