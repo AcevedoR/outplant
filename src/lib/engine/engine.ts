@@ -1,4 +1,4 @@
-import { getChain, getChains, getEffect, getEvent } from "./chain_store";
+import { ChainStore } from "./chain_store";
 import { applyEffectTo } from "./effect";
 import type { Outcome } from "./model";
 import { addNamespaceToIdentifier, extractNamespace } from "./namespace";
@@ -23,12 +23,21 @@ type OngoingEventChain = {
 
 export class Engine {
     readonly state: GameState = new GameState();
+    private chainStore: ChainStore;
     private eventsToResolveThisTurn: Array<OngoingEventChain> = [];
     private eventsToResolveLater: Array<OngoingEventChain> = [];
     private ongoingPermanentEffects: Set<string> = new Set<string>();
     private justAppliedPermanentEffects: Array<string> = [];
     private readonly rng: RNG = new RNG();
-    private coolingDownChains: {[key: string]: number} = {};
+    private coolingDownChains: { [key: string]: number } = {};
+
+    constructor(chainStore?: ChainStore) {
+        if (chainStore) {
+            this.chainStore = chainStore;
+        } else {
+            this.chainStore = new ChainStore();
+        }
+    }
 
     public nextCycle(): ViewModel {
         if (this.eventsToResolveThisTurn.length !== 0) {
@@ -50,7 +59,7 @@ export class Engine {
         // Apply ongoing effects
         const ongoingEffectsToApply = Array.from(this.ongoingPermanentEffects)
             .filter(effectId => !this.justAppliedPermanentEffects.includes(effectId))
-            .map(effectId => getEffect(effectId));
+            .map(effectId => this.chainStore.getEffect(effectId));
         ongoingEffectsToApply.forEach(effect => applyEffectTo(effect, this.state));
 
         // Queue new chains
@@ -71,7 +80,7 @@ export class Engine {
         this.justAppliedPermanentEffects = [];
 
         const eventWithChoiceName = this.eventsToResolveThisTurn.pop()!.event;
-        const eventWithChoice = getEvent(eventWithChoiceName);
+        const eventWithChoice = this.chainStore.getEvent(eventWithChoiceName);
         const choice = (eventWithChoice.choices)![index];
 
         const outcome = this.selectNextEvent(choice.next);
@@ -92,7 +101,7 @@ export class Engine {
     }
 
     selectChains(): Array<OngoingEventChain> {
-        return getChains()
+        return this.chainStore.getChains()
             .filter(chain => !chain.trigger || chain.trigger.isSatisfiedBy(this.state)) // filter out chains with unsatisfied trigger
             .filter(chain => !this.coolingDownChains[chain.title]) // filter out chains that are cooling down
             .filter(chain => !this.eventsToResolveLater.find(event => event.event.startsWith(chain.title))) // filter out ongoing chains
@@ -115,7 +124,7 @@ export class Engine {
                 continue;
             }
 
-            const event = getEvent(eventToPlay.event);
+            const event = this.chainStore.getEvent(eventToPlay.event);
             const chainTitle = extractNamespace(eventToPlay.event);
 
             if (event.text) {
@@ -150,7 +159,7 @@ export class Engine {
 
             if (event.next) {
                 const next = this.selectNextEvent(event.next);
-                const nextEvent = getEvent(next.event);
+                const nextEvent = this.chainStore.getEvent(next.event);
 
                 if (nextEvent.effects) {
                     this.applyEffects(nextEvent.effects);
@@ -162,7 +171,7 @@ export class Engine {
                 });
             } else {
                 // We've reached the end of the chain
-                this.coolingDownChains[chainTitle] = getChain(chainTitle).cooldown;
+                this.coolingDownChains[chainTitle] = this.chainStore.getChain(chainTitle).cooldown;
             }
         }
 
@@ -182,7 +191,7 @@ export class Engine {
             .filter(effectName => effects[effectName])
             .map(effectName => ({
                 name: effectName,
-                ...getEffect(effectName),
+                ...this.chainStore.getEffect(effectName),
             }));
 
         const activatedInstantEffects = effectActivations

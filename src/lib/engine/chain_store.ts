@@ -1,67 +1,69 @@
-import type { Chain, ChainEvent, Effect, StateVariable } from "./model";
-import { addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent } from "./namespace";
-import { Trigger, type Comparator } from "./trigger";
+import type {Chain, ChainEvent, Effect, StateVariable} from "./model";
+import {type Comparator, Trigger} from "./trigger";
+import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
 
-const chainFiles = import.meta.glob(["/chains/*.json", "!**/schema.json"], {eager: true});
 
-const defaultStore: ChainStore = {
-    chains: {},
-    events: {},
-    effects: {},
-};
+export class ChainStore {
+    readonly chains: { [key: string]: Chain } = {};
+    events: { [key: string]: ChainEvent } = {};
+    effects: { [key: string]: Effect } = {};
 
-export function getChain(title: string): Chain {
-    return defaultStore.chains[title];
-}
 
-export function getChains(): Array<Chain> {
-    return Object.values(defaultStore.chains);
-}
+    public getChain(title: string): Chain {
+        return this.chains[title];
+    }
 
-export function getEvent(eventName: string): ChainEvent {
-    return defaultStore.events[eventName];
-}
+    public getChains(): Array<Chain> {
+        return Object.values(this.chains);
+    }
 
-export function getEffect(effectName: string): Effect {
-    return defaultStore.effects[effectName];
-}
+    public getEvent(eventName: string): ChainEvent {
+        return this.events[eventName];
+    }
 
-function initStore() {
-    for (const chainFile in chainFiles) {
-        const jsonChain = chainFiles[chainFile] as JSONChain;
+    public getEffect(effectName: string): Effect {
+        return this.effects[effectName];
+    }
 
-        const trigger = jsonChain.trigger ?
-            new Trigger(jsonChain.trigger.comparator, jsonChain.trigger.target, jsonChain.trigger.value) :
-            undefined;
+    constructor(options?: ConstructorOptions) {
+        const chainFiles = getChainsFiles(options);
+        for (const chainFile in chainFiles) {
+            const jsonChain = chainFiles[chainFile] as JSONChain;
 
-        defaultStore.chains[jsonChain.title] = {
-            ...jsonChain,
-            trigger,
-            cooldown: jsonChain.cooldown || 0,
-            autoSelect: jsonChain.autoSelect || false,
-        };
+            const trigger = jsonChain.trigger ?
+                new Trigger(jsonChain.trigger.comparator, jsonChain.trigger.target, jsonChain.trigger.value) :
+                undefined;
 
-        for (const eventId in jsonChain.events) {
-            const event = jsonChain.events[eventId];
-            setNamespaceInEvent(event, jsonChain.title);
-            defaultStore.events[addNamespaceToIdentifier(eventId, jsonChain.title)] = event;
-        }
-
-        if (jsonChain.effects) {
-            addNamespaceToKeys(jsonChain.effects, jsonChain.title);
-            defaultStore.effects = {
-                ...defaultStore.effects,
-                ...jsonChain.effects,
+            this.chains[jsonChain.title] = {
+                ...jsonChain,
+                trigger,
+                cooldown: jsonChain.cooldown || 0,
+                autoSelect: jsonChain.autoSelect || false,
             };
+
+            for (const eventId in jsonChain.events) {
+                const event = jsonChain.events[eventId];
+                setNamespaceInEvent(event, jsonChain.title);
+                this.events[addNamespaceToIdentifier(eventId, jsonChain.title)] = event;
+            }
+
+            if (jsonChain.effects) {
+                addNamespaceToKeys(jsonChain.effects, jsonChain.title);
+                this.effects = {
+                    ...this.effects,
+                    ...jsonChain.effects,
+                };
+            }
         }
     }
 }
 
-type ChainStore = {
-    chains: { [key: string]: Chain };
-    events: { [key: string]: ChainEvent };
-    effects: { [key: string]: Effect };
-};
+function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
+    if (options && options.overrideInputChains) {
+        return options.overrideInputChains;
+    }
+    return import.meta.glob(["/chains/*.json", "!**/schema.json"], {eager: true});
+}
 
 type JSONChain = {
     title: string;
@@ -83,4 +85,6 @@ type JSONTrigger = {
     value: number;
 };
 
-initStore();
+type ConstructorOptions = {
+    overrideInputChains?: Record<string, any>
+}
