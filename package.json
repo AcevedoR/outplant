@@ -21,5 +21,8 @@
     "typescript": "^5.0.2",
     "vite": "^5.2.8",
     "vitest": "^1.5.0"
+  },
+  "dependencies": {
+    "@types/node": "^20.12.7"
   }
 }
