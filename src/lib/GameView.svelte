@@ -18,35 +18,28 @@
         },
     };
 
-    $: lines = (() => {
+    type DisplayModel = {
+        linesByChain: { [key: string]: Array<string> };
+        choices?: Array<string>;
+    }
+
+    $: displayModel = (() => {
         if ("isVictory" in viewModel) {
-            return [viewModel.isVictory ? "You won!" : "You lose!"];
+            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}} as DisplayModel;
         }
-
-        const lines = [];
-        for (let chain in viewModel.linesByChain) {
-            if (chain === viewModel.lastChain) {
-                continue;
-            }
-            lines.push(...viewModel.linesByChain[chain]);
-        }
-        if (viewModel.lastChain) {
-            lines.push(...viewModel.linesByChain[viewModel.lastChain]);
-        }
-
-        return lines;
+        return viewModel as DisplayModel;
     })();
 
     $: choices = (() => {
-        if ("choices" in viewModel) {
-            return viewModel.choices;
+        if ("choices" in displayModel) {
+            return displayModel.choices;
         }
         return undefined;
     })();
 
     $: gameStart = (() => {
-        if ("linesByChain" in viewModel) {
-            return !!viewModel.linesByChain.intro;
+        if ("linesByChain" in displayModel) {
+            return !!displayModel.linesByChain.intro;
         }
         return false;
     })();
@@ -84,8 +77,8 @@
         </ul>
     </header>
 
-    {#if lines.length !== 0}
-        <LogDisplayer {lines} />
+    {#if 'linesByChain' in displayModel && Object.keys(displayModel.linesByChain).length > 0}
+        <LogDisplayer linesByChain={displayModel.linesByChain} />
     {/if}
 
     {#if !("isVictory" in viewModel)}
