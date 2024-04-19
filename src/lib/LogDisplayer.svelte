@@ -41,12 +41,6 @@
         margin-top: 20px
     }
 
-    .highlight-group.log-displayer__entry-group .log-displayer__entry:last-of-type {
-        border: 1px solid var(--main-color-light);
-        padding: 5px;
-        margin-top: 20px
-    }
-
     .highlight-group.log-displayer__entry-group .log-displayer__entry:last-of-type::before {
         white-space: nowrap;
         content: ">";
