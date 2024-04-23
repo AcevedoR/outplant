@@ -18,16 +18,11 @@
         },
     };
 
-    type DisplayModel = {
-        linesByChain: { [key: string]: Array<string> };
-        choices?: Array<string>;
-    }
-
     $: displayModel = (() => {
         if ("isVictory" in viewModel) {
-            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}} as DisplayModel;
+            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}} as ViewModel;
         }
-        return viewModel as DisplayModel;
+        return viewModel as ViewModel;
     })();
 
     $: choices = (() => {

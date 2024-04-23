@@ -4,7 +4,6 @@
 
     const getLastChain = (linesByChain: { [key: string]: Array<string> }) => {
         let entries = Object.entries(linesByChain);
-        console.log(entries.map(([chainName, lines]) => lines.length));
         if(entries.map(([chainName, lines]) => lines.length).flat().reduce((a,b) => a+b) > 1) {
             return entries[entries.length-1][0];
         }
@@ -35,6 +34,7 @@
         position: relative;
     }
 
+    /* between each ul.log-displayer__entry-group */
     section ul.log-displayer__entry-group + ul.log-displayer__entry-group {
         border-top: 1px solid var(--main-color-light);
         padding-top: 20px;
