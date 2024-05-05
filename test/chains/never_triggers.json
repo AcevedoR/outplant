@@ -1,6 +1,7 @@
 {
   "title": "starvation",
   "cooldown": 5,
+  "autoSelect": true,
   "trigger": {
     "comparator": "gt",
     "target": "population",

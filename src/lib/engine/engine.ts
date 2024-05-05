@@ -1,7 +1,7 @@
 import {ChainStore} from "./chain_store";
 import {checkIsSatisfied} from "./condition";
 import {applyEffectTo} from "./effect";
-import type {Outcome} from "./model";
+import type {Effect, Outcome} from "./model";
 import {addNamespaceToIdentifier, extractNamespace} from "./namespace";
 import {RNG} from "./rng";
 import {GameState} from "./state";
@@ -9,13 +9,32 @@ import {translate} from "./translator";
 
 const DEFAULT_LOCALE = "en_US";
 
-export type ViewModel = {
+export type GameInfos = OngoingGameInfos | EndOfGameInfos;
+export type EndOfGameInfos = {
+    isVictory: boolean;
+};
+export type OngoingGameInfos = {
     linesByChain: { [key: string]: Array<string> };
     lastChain?: string;
     choices?: Array<ViewChoice>;
-} | {
-    isVictory: boolean;
-};
+    stateInformations?: StateInformations;
+}
+export const isEndOfGameInfos = (gameInfos: GameInfos): gameInfos is EndOfGameInfos =>
+    'isVictory' in gameInfos;
+export const isOngoingGameInfos = (gameInfos: GameInfos): gameInfos is OngoingGameInfos =>
+    'linesByChain' in gameInfos;
+
+
+export type StateInformations = {
+    populationChange: number,
+    ecologyChange: number,
+    moneyChange: number,
+
+    // TODO we need to differenciate permanent effects (populationChange)
+    // from instant effects
+    // we could return the instant effects as an array of Changes
+    // and add a UI Feature to display these changes as Popups
+}
 
 export type ViewChoice = {
     text: string;
@@ -32,7 +51,7 @@ export class Engine {
     private chainStore: ChainStore;
     private eventsToResolveThisTurn: Array<OngoingEventChain> = [];
     private eventsToResolveLater: Array<OngoingEventChain> = [];
-    private ongoingPermanentEffects: Set<string> = new Set<string>();
+    private ongoingPermanentEffects: Record<string, Effect> = {};
     private justAppliedPermanentEffects: Array<string> = [];
     private readonly rng: RNG = new RNG();
     private coolingDownChains: { [key: string]: number } = {};
@@ -45,7 +64,7 @@ export class Engine {
         }
     }
 
-    public nextCycle(): ViewModel {
+    public nextCycle(): GameInfos {
         if (this.eventsToResolveThisTurn.length !== 0) {
             throw new Error('nextCycle called when some events of current turn were waiting to be resolved');
         }
@@ -63,7 +82,7 @@ export class Engine {
         this.state.nextTurn();
 
         // Apply ongoing effects
-        const ongoingEffectsToApply = Array.from(this.ongoingPermanentEffects)
+        const ongoingEffectsToApply = Object.keys(this.ongoingPermanentEffects)
             .filter(effectId => !this.justAppliedPermanentEffects.includes(effectId))
             .map(effectId => this.chainStore.getEffect(effectId));
         ongoingEffectsToApply.forEach(effect => applyEffectTo(effect, this.state));
@@ -78,7 +97,7 @@ export class Engine {
         return this.unstackEventsToResolveThisTurn();
     }
 
-    public makeChoice(index: number): ViewModel {
+    public makeChoice(index: number): GameInfos {
         if (this.eventsToResolveThisTurn.length === 0) {
             throw new Error('makeChoice called when no events of current turn were waiting to be resolved');
         }
@@ -121,7 +140,7 @@ export class Engine {
             }));
     }
 
-    unstackEventsToResolveThisTurn(): ViewModel {
+    unstackEventsToResolveThisTurn(): GameInfos {
         const eventsByChain: { [key: string]: Array<string> } = {};
 
         while (this.eventsToResolveThisTurn.length !== 0) {
@@ -152,9 +171,9 @@ export class Engine {
 
                 // Test for win and lose conditions
                 if (this.hasWon()) {
-                    return {isVictory: true};
+                    return { isVictory: true };
                 } else if (this.hasLost()) {
-                    return {isVictory: false};
+                    return { isVictory: false };
                 }
 
                 return {
@@ -165,6 +184,7 @@ export class Engine {
                             text: translate(choice.text, DEFAULT_LOCALE),
                             hidden: !checkIsSatisfied(choice.if, this.state),
                         })),
+                    stateInformations: this.createStateInformations(),
                 }
             }
 
@@ -189,12 +209,15 @@ export class Engine {
         // We resolved every event that could be during this turn
         // Test for win and lose conditions
         if (this.hasWon()) {
-            return {isVictory: true};
+            return { isVictory: true };
         } else if (this.hasLost()) {
-            return {isVictory: false};
+            return { isVictory: false };
         }
 
-        return {linesByChain: eventsByChain};
+        return {
+            linesByChain: eventsByChain,
+            stateInformations: this.createStateInformations(),
+        };
     }
 
     applyEffects(effects: { [key: string]: boolean }) {
@@ -211,17 +234,17 @@ export class Engine {
 
         const newlyActivatedPermanentEffects = effectActivations
             .filter(effect => effect.type === 'permanent')
-            .filter(effect => !this.ongoingPermanentEffects.has(effect.name));
+            .filter(effect => !Object.keys(this.ongoingPermanentEffects).find(effectId => effectId === effect.name));
 
         newlyActivatedPermanentEffects.forEach(effect => {
             applyEffectTo(effect, this.state);
-            this.ongoingPermanentEffects.add(effect.name);
+            this.ongoingPermanentEffects[effect.name] = effect;
             this.justAppliedPermanentEffects.push(effect.name);
         });
 
         const effectDeactivations = Object.keys(effects)
             .filter(effectName => !effects[effectName]);
-        effectDeactivations.forEach(effectName => this.ongoingPermanentEffects.delete(effectName));
+        effectDeactivations.forEach(effectName => delete this.ongoingPermanentEffects[effectName]);
     }
 
     hasLost(): boolean {
@@ -243,5 +266,32 @@ export class Engine {
                 weight: outcome.weight,
             }))
         );
+    }
+
+    createStateInformations(): StateInformations {
+        let populationChange = 1;
+        let moneyChange = 0;
+        let ecologyChange = 0;
+
+        for (const [effectId, effect] of Object.entries(this.ongoingPermanentEffects)) {
+            const difference = effect.operation === 'subtract' ? -effect.value : effect.value;
+            switch (effect.target) {
+                case "population":
+                    populationChange += difference;
+                    break;
+                case "ecology":
+                    ecologyChange += difference;
+                    break;
+                case "money":
+                    moneyChange += difference;
+                    break;
+            }
+        }
+
+        return {
+            ecologyChange,
+            populationChange,
+            moneyChange
+        }
     }
 }
