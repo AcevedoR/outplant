@@ -12,9 +12,21 @@ export type ViewModel = {
     linesByChain: { [key: string]: Array<string> };
     lastChain?: string;
     choices?: Array<string>;
+    stateInformations?: StateInformations;
 } | {
     isVictory: boolean;
 };
+
+export type StateInformations = {
+    populationGrowth: number,
+    economyGrowth: number,
+    moneyGrowth: number,
+
+// TODO we need to differenciate permanent effects (populationGrowth)
+// from instant effects
+// we could return the instant effects as an array of Changes
+// and add a UI Feature to display these changes as Popups
+}
 
 type OngoingEventChain = {
     timer: number;
