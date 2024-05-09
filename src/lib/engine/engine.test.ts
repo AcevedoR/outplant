@@ -1,5 +1,5 @@
 import {describe, expect, expectTypeOf, it} from 'vitest'
-import {Engine, ViewModel} from "./engine";
+import {Engine} from "./engine";
 import * as fs from "fs";
 import path from "path";
 import {ChainStore} from "./chain_store";
@@ -16,6 +16,7 @@ describe('engine test', () => {
 
         expect(engine.state.population).equal(7);
     })
+
     it('should return population growth to the user', () => {
         const engine = new Engine(new ChainStore({overrideInputChains: getChainFromDisk('never_triggers.json')}));
 
@@ -25,12 +26,23 @@ describe('engine test', () => {
         expect(res.stateInformations.populationGrowth, 'default population growth should be').equal(1);
     })
 
+    it('should return decreasing ecology when having a bad permanent effect', () => {
+        const engine = new Engine(new ChainStore({overrideInputChains: getChainFromDisk('ecology_permanent_drop.json')}));
+
+        const res = engine.nextCycle();
+
+        expect(res).toHaveProperty('stateInformations');
+        expect(res.stateInformations.ecologyGrowth, 'ecology should be decreasing').equal(-2);
+        expect(engine.state.ecology, 'ecology should have decrease by 2').equal(8);
+    })
+
     it('a simple autoselect chain should always resolve', () => {
         const engine = new Engine(new ChainStore({overrideInputChains: getChainFromDisk('a_simple_empty_chain.json')}));
 
         const firstTurn = engine.nextCycle();
 
-        expect(firstTurn).to.deep.equal({linesByChain: {'simple empty chain': ["Hello world!"]}});
+        expect(firstTurn).toHaveProperty('linesByChain');
+        expect(firstTurn.linesByChain).toStrictEqual({'simple empty chain': ["Hello world!"]});
     })
 })
 
