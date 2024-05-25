@@ -8,14 +8,21 @@ import { translate } from "./translator";
 
 const DEFAULT_LOCALE = "en_US";
 
-export type ViewModel = {
+export type GameInfos = OngoingGameInfos | EndOfGameInfos;
+export type EndOfGameInfos = {
+    isVictory: boolean;
+    type: "EndOfGameInfos";
+};
+export type OngoingGameInfos = {
     linesByChain: { [key: string]: Array<string> };
     lastChain?: string;
     choices?: Array<string>;
     stateInformations?: StateInformations;
-} | {
-    isVictory: boolean;
-};
+    type: "OngoingGameInfos";
+}
+export const isEndOfGameInfos = (x: GameInfos): x is EndOfGameInfos =>
+    'isVictory' in x;
+
 
 export type StateInformations = {
     populationGrowth: number,
@@ -51,7 +58,7 @@ export class Engine {
         }
     }
 
-    public nextCycle(): ViewModel {
+    public nextCycle(): GameInfos {
         if (this.eventsToResolveThisTurn.length !== 0) {
             throw new Error('nextCycle called when some events of current turn were waiting to be resolved');
         }
@@ -84,7 +91,7 @@ export class Engine {
         return this.unstackEventsToResolveThisTurn();
     }
 
-    public makeChoice(index: number): ViewModel {
+    public makeChoice(index: number): GameInfos {
         if (this.eventsToResolveThisTurn.length === 0) {
             throw new Error('makeChoice called when no events of current turn were waiting to be resolved');
         }
@@ -124,7 +131,7 @@ export class Engine {
             }));
     }
 
-    unstackEventsToResolveThisTurn(): ViewModel {
+    unstackEventsToResolveThisTurn(): GameInfos {
         const eventsByChain: { [key: string]: Array<string> } = {};
 
         while (this.eventsToResolveThisTurn.length !== 0) {
@@ -155,9 +162,9 @@ export class Engine {
 
                 // Test for win and lose conditions
                 if (this.hasWon()) {
-                    return { isVictory: true };
+                    return { isVictory: true, type:"EndOfGameInfos" };
                 } else if (this.hasLost()) {
-                    return { isVictory: false };
+                    return { isVictory: false, type:"EndOfGameInfos" };
                 }
 
                 return {
@@ -166,7 +173,8 @@ export class Engine {
                     choices: event.choices
                         .map(choice => choice.text)
                         .map(text => translate(text, DEFAULT_LOCALE)),
-                    stateInformations: this.createStateInformations()
+                    stateInformations: this.createStateInformations(),
+                    type: "OngoingGameInfos"
                 }
             }
 
@@ -191,14 +199,15 @@ export class Engine {
         // We resolved every event that could be during this turn
         // Test for win and lose conditions
         if (this.hasWon()) {
-            return { isVictory: true };
+            return { isVictory: true, type: "EndOfGameInfos" };
         } else if (this.hasLost()) {
-            return { isVictory: false };
+            return { isVictory: false, type: "EndOfGameInfos" };
         }
 
         return {
             linesByChain: eventsByChain,
             stateInformations: this.createStateInformations(),
+            type: "OngoingGameInfos"
         };
     }
 

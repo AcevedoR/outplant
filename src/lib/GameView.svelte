@@ -1,13 +1,13 @@
 <script lang="ts">
     import VariableDashboardItem from "./VariableDashboardItem.svelte";
     import StarBackground from "./StarBackground.svelte";
-    import { Engine, type ViewModel } from "./engine/engine";
+    import { Engine, type GameInfos, type OngoingGameInfos } from "./engine/engine";
     import LogDisplayer from "./LogDisplayer.svelte";
     import ChoiceDisplayer from "./ChoiceDisplayer.svelte";
 
     const engine = new Engine();
 
-    let viewModel: ViewModel = {
+    let viewModel: GameInfos = {
         linesByChain: {
             intro: [
                 "Hello, I'm Aude, your personal AI that you created a while ago to help you and to remind you of your tasks. We are currently orbiting around an uninhabited planet, and your job is to introduce a new species on it. The end goal is to study how this species adapts to its environment, as well as finding new evolutionary traits that your company could patent and sell! You have just implemented the first subjects that you previously created in your lab. You told me that you were eager to watch them grow, and, hopefully, survive and adapt! You did not seem too sure to what extent it is wise for you to physically intervene with them, so, for now, you would try to let them be as much possible on their own.",
@@ -16,13 +16,14 @@
                 "You better start emerging soon from your sleep and get to work, go grab a coffee!",
             ],
         },
+        type:"OngoingGameInfos"
     };
 
     $: displayModel = (() => {
-        if ("isVictory" in viewModel) {
-            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}} as ViewModel;
+        if (viewModel.type === 'EndOfGameInfos') {
+            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}, type: "EndOfGameInfos"};
         }
-        return viewModel as ViewModel;
+        return viewModel as GameInfos;
     })();
 
     $: choices = (() => {
@@ -33,14 +34,15 @@
     })();
 
     $: gameStart = (() => {
-        if ("linesByChain" in displayModel) {
-            return !!displayModel.linesByChain.intro;
+        if (displayModel.type === 'OngoingGameInfos') {
+            return !!displayModel.linesByChain['intro'];
         }
         return false;
     })();
 
     function handleNext() {
         viewModel = engine.nextCycle();
+        console.log(viewModel); // FIXME remove
         updateCounters();
     }
 
@@ -65,9 +67,10 @@
 <div>
     <header>
         <ul class="variable-dashboard">
-            <VariableDashboardItem label="Pop" value={pop} />
-            <VariableDashboardItem label="Eco" value={eco} />
-            <VariableDashboardItem label="€€€" value={money} />
+<!--            FIXME: I didnt realized we were fetching data directly from the engine.. what should we do ? keep this ? or use the game informations ?-->
+            <VariableDashboardItem label="Pop" value={pop} growth={viewModel.stateInformations?.populationGrowth} />
+            <VariableDashboardItem label="Eco" value={eco} growth={viewModel.stateInformations?.ecologyGrowth} />
+            <VariableDashboardItem label="€€€" value={money} growth={viewModel.stateInformations?.moneyGrowth} />
             <VariableDashboardItem label="Turn" value={turnCounter} />
         </ul>
     </header>

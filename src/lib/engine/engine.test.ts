@@ -1,5 +1,5 @@
 import {describe, expect, expectTypeOf, it} from 'vitest'
-import {Engine} from "./engine";
+import {Engine, isEndOfGameInfos} from "./engine";
 import * as fs from "fs";
 import path from "path";
 import {ChainStore} from "./chain_store";
@@ -22,7 +22,10 @@ describe('engine test', () => {
 
         const res = engine.nextCycle();
 
-        expect(res).toHaveProperty('stateInformations');
+        if(isEndOfGameInfos(res)){
+            throw new Error('type should not be endofgame')
+        }
+        expect(res.stateInformations).not.empty;
         expect(res.stateInformations.populationGrowth, 'default population growth should be').equal(1);
     })
 
@@ -31,7 +34,10 @@ describe('engine test', () => {
 
         const res = engine.nextCycle();
 
-        expect(res).toHaveProperty('stateInformations');
+        if(isEndOfGameInfos(res)){
+            throw new Error('type should not be endofgame')
+        }
+        expect(res.stateInformations).not.empty;
         expect(res.stateInformations.ecologyGrowth, 'ecology should be decreasing').equal(-2);
         expect(engine.state.ecology, 'ecology should have decrease by 2').equal(8);
     })
@@ -41,7 +47,10 @@ describe('engine test', () => {
 
         const firstTurn = engine.nextCycle();
 
-        expect(firstTurn).toHaveProperty('linesByChain');
+        if(isEndOfGameInfos(firstTurn)){
+            throw new Error('type should not be endofgame')
+        }
+    
         expect(firstTurn.linesByChain).toStrictEqual({'simple empty chain': ["Hello world!"]});
     })
 })
