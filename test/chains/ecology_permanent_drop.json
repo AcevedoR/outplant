@@ -1,0 +1,21 @@
+{
+  "title": "starvation",
+  "cooldown": 5,
+  "autoSelect": true,
+  "events": {
+    "start": {
+      "text": "permanent ecology drop",
+      "effects":{
+        "permanent_ecology_drop": true
+      }
+    }
+  },
+  "effects": {
+    "permanent_ecology_drop": {
+      "operation": "subtract",
+      "value": 2,
+      "type": "permanent",
+      "target": "ecology"
+    }
+  }
+}

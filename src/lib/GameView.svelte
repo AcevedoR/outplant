@@ -1,13 +1,13 @@
 <script lang="ts">
     import VariableDashboardItem from "./VariableDashboardItem.svelte";
     import StarBackground from "./StarBackground.svelte";
-    import { Engine, type ViewModel } from "./engine/engine";
+    import {Engine, type GameInfos, isEndOfGameInfos, isOngoingGameInfos, type OngoingGameInfos} from "./engine/engine";
     import LogDisplayer from "./LogDisplayer.svelte";
     import ChoiceDisplayer from "./ChoiceDisplayer.svelte";
 
     const engine = new Engine();
 
-    let viewModel: ViewModel = {
+    let viewModel: GameInfos = {
         linesByChain: {
             intro: [
                 "Hello, I'm Aude, your personal AI that you created a while ago to help you and to remind you of your tasks. We are currently orbiting around an uninhabited planet, and your job is to introduce a new species on it. The end goal is to study how this species adapts to its environment, as well as finding new evolutionary traits that your company could patent and sell! You have just implemented the first subjects that you previously created in your lab. You told me that you were eager to watch them grow, and, hopefully, survive and adapt! You did not seem too sure to what extent it is wise for you to physically intervene with them, so, for now, you would try to let them be as much possible on their own.",
@@ -19,10 +19,10 @@
     };
 
     $: displayModel = (() => {
-        if ("isVictory" in viewModel) {
-            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}} as ViewModel;
+        if (isEndOfGameInfos(viewModel)) {
+            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}} as OngoingGameInfos;
         }
-        return viewModel as ViewModel;
+        return viewModel as GameInfos;
     })();
 
     $: choices = (() => {
@@ -33,14 +33,15 @@
     })();
 
     $: gameStart = (() => {
-        if ("linesByChain" in displayModel) {
-            return !!displayModel.linesByChain.intro;
+        if (isOngoingGameInfos(viewModel)) {
+            return !!displayModel.linesByChain['intro'];
         }
         return false;
     })();
 
     function handleNext() {
         viewModel = engine.nextCycle();
+        console.log(viewModel); // FIXME remove
         updateCounters();
     }
 
@@ -65,9 +66,9 @@
 <div>
     <header>
         <ul class="variable-dashboard">
-            <VariableDashboardItem label="Pop" value={pop} />
-            <VariableDashboardItem label="Eco" value={eco} />
-            <VariableDashboardItem label="€€€" value={money} />
+            <VariableDashboardItem label="Pop" value={pop} growth={isOngoingGameInfos(viewModel) ? viewModel.stateInformations?.populationGrowth : undefined} />
+            <VariableDashboardItem label="Eco" value={eco} growth={isOngoingGameInfos(viewModel) ? viewModel.stateInformations?.ecologyGrowth : undefined} />
+            <VariableDashboardItem label="€€€" value={money} growth={isOngoingGameInfos(viewModel) ? viewModel.stateInformations?.moneyGrowth : undefined} />
             <VariableDashboardItem label="Turn" value={turnCounter} />
         </ul>
     </header>
