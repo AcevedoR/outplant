@@ -1,7 +1,7 @@
 <script lang="ts">
     import VariableDashboardItem from "./VariableDashboardItem.svelte";
     import StarBackground from "./StarBackground.svelte";
-    import { Engine, type GameInfos, type OngoingGameInfos } from "./engine/engine";
+    import {Engine, type GameInfos, isEndOfGameInfos, isOngoingGameInfos, type OngoingGameInfos} from "./engine/engine";
     import LogDisplayer from "./LogDisplayer.svelte";
     import ChoiceDisplayer from "./ChoiceDisplayer.svelte";
 
@@ -16,12 +16,11 @@
                 "You better start emerging soon from your sleep and get to work, go grab a coffee!",
             ],
         },
-        type:"OngoingGameInfos"
     };
 
     $: displayModel = (() => {
-        if (viewModel.type === 'EndOfGameInfos') {
-            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}, type: "EndOfGameInfos"};
+        if (isEndOfGameInfos(viewModel)) {
+            return {linesByChain: {end:[viewModel.isVictory ? "You won!" : "You lose!"]}} as OngoingGameInfos;
         }
         return viewModel as GameInfos;
     })();
@@ -34,7 +33,7 @@
     })();
 
     $: gameStart = (() => {
-        if (displayModel.type === 'OngoingGameInfos') {
+        if (isOngoingGameInfos(viewModel)) {
             return !!displayModel.linesByChain['intro'];
         }
         return false;
@@ -67,10 +66,9 @@
 <div>
     <header>
         <ul class="variable-dashboard">
-<!--            FIXME: I didnt realized we were fetching data directly from the engine.. what should we do ? keep this ? or use the game informations ?-->
-            <VariableDashboardItem label="Pop" value={pop} growth={viewModel.stateInformations?.populationGrowth} />
-            <VariableDashboardItem label="Eco" value={eco} growth={viewModel.stateInformations?.ecologyGrowth} />
-            <VariableDashboardItem label="€€€" value={money} growth={viewModel.stateInformations?.moneyGrowth} />
+            <VariableDashboardItem label="Pop" value={pop} growth={isOngoingGameInfos(viewModel) ? viewModel.stateInformations?.populationGrowth : undefined} />
+            <VariableDashboardItem label="Eco" value={eco} growth={isOngoingGameInfos(viewModel) ? viewModel.stateInformations?.ecologyGrowth : undefined} />
+            <VariableDashboardItem label="€€€" value={money} growth={isOngoingGameInfos(viewModel) ? viewModel.stateInformations?.moneyGrowth : undefined} />
             <VariableDashboardItem label="Turn" value={turnCounter} />
         </ul>
     </header>

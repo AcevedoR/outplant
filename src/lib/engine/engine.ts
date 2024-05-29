@@ -11,17 +11,17 @@ const DEFAULT_LOCALE = "en_US";
 export type GameInfos = OngoingGameInfos | EndOfGameInfos;
 export type EndOfGameInfos = {
     isVictory: boolean;
-    type: "EndOfGameInfos";
 };
 export type OngoingGameInfos = {
     linesByChain: { [key: string]: Array<string> };
     lastChain?: string;
     choices?: Array<string>;
     stateInformations?: StateInformations;
-    type: "OngoingGameInfos";
 }
-export const isEndOfGameInfos = (x: GameInfos): x is EndOfGameInfos =>
-    'isVictory' in x;
+export const isEndOfGameInfos = (gameInfos: GameInfos): gameInfos is EndOfGameInfos =>
+    'isVictory' in gameInfos;
+export const isOngoingGameInfos = (gameInfos: GameInfos): gameInfos is OngoingGameInfos =>
+    'linesByChain' in gameInfos;
 
 
 export type StateInformations = {
@@ -162,9 +162,9 @@ export class Engine {
 
                 // Test for win and lose conditions
                 if (this.hasWon()) {
-                    return { isVictory: true, type:"EndOfGameInfos" };
+                    return { isVictory: true };
                 } else if (this.hasLost()) {
-                    return { isVictory: false, type:"EndOfGameInfos" };
+                    return { isVictory: false };
                 }
 
                 return {
@@ -174,7 +174,6 @@ export class Engine {
                         .map(choice => choice.text)
                         .map(text => translate(text, DEFAULT_LOCALE)),
                     stateInformations: this.createStateInformations(),
-                    type: "OngoingGameInfos"
                 }
             }
 
@@ -199,15 +198,14 @@ export class Engine {
         // We resolved every event that could be during this turn
         // Test for win and lose conditions
         if (this.hasWon()) {
-            return { isVictory: true, type: "EndOfGameInfos" };
+            return { isVictory: true };
         } else if (this.hasLost()) {
-            return { isVictory: false, type: "EndOfGameInfos" };
+            return { isVictory: false };
         }
 
         return {
             linesByChain: eventsByChain,
             stateInformations: this.createStateInformations(),
-            type: "OngoingGameInfos"
         };
     }
 
