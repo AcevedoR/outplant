@@ -1,0 +1,35 @@
+{
+  "title": "a_simple_empty_chain_with_an_hidden_choice",
+  "cooldown": 0,
+  "autoSelect": true,
+  "events": {
+    "start": {
+      "text": "Hello world!",
+      "choices": [
+        {
+          "text": "an hidden choice because not enough money",
+          "next": [],
+          "if": {
+            "comparator": "gte",
+            "target": "money",
+            "value": 3000000
+          }
+        },
+        {
+          "text": "a displayed choice",
+          "next": []
+        },
+        {
+          "text": "a displayed choice because enough money",
+          "next": [],
+          "if": {
+            "comparator": "gte",
+            "target": "money",
+            "value": 20
+          }
+        }
+      ]
+    }
+  },
+  "effects": {}
+}
