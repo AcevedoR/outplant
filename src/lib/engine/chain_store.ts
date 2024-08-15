@@ -1,5 +1,4 @@
-import type {Chain, ChainEvent, Effect, StateVariable} from "./model";
-import {type Comparator, Trigger} from "./trigger";
+import type {Chain, ChainEvent, Condition, Effect, StateVariable} from "./model";
 import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
 
 
@@ -30,13 +29,8 @@ export class ChainStore {
         for (const chainFile in chainFiles) {
             const jsonChain = chainFiles[chainFile] as JSONChain;
 
-            const trigger = jsonChain.trigger ?
-                new Trigger(jsonChain.trigger.comparator, jsonChain.trigger.target, jsonChain.trigger.value) :
-                undefined;
-
             this.chains[jsonChain.title] = {
                 ...jsonChain,
-                trigger,
                 cooldown: jsonChain.cooldown || 0,
                 autoSelect: jsonChain.autoSelect || false,
             };
@@ -68,7 +62,7 @@ function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
 type JSONChain = {
     title: string;
     cooldown?: number;
-    trigger?: JSONTrigger;
+    trigger?: Condition;
     autoSelect?: boolean;
     events: {
         start: ChainEvent;
@@ -77,12 +71,6 @@ type JSONChain = {
     effects?: {
         [key: string]: Effect;
     }
-};
-
-type JSONTrigger = {
-    comparator: Comparator;
-    target: StateVariable;
-    value: number;
 };
 
 type ConstructorOptions = {

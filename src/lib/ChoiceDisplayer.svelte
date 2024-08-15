@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+    import type { ViewChoice } from './engine/engine';
 
-    export let choices: string[] | undefined;
+    export let choices: ViewChoice[] | undefined;
     export let gameStart: boolean;
 
     const dispatch = createEventDispatcher();
@@ -22,13 +23,15 @@
         <p class="choice-displayer__cta">{ "What's your response?" }</p>
         <ul class="choice-displayer__entries">
             {#each choices as choice, i (i)}
-                <li>
-                    <button
-                        type="button"
-                        class="choice-displayer__button"
-                        on:click={() => makeChoice(i)}
-                    > { choice } </button>
-                </li>
+                {#if !choice.hidden }
+                    <li>
+                        <button
+                            type="button"
+                            class="choice-displayer__button"
+                            on:click={() => makeChoice(i)}
+                        > { choice.text } </button>
+                    </li>
+                {/if }
             {/each}
         </ul>
     {:else if gameStart}

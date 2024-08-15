@@ -16,6 +16,11 @@
           ],
           "effects": {
             "major_drone_upgrade_payed": true
+          },
+          "if": {
+            "comparator": "gte",
+            "target": "money",
+            "value": 300
           }
         },
         {
@@ -33,6 +38,11 @@
           ],
           "effects": {
             "minor_drone_upgrade_payed": true
+          },
+          "if": {
+            "comparator": "gte",
+            "target": "money",
+            "value": 95
           }
         },
         {

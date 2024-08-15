@@ -1,9 +1,7 @@
-import {Trigger} from './trigger';
-
 export type Chain = {
     title: string;
     cooldown: number;
-    trigger?: Trigger;
+    trigger?: Condition;
     autoSelect: boolean;
 };
 
@@ -18,6 +16,7 @@ export type Choice = {
     text: string;
     next: Array<Outcome>;
     effects?: { [key: string]: boolean };
+    if?: Condition;
 };
 
 export type Outcome = {
@@ -34,4 +33,12 @@ export type Effect = {
     type: "instant" | "permanent";
 };
 
+export type Condition = {
+    comparator: Comparator;
+    target: StateVariable;
+    value: number;
+};
+
 export type StateVariable = "population" | "ecology" | "money";
+
+export type Comparator = "lt" | "lte" | "eq" | "gte" | "gt";

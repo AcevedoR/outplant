@@ -17,31 +17,7 @@
           "minimum": 1
         },
         "trigger": {
-          "type": "object",
-          "properties": {
-            "comparator": {
-              "type": "string",
-              "enum": [
-                "lt",
-                "lte",
-                "eq",
-                "gte",
-                "gt"
-              ]
-            },
-            "target": {
-              "$ref": "#/definitions/StateVariable"
-            },
-            "value": {
-              "type": "integer"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "comparator",
-            "target",
-            "value"
-          ]
+          "$ref": "#/definitions/Condition"
         },
         "autoSelect": {
           "type": "boolean",
@@ -80,6 +56,9 @@
                       "additionalProperties": {
                         "type": "boolean"
                       }
+                    },
+                    "if": {
+                      "$ref": "#/definitions/Condition"
                     }
                   },
                   "required": [
@@ -174,6 +153,33 @@
       "additionalProperties": false,
       "required": [
         "event"
+      ]
+    },
+    "Condition": {
+      "type": "object",
+      "properties": {
+        "comparator": {
+          "type": "string",
+          "enum": [
+            "lt",
+            "lte",
+            "eq",
+            "gte",
+            "gt"
+          ]
+        },
+        "target": {
+          "$ref": "#/definitions/StateVariable"
+        },
+        "value": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "comparator",
+        "target",
+        "value"
       ]
     },
     "StateVariable": {
