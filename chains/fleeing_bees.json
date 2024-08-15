@@ -2,7 +2,6 @@
   "$schema": "./schema.json",
   "title": "fleeing bees",
   "cooldown": 999,
-  "autoSelect": true,
   "trigger": {
     "target": "population",
     "comparator": "gte",
