@@ -1,4 +1,5 @@
 import { ChainStore } from "./chain_store";
+import { checkIsSatisfied } from "./condition";
 import { applyEffectTo } from "./effect";
 import type { Outcome } from "./model";
 import { addNamespaceToIdentifier, extractNamespace } from "./namespace";
@@ -11,9 +12,14 @@ const DEFAULT_LOCALE = "en_US";
 export type ViewModel = {
     linesByChain: { [key: string]: Array<string> };
     lastChain?: string;
-    choices?: Array<string>;
+    choices?: Array<ViewChoice>;
 } | {
     isVictory: boolean;
+};
+
+export type ViewChoice = {
+    text: string;
+    hidden: boolean;
 };
 
 type OngoingEventChain = {
@@ -102,7 +108,7 @@ export class Engine {
 
     selectChains(): Array<OngoingEventChain> {
         return this.chainStore.getChains()
-            .filter(chain => !chain.trigger || chain.trigger.isSatisfiedBy(this.state)) // filter out chains with unsatisfied trigger
+            .filter(chain => checkIsSatisfied(chain.trigger, this.state)) // filter out chains with unsatisfied trigger
             .filter(chain => !this.coolingDownChains[chain.title]) // filter out chains that are cooling down
             .filter(chain => !this.eventsToResolveLater.find(event => event.event.startsWith(chain.title))) // filter out ongoing chains
             .filter(chain => chain.autoSelect || this.rng.selectOption({value: true, weight: 40}, {value: false, weight: 60})) // chains without autoselect have a 40% chance of being selected
@@ -152,8 +158,10 @@ export class Engine {
                     linesByChain: eventsByChain,
                     lastChain: chainTitle,
                     choices: event.choices
-                        .map(choice => choice.text)
-                        .map(text => translate(text, DEFAULT_LOCALE)),
+                        .map(choice => ({
+                            text: translate(choice.text, DEFAULT_LOCALE),
+                            hidden: !checkIsSatisfied(choice.if, this.state),
+                        })),
                 }
             }
 
