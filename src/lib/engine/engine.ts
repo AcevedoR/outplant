@@ -1,11 +1,11 @@
-import { ChainStore } from "./chain_store";
-import { checkIsSatisfied } from "./condition";
-import { applyEffectTo } from "./effect";
-import type { Outcome } from "./model";
-import { addNamespaceToIdentifier, extractNamespace } from "./namespace";
-import { RNG } from "./rng";
-import { GameState } from "./state";
-import { translate } from "./translator";
+import {ChainStore} from "./chain_store";
+import {checkIsSatisfied} from "./condition";
+import {applyEffectTo} from "./effect";
+import type {Outcome} from "./model";
+import {addNamespaceToIdentifier, extractNamespace} from "./namespace";
+import {RNG} from "./rng";
+import {GameState} from "./state";
+import {translate} from "./translator";
 
 const DEFAULT_LOCALE = "en_US";
 
@@ -111,7 +111,10 @@ export class Engine {
             .filter(chain => checkIsSatisfied(chain.trigger, this.state)) // filter out chains with unsatisfied trigger
             .filter(chain => !this.coolingDownChains[chain.title]) // filter out chains that are cooling down
             .filter(chain => !this.eventsToResolveLater.find(event => event.event.startsWith(chain.title))) // filter out ongoing chains
-            .filter(chain => chain.autoSelect || this.rng.selectOption({value: true, weight: 40}, {value: false, weight: 60})) // chains without autoselect have a 40% chance of being selected
+            .filter(chain => chain.autoSelect || this.rng.selectOption({value: true, weight: 40}, {
+                value: false,
+                weight: 60
+            })) // chains without autoselect have a 40% chance of being selected
             .map(chain => ({
                 event: addNamespaceToIdentifier("start", chain.title),
                 timer: 0,
@@ -165,7 +168,7 @@ export class Engine {
                 }
             }
 
-            if (event.next) {
+            if (event.next && event.next.length > 0) {
                 const next = this.selectNextEvent(event.next);
                 const nextEvent = this.chainStore.getEvent(next.event);
 
@@ -191,10 +194,10 @@ export class Engine {
             return {isVictory: false};
         }
 
-        return { linesByChain: eventsByChain };
+        return {linesByChain: eventsByChain};
     }
 
-    applyEffects(effects: {[key: string]: boolean}) {
+    applyEffects(effects: { [key: string]: boolean }) {
         const effectActivations = Object.keys(effects)
             .filter(effectName => effects[effectName])
             .map(effectName => ({
@@ -230,6 +233,9 @@ export class Engine {
     }
 
     selectNextEvent(outcomes: Array<Outcome>): Outcome {
+        if (outcomes.length === 0) {
+            throw new Error("cannot selectNextEvent when there is none to select");
+        }
         return this.rng.selectOption(...outcomes
             .filter(outcome => checkIsSatisfied(outcome.if, this.state))
             .map(outcome => ({

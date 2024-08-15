@@ -1,6 +1,5 @@
 {
   "title": "a_simple_empty_chain_with_an_hidden_choice",
-  "cooldown": 0,
   "autoSelect": true,
   "events": {
     "start": {
