@@ -1,4 +1,4 @@
-import type {Chain, ChainEvent, Condition, Effect, StateVariable} from "./model";
+import type {Chain, ChainEvent, Condition, Effect} from "./model";
 import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
 
 
@@ -56,6 +56,18 @@ function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
     if (options && options.overrideInputChains) {
         return options.overrideInputChains;
     }
+    if (import.meta.env.VITE_ENABLE_TEST_ENV === 'true') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const overrideInputChainFilenames = urlParams.getAll('overrideInputChainFilenames')
+            .map(name => `/test/chains/${name}.json`);
+        let files: Record<string, any> = import.meta.glob(["/test/chains/*.json", "!**/schema.json"], {eager: true});
+
+        return Object.fromEntries(
+            Object.entries(files)
+                .filter(([fileName]) => overrideInputChainFilenames.indexOf(fileName) >= 0)
+        );
+    }
+
     return import.meta.glob(["/chains/*.json", "!**/schema.json"], {eager: true});
 }
 
