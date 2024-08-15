@@ -1,6 +1,6 @@
 import type {Chain, ChainEvent, Condition, Effect} from "./model";
 import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
-
+import {validate as validateJsonSchema} from "jsonschema";
 
 export class ChainStore {
     readonly chains: { [key: string]: Chain } = {};
@@ -29,6 +29,9 @@ export class ChainStore {
         for (const chainFile in chainFiles) {
             const jsonChain = chainFiles[chainFile] as JSONChain;
 
+            const validationRes = validateJsonSchema(jsonChain, getJsonSchema());
+            if (!validationRes.valid) throw new Error(`invalid chain: ${chainFile}, json schema error:${JSON.stringify(validationRes.errors)}`);
+
             this.chains[jsonChain.title] = {
                 ...jsonChain,
                 cooldown: jsonChain.cooldown || 0,
@@ -50,6 +53,16 @@ export class ChainStore {
             }
         }
     }
+}
+
+function getJsonSchema() {
+    let foundFiles = Object.values(import.meta.glob(["/chains/schema.json"], {eager: true}));
+    if (foundFiles.length === 0) {
+        throw new Error("json schema missing")
+    } else if (foundFiles.length > 1) {
+        throw new Error("there was multiple json schema")
+    }
+    return foundFiles[0];
 }
 
 function getChainsFiles(options?: ConstructorOptions): Record<string, any> {

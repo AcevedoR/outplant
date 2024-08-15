@@ -1,6 +1,5 @@
 {
   "title": "simple empty chain",
-  "cooldown": 0,
   "autoSelect": true,
   "events": {
     "start": {
