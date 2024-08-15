@@ -24,6 +24,7 @@ export type Outcome = {
     in?: number;
     weight?: number;
     effects?: { [key: string]: boolean };
+    if?: Condition;
 };
 
 export type Effect = {

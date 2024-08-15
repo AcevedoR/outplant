@@ -148,6 +148,9 @@
           "additionalProperties": {
             "type": "boolean"
           }
+        },
+        "if": {
+          "$ref": "#/definitions/Condition"
         }
       },
       "additionalProperties": false,

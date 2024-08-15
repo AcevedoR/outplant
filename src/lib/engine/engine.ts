@@ -230,9 +230,12 @@ export class Engine {
     }
 
     selectNextEvent(outcomes: Array<Outcome>): Outcome {
-        return this.rng.selectOption(...outcomes.map(outcome => ({
-            value: outcome,
-            weight: outcome.weight,
-        })));
+        return this.rng.selectOption(...outcomes
+            .filter(outcome => checkIsSatisfied(outcome.if, this.state))
+            .map(outcome => ({
+                value: outcome,
+                weight: outcome.weight,
+            }))
+        );
     }
 }
