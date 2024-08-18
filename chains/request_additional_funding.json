@@ -12,7 +12,7 @@
       "text": "Aude: “Wake up, the project bank account is low, you need to do something about it.“",
       "choices": [
         {
-          "text": "“Do you expect me to magically make money appear ?“",
+          "text": "“Do you expect me to magically make money appear?“",
           "next": [
             {
               "event": "talk-with-aude"
