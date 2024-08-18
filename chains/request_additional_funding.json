@@ -235,7 +235,7 @@
           ]
         },
         {
-          "text": "Accept to try out a dangerous third-party experimental drug on a subset of your specimens",
+          "text": "Accept to try out a dangerous third-party experimental drug on a subset of your specimens.",
           "next": [
             {
               "event": "experimental-drug-trial"
