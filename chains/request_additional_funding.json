@@ -245,7 +245,7 @@
       ]
     },
     "tour-guide-solution": {
-      "text": "A tour guide of your infrastructure is organized at your station. Some of your Company bossed are present, talking about what a great scientist your are to the rich investors.\nOne ultra-rich investor takes the opportunity to try-out his new personal land-vehicule of 25 tons on your planet, destroying a tiny forest on his passage.\nSince he is happy about his truck, he gives a decent funding.",
+      "text": "A tour guide of your infrastructure is organized at your station. Some of your Company bosses are present, talking about what a great scientist you are to the rich investors.\nOne ultra-rich investor takes the opportunity to try out his new personal land-vehicle of 25 tons on your planet, destroying a tiny forest on his passage.\nSince he is happy about his truck, he gives a decent funding.",
       "effects": {
         "maximum-funding": true,
         "destroyed-forest": true
