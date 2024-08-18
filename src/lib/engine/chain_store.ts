@@ -27,7 +27,8 @@ export class ChainStore {
     constructor(options?: ConstructorOptions) {
         const chainFiles = getChainsFiles(options);
         for (const chainFile in chainFiles) {
-            const jsonChain = chainFiles[chainFile] as JSONChain;
+            const jsonChain = {...chainFiles[chainFile]} as JSONChain;
+            delete (jsonChain as any).default;
 
             const validationRes = validateJsonSchema(jsonChain, getJsonSchema());
             if (!validationRes.valid) throw new Error(`invalid chain: ${chainFile}, json schema error:${JSON.stringify(validationRes.errors)}`);
