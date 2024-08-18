@@ -1,0 +1,417 @@
+{
+  "$schema": "./schema.json",
+  "title": "botanists",
+  "cooldown": 999,
+  "autoSelect": true,
+  "events": {
+    "start": {
+      "text": "Several reports seem to show the planet base ecosystems are still not completely stable. A few areas in the northern hemisphere who used to be covered with forests are now plains. One is even close to becoming a desert.",
+      "effects": {
+        "desertification": true
+      },
+      "choices": [
+        {
+          "text": "“So what? The ecosystems won't be stable until the last species has been completely integrated. This kind of things happen all the time.”",
+          "next": [
+            {
+              "event": "ignore",
+              "in": 2
+            }
+          ]
+        },
+        {
+          "text": "“Someone should probably go there and see if there's anything weird going on.”",
+          "next": [
+            {
+              "event": "send_intern_to_investigate"
+            }
+          ]
+        },
+        {
+          "text": "“Is that normal? Maybe I should ask AUDE to run some simulations about it.”",
+          "next": [
+            {
+              "event": "aude_simulation"
+            }
+          ]
+        }
+      ]
+    },
+    "send_intern_to_investigate": {
+      "text": "Turns out the only member of your team available is an intern. It takes some time explaining the situation to them and what you're expecting them to do, but they eventually seem to understand.",
+      "next": [
+        {
+          "event": "news_from_intern",
+          "in": 1
+        }
+      ]
+    },
+    "news_from_intern": {
+      "text": "You get news from the intern you sent to investigate about the forests that turned to plains and deserts in the northern hemisphere.",
+      "next": [
+        {
+          "event": "intern_hurt"
+        },
+        {
+          "event": "intern_misunderstood",
+          "weight": 2
+        }
+      ]
+    },
+    "intern_hurt": {
+      "text": "They've managed to hurt themselves while on the field before they found any insight about what's going on there. Healing them will cost around 50€€€.",
+      "effects": {
+        "pay_to_heal_intern": true
+      },
+      "next": [
+        {
+          "event": "space_botanists_call",
+          "in": 1
+        }
+      ]
+    },
+    "intern_misunderstood": {
+      "text": "They proudly tell you that yes, they are positive there are no forests there. When asked about the reasons why there are no forests anymore, they seem lost.",
+      "choices": [
+        {
+          "text": "“I guess I should have repeated my instructions an 11th time...”",
+          "next": [
+            {
+              "event": "space_botanists_call",
+              "in": 1
+            }
+          ]
+        }
+      ]
+    },
+    "aude_simulation": {
+      "text": "AUDE informs you running the simulations, even based on cached data rather than field observations, will take some time.",
+      "next": [
+        {
+          "event": "aude_simulation_completed",
+          "in": 1
+        }
+      ]
+    },
+    "aude_simulation_completed": {
+      "text": "AUDE lets you know it's done running the simulations about the forests that turned to plains and deserts in the northern hemisphere.\nAccording to its conclusions, this is but a temporary anomaly, and the plants and trees are bound to grow back there soon.",
+      "choices": [
+        {
+          "text": "“That's surprising, but if you say so, I have a ton of other matters to worry about.”",
+          "next": [
+            {
+              "event": "space_botanists_call",
+              "in": 1
+            }
+          ]
+        }
+      ]
+    },
+    "space_botanists_call": {
+      "text": "Not long after, just as you've escaped from a mandatory team-building event, you receive a call from the team of space-botanists who were in charge of the planets some time before you arrived.",
+      "next": [
+        {
+          "event": "missing_vegetables",
+          "variables": {
+            "plantType": "vegetables"
+          }
+        },
+        {
+          "event": "missing_ferns",
+          "variables": {
+            "plantType": "ferns"
+          }
+        },
+        {
+          "event": "missing_flowers",
+          "variables": {
+            "plantType": "flowers"
+          }
+        }
+      ]
+    },
+    "missing_vegetables": {
+      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of proto-vegetables that was supposed to go to your planet, but for some reason, didn't.",
+      "next": [
+        {
+          "event": "botanists_setback"
+        }
+      ]
+    },
+    "missing_ferns": {
+      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of giant tree-ferns that was supposed to go to your planet, but for some reason, didn't.",
+      "next": [
+        {
+          "event": "botanists_setback"
+        }
+      ]
+    },
+    "missing_flowers": {
+      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of flowers that was supposed to go to your planet, but for some reason, didn't.",
+      "next": [
+        {
+          "event": "botanists_setback"
+        }
+      ]
+    },
+    "botanists_setback": {
+      "text": "“There's a very slight chance this could cause a minor setback with some forests.”, they say.\n“Minor setback? Like, 20% of the northern hemisphere is a desert now!”\n“Alright, alright, you don't have to take it like that. We'll plant the seeds now and everything will get back to normal.”",
+      "choices": [
+        {
+          "text": "Okay.",
+          "next": [
+            {
+              "event": "botanists_choice"
+            }
+          ]
+        },
+        {
+          "text": "“You won't get away with this that easily. You've made a mistake, that disturbs my work, so you're going to pay some penalties.”",
+          "next": [
+            {
+              "event": "botanists_pay_penalties"
+            },
+            {
+              "event": "botanists_do_not_pay_penalties"
+            }
+          ]
+        }
+      ]
+    },
+    "botanists_pay_penalties": {
+      "text": "“I guess we could spare some money - IF you promise to forget that discussion ever happened.”",
+      "effects": {
+        "get_paid_by_botanists": true
+      },
+      "next": [
+        {
+          "event": "botanists_choice"
+        }
+      ]
+    },
+    "botanists_do_not_pay_penalties": {
+      "text": "“Cry me a river.” says an older looking botanists. “If your handcrafted species wasn't that delicate to begin with, they wouldn't care for some tiny deserts here and there. We won't pay anything.”\nLooks like you won't get anything from them but the seeds.",
+      "next": [
+        {
+          "event": "botanists_choice"
+        }
+      ]
+    },
+    "botanists_choice": {
+      "text": "",
+      "choices": [
+        {
+          "text": "“Can you at least hurry when fixing this? We're behind our schedule more than enough already.”",
+          "next": [
+            {
+              "event": "exogardeners_reply"
+            }
+          ]
+        },
+        {
+          "text": "“I'll let you handle this. Let me know once you're finished.”",
+          "next": [
+            {
+              "event": "botanists_reply",
+              "variables": {
+                "monitor_botanists": "false"
+              }
+            }
+          ]
+        },
+        {
+          "text": "“I'll instruct someone from my team to come with you when you fix this.”",
+          "next": [
+            {
+              "event": "botanists_reply",
+              "variables": {
+                "monitor_botanists": "true"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "exogardeners_reply": {
+      "text": "“Don't worry, we'll send our best exo-gardeners your way.”",
+      "next": [
+        {
+          "event": "exogardeners_here",
+          "in": 1
+        }
+      ]
+    },
+    "botanists_reply": {
+      "text": "“Don't worry, we'll be there soon.”",
+      "next": [
+        {
+          "event": "botanists_here",
+          "in": 1
+        }
+      ]
+    },
+    "exogardeners_here": {
+      "text": "The exo-gardeners sent by the space-botanists are there, carrying the seeds that are to be planted to fight the northern hemisphere deserts.\nThey do their work remarkably fast, but it seems only partially effective. The desertification process stops, but the plains don't go back to being forests again.",
+      "effects": {
+        "desertification": false
+      }
+    },
+    "botanists_here": {
+      "text": "The space-botanists are there, carrying the seeds they had forgotten to plant on the northern hemisphere. They've also brought other seeds: “Without that we'd be basically setting up mono-cultures and that's never a good thing.”",
+      "effects": {
+        "desertification": false
+      },
+      "next": [
+        {
+          "event": "send_intern_with_botanists",
+          "if": {
+            "target": "monitor_botanists",
+            "comparator": "eq",
+            "value": "true"
+          }
+        },
+        {
+          "event": "botanists_work_done_1",
+          "in": 1,
+          "if": {
+            "target": "monitor_botanists",
+            "comparator": "not",
+            "value": "true"
+          }
+        }
+      ]
+    },
+    "send_intern_with_botanists": {
+      "text": "You send an intern with them to ensure they'll do a good job.",
+      "next": [
+        {
+          "event": "botanists_work_done_1",
+          "in": 1
+        }
+      ]
+    },
+    "botanists_work_done_1": {
+      "text": "The space-botanists have completed their task, and leave the system after a short stay on your space station.",
+      "next": [
+        {
+          "event": "intern_reports_about_botanists",
+          "if": {
+            "target": "monitor_botanists",
+            "comparator": "eq",
+            "value": "true"
+          }
+        },
+        {
+          "event": "botanists_work_done_2",
+          "if": {
+            "target": "monitor_botanists",
+            "comparator": "not",
+            "value": "true"
+          }
+        }
+      ]
+    },
+    "intern_reports_about_botanists": {
+      "text": "The intern you send with them said they didn't notice them slacking or whatnot.",
+      "next": [
+        {
+          "event": "botanists_work_done_2"
+        }
+      ]
+    },
+    "botanists_work_done_2": {
+      "text": "It seems the space-botanists' efforts have paid off: all the forests that had turned into plains or even deserts are now back.",
+      "effects": {
+        "desertification_reversed": true
+      },
+      "next": [
+        {
+          "event": "flowers_outcome",
+          "if": {
+            "target": "plantType",
+            "comparator": "eq",
+            "value": "flowers"
+          }
+        },
+        {
+          "event": "ferns_outcome",
+          "if": {
+            "target": "plantType",
+            "comparator": "eq",
+            "value": "ferns"
+          }
+        },
+        {
+          "event": "vegetables_outcome",
+          "if": {
+            "target": "plantType",
+            "comparator": "eq",
+            "value": "vegetables"
+          }
+        }
+      ]
+    },
+    "flowers_outcome": {
+      "text": "Moreover, the newly planted flowers have caught the eyes of a jury, and the planet now holds the title of “Flowered Planet©® 1 pistil”, while you've got a cashprize of 100€€€.",
+      "effects": {
+        "flower_cashprize": true
+      }
+    },
+    "ferns_outcome": {
+      "text": "However, the newly planted giant tree-ferns turn out to trigger an allergic reaction in several animal species nearby, which disturbs the ecosystem as a whole.",
+      "effects": {
+        "fern_toxins": true
+      }
+    },
+    "vegetables_outcome": {
+      "text": "Moreover, the newly planted vegetables turned out to be quite to your specimens' liking, and that abundant new source of food helps the population grow.",
+      "effects": {
+        "species_eats_veggies": true
+      }
+    }
+  },
+  "effects": {
+    "desertification": {
+      "type": "permanent",
+      "target": "ecology",
+      "operation": "subtract",
+      "value": 1
+    },
+    "pay_to_heal_intern": {
+      "type": "instant",
+      "target": "money",
+      "operation": "subtract",
+      "value": 50
+    },
+    "get_paid_by_botanists": {
+      "type": "instant",
+      "target": "money",
+      "operation": "add",
+      "value": 100
+    },
+    "desertification_reversed": {
+      "type": "instant",
+      "target": "ecology",
+      "operation": "add",
+      "value": 2
+    },
+    "flower_cashprize": {
+      "type": "instant",
+      "target": "money",
+      "operation": "add",
+      "value": 100
+    },
+    "fern_toxins": {
+      "type": "instant",
+      "target": "ecology",
+      "operation": "subtract",
+      "value": 1
+    },
+    "species_eats_veggies": {
+      "type": "instant",
+      "target": "population",
+      "operation": "add",
+      "value": 1
+    }
+  }
+}
