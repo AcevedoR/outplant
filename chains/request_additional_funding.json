@@ -54,7 +54,7 @@
       "text": "Aude: “You probably know what you should do, even if you're not happy about it. Have a bit of courage and go on with it.“",
       "choices": [
         {
-          "text": "“Oh no, I guess it's that time of the year. I will ask for more funding to my bosses“",
+          "text": "“Oh no, I guess it's that time of the year. I will ask for more funding to my bosses.“",
           "next": [
             {
               "event": "request-funding"
@@ -62,7 +62,7 @@
           ]
         },
         {
-          "text": "“There is nothing I have more than speaking to my bosses, I don't need help from nobody, I'll do fine on my own.“",
+          "text": "“There is nothing I hate more than speaking to my bosses, I don't need help from nobody, I'll do fine on my own.“",
           "next": [
             {
               "event": "aude-warns-you"
@@ -72,7 +72,7 @@
       ]
     },
     "request-funding": {
-      "text": "You spend way too much time finding out who to contact and to write the actual mail.",
+      "text": "You spend way too much time finding out who to contact and writing the actual spacemail.",
       "choices": [
         {
           "text": "Ask to meet the Company Board to request more funding.",
@@ -116,7 +116,7 @@
       ]
     },
     "board-meeting-accepted": {
-      "text": "You receive a (way too) fast positive response, the Board has 5 minutes to spare between two meetings in.. 5 minutes.",
+      "text": "You receive a (way too) fast positive response, the Board has 5 minutes to spare between two meetings in... 5 minutes.",
       "next": [
         {
           "event": "board-meeting"
@@ -124,13 +124,13 @@
       ]
     },
     "aude-warns-you": {
-      "text": "Aude: “Do I have to remind you that you hate dealing with your Bank more ?“",
+      "text": "Aude: “Do I have to remind you that you hate dealing with your Bank even more?“",
       "choices": [
         {
           "text": "“Money comes and goes, you should never worry about it.“ [ignore this issue]",
           "next": [
             {
-              "event": "no-additional-funding-requeted"
+              "event": "no-additional-funding-requested"
             }
           ]
         },
@@ -144,11 +144,11 @@
         }
       ]
     },
-    "no-additional-funding-requeted": {
+    "no-additional-funding-requested": {
       "text": ""
     },
     "bad-report-induce-bad-review": {
-      "text": "The Company Board is very displeased by your performances, all of your study indicators are bad. You endure a long speech about how you are lucky to already have been funded this much and should be thankful to the Company.",
+      "text": "The Company Board is very displeased with your performances, all of your study indicators are bad. You endure a long speech about how lucky you are to already have been funded this much and should be thankful to the Company.",
       "next": [
         {
           "event": "bad-review-actions"
@@ -167,10 +167,10 @@
       ]
     },
     "no-more-funding-accepted": {
-      "text": "The Company Board comes back to you announcing that your results are not enough convincing for them to unlock additional funding."
+      "text": "The Company Board comes back to you announcing that your results are not convincing enough for them to unlock additional funding."
     },
     "good-report-induce-good-review": {
-      "text": "The Company Board is exited about the population of subjects you managed to make grow!\nThey ask you a lot of questions, and seem to be very interested for about 2 full minutes!",
+      "text": "The Company Board is excited about the population of subjects you managed to make grow!\nThey ask you a lot of questions, and seem to be very interested for about 2 full minutes!",
       "next": [
         {
           "event": "no-more-funding-accepted"
@@ -200,10 +200,10 @@
       ]
     },
     "maximum-funding-received": {
-      "text": "You haven't heard back from the The Company Board, but you get a congratulation space-mail from an old friend: numerous articles were published into various medias about your Company fully investing on your project due to recent major discoveries.. you don't recalled most of your citations in them, and there is even a montage of you celebrating with your bosses.",
+      "text": "You haven't heard back from the The Company Board, but you get a congratulation space-mail from an old friend: numerous articles were published into various medias about your Company fully investing on your project due to recent major discoveries.. you don't recall most of your quotes in them, and there is even a montage of you celebrating with your bosses.",
       "choices": [
         {
-          "text": "“I'm not sure how I should feel about this, at least the bank account is full now..“",
+          "text": "“I'm not sure how I should feel about this. At least the bank account is full now...“",
           "next": [
             {
               "event": "maximum-funding-received-end"
@@ -216,7 +216,7 @@
       ]
     },
     "bad-review-actions": {
-      "text": "The Company Board is talking about various solutions to improve the situation, unfortunately you can only try to orientate their choice towards something you hate less.",
+      "text": "The Company Board is talking about various solutions to improve the situation, unfortunately you can only try to nudge their choice towards something you hate less.",
       "choices": [
         {
           "text": "Offer a toured guide of your infrastructure open to rich investors.",
