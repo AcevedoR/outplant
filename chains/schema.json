@@ -58,7 +58,14 @@
                       }
                     },
                     "if": {
-                      "$ref": "#/definitions/Condition"
+                      "oneOf": [
+                        {
+                          "$ref": "#/definitions/Condition"
+                        },
+                        {
+                          "$ref": "#/definitions/VariableCondition"
+                        }
+                      ]
                     }
                   },
                   "required": [
@@ -150,7 +157,20 @@
           }
         },
         "if": {
-          "$ref": "#/definitions/Condition"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Condition"
+            },
+            {
+              "$ref": "#/definitions/VariableCondition"
+            }
+          ]
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false,
@@ -176,6 +196,30 @@
         },
         "value": {
           "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "comparator",
+        "target",
+        "value"
+      ]
+    },
+    "VariableCondition": {
+      "type": "object",
+      "properties": {
+        "comparator": {
+          "type": "string",
+          "enum": [
+            "eq",
+            "not"
+          ]
+        },
+        "target": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
         }
       },
       "additionalProperties": false,

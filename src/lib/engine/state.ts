@@ -1,14 +1,19 @@
+import { VariableStore } from "./variable_store";
+
 export class GameState {
     private _population: number;
     private _ecology: number;
     private _money: number;
     private _turnCounter: number;
 
+    readonly chainVariables: VariableStore;
+
     constructor(population = 1, ecology = 10, money = 1000, turnCounter = 0) {
         this._population = population;
         this._ecology = ecology;
         this._money = money;
         this._turnCounter = turnCounter;
+        this.chainVariables = new VariableStore();
     }
 
     get population(): number {

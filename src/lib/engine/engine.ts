@@ -97,6 +97,11 @@ export class Engine {
         if (outcome.effects) {
             this.applyEffects(outcome.effects);
         }
+        if (outcome.variables) {
+            for (let variable in outcome.variables) {
+                this.state.chainVariables.set(extractNamespace(eventWithChoiceName), variable, outcome.variables[variable]);
+            }
+        }
 
         this.eventsToResolveThisTurn.push({
             event: outcome.event,
@@ -163,7 +168,7 @@ export class Engine {
                     choices: event.choices
                         .map(choice => ({
                             text: translate(choice.text, DEFAULT_LOCALE),
-                            hidden: !checkIsSatisfied(choice.if, this.state),
+                            hidden: !checkIsSatisfied(choice.if, this.state, chainTitle),
                         })),
                 }
             }
@@ -175,6 +180,11 @@ export class Engine {
                 if (nextEvent.effects) {
                     this.applyEffects(nextEvent.effects);
                 }
+                if (next.variables) {
+                    for (let variable in next.variables) {
+                        this.state.chainVariables.set(chainTitle, variable, next.variables[variable]);
+                    }
+                }
 
                 this.eventsToResolveThisTurn.push({
                     timer: next.in || 0,
@@ -183,6 +193,7 @@ export class Engine {
             } else {
                 // We've reached the end of the chain
                 this.coolingDownChains[chainTitle] = this.chainStore.getChain(chainTitle).cooldown;
+                this.state.chainVariables.clearNamespace(chainTitle);
             }
         }
 
@@ -237,7 +248,7 @@ export class Engine {
             throw new Error("cannot selectNextEvent when there is none to select");
         }
         return this.rng.selectOption(...outcomes
-            .filter(outcome => checkIsSatisfied(outcome.if, this.state))
+            .filter(outcome => checkIsSatisfied(outcome.if, this.state, extractNamespace(outcome.event)))
             .map(outcome => ({
                 value: outcome,
                 weight: outcome.weight,

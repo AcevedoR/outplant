@@ -16,7 +16,7 @@ export type Choice = {
     text: string;
     next: Array<Outcome>;
     effects?: { [key: string]: boolean };
-    if?: Condition;
+    if?: Condition | VariableCondition;
 };
 
 export type Outcome = {
@@ -24,7 +24,8 @@ export type Outcome = {
     in?: number;
     weight?: number;
     effects?: { [key: string]: boolean };
-    if?: Condition;
+    if?: Condition | VariableCondition;
+    variables?: { [key: string]: string };
 };
 
 export type Effect = {
@@ -43,3 +44,11 @@ export type Condition = {
 export type StateVariable = "population" | "ecology" | "money";
 
 export type Comparator = "lt" | "lte" | "eq" | "gte" | "gt";
+
+export type VariableCondition = {
+    comparator: VariableComparator;
+    target: string;
+    value: string;
+}
+
+export type VariableComparator = "eq" | "not";
