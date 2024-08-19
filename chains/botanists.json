@@ -5,7 +5,7 @@
   "autoSelect": true,
   "events": {
     "start": {
-      "text": "Several reports seem to show the planet base ecosystems are still not completely stable. A few areas in the northern hemisphere who used to be covered with forests are now plains. One is even close to becoming a desert.",
+      "text": "Several reports seem to show the planet base ecosystems are still not completely stable. A few areas in the northern hemisphere that used to be covered with forests are now plains. One is even close to becoming a desert.",
       "effects": {
         "desertification": true
       },
@@ -190,7 +190,7 @@
       ]
     },
     "botanists_do_not_pay_penalties": {
-      "text": "“Cry me a river.” says an older looking botanists. “If your handcrafted species wasn't that delicate to begin with, they wouldn't care for some tiny deserts here and there. We won't pay anything.”\nLooks like you won't get anything from them but the seeds.",
+      "text": "“Cry me a river.” says an older looking botanist. “If your handcrafted species wasn't that delicate to begin with, they wouldn't care for some tiny deserts here and there. We won't pay anything.”\nLooks like you won't get anything from them but the seeds.",
       "next": [
         {
           "event": "botanists_choice"
@@ -312,7 +312,7 @@
       ]
     },
     "intern_reports_about_botanists": {
-      "text": "The intern you send with them said they didn't notice them slacking or whatnot.",
+      "text": "The intern you sent with them said they didn't notice them slacking or whatnot.",
       "next": [
         {
           "event": "botanists_work_done_2"
