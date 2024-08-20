@@ -1,9 +1,10 @@
 <script lang="ts">
     import VariableDashboardItem from "./VariableDashboardItem.svelte";
     import StarBackground from "./StarBackground.svelte";
-    import { Engine, type ViewModel } from "./engine/engine";
+    import {Engine, type ViewModel} from "./engine/engine";
     import LogDisplayer from "./LogDisplayer.svelte";
-    import ChoiceDisplayer from "./ChoiceDisplayer.svelte";
+    import ChoiceDisplayer, {type NextCycleEvent} from "./ChoiceDisplayer.svelte";
+    import NextCycleTransition from "./animation/NextCycleTransition.svelte";
 
     const engine = new Engine();
 
@@ -39,9 +40,15 @@
         return false;
     })();
 
-    function handleNext() {
-        viewModel = engine.nextCycle();
-        updateCounters();
+    let playNextCycleTransition: (textToDisplay: string) => Promise<void>;
+
+    function handleNextCycle(event: CustomEvent) {
+        const nextCycleEvent = event.detail as NextCycleEvent;
+        playNextCycleTransition(nextCycleEvent.type)
+            ?.then(() => {
+                viewModel = engine.nextCycle();
+                updateCounters();
+            });
     }
 
     function handleMakeChoice(event: CustomEvent) {
@@ -78,14 +85,16 @@
 
     {#if !("isVictory" in viewModel)}
         <ChoiceDisplayer
-            {choices}
-            {gameStart}
-            on:next={handleNext}
-            on:choiceMade={handleMakeChoice}
+                {choices}
+                {gameStart}
+                on:nextCycle={handleNextCycle}
+                on:choiceMade={handleMakeChoice}
         />
     {/if}
 
-    <StarBackground />
+    <NextCycleTransition bind:playAnimation={playNextCycleTransition}/>
+
+    <StarBackground/>
 </div>
 
 <style>
