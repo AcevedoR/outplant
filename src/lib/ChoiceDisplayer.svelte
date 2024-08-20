@@ -13,13 +13,23 @@
         });
     }
 
-    function next() {
-        dispatch('next', {});
+    function nextCycle(nextCycleType: NextCycleType) {
+        let body: NextCycleEvent = {
+            type: nextCycleType,
+        };
+        dispatch('nextCycle', body);
     }
 
     function blur(event: MouseEvent) {
         const target = event.currentTarget as HTMLElement;
         target.blur();
+    }
+</script>
+<script lang="ts" context="module">
+    export type NextCycleType = "Next cycle" | "First cycle";
+
+    export interface NextCycleEvent {
+        type: NextCycleType
     }
 </script>
 
@@ -37,21 +47,21 @@
                                 on:mouseleave={(event) => blur(event)}
                         > { choice.text } </button>
                     </li>
-                {/if     }
+                {/if}
             {/each}
         </ul>
     {:else if gameStart}
         <button
                 type="button"
                 class="choice-displayer__button"
-                on:click={() => next()}
+                on:click={() => nextCycle('First cycle')}
         > {"Let's begin!"}</button>
     {:else}
         <p class="choice-displayer__cta">{"There is nothing to do for you right now."}</p>
         <button
                 type="button"
                 class="choice-displayer__button"
-                on:click={() => next()}
+                on:click={() => nextCycle('Next cycle')}
         > {"Wait until next cycle"}</button>
     {/if}
 </section>
