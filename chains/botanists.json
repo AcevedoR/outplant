@@ -334,11 +334,37 @@
           }
         },
         {
-          "event": "ferns_outcome",
+          "event": "ferns_unmonitored_outcome",
           "if": {
-            "target": "plantType",
-            "comparator": "eq",
-            "value": "ferns"
+            "allOf": [
+              {
+                "target": "plantType",
+                "comparator": "eq",
+                "value": "ferns"
+              },
+              {
+                "target": "monitor_botanists",
+                "comparator": "eq",
+                "value": "false"
+              }
+            ]
+          }
+        },
+        {
+          "event": "ferns_monitored_outcome",
+          "if": {
+            "allOf": [
+              {
+                "target": "plantType",
+                "comparator": "eq",
+                "value": "ferns"
+              },
+              {
+                "target": "monitor_botanists",
+                "comparator": "eq",
+                "value": "true"
+              }
+            ]
           }
         },
         {
@@ -357,11 +383,14 @@
         "flower_cashprize": true
       }
     },
-    "ferns_outcome": {
+    "ferns_unmonitored_outcome": {
       "text": "However, the newly planted giant tree-ferns turn out to trigger an allergic reaction in several animal species nearby, which disturbs the ecosystem as a whole.",
       "effects": {
         "fern_toxins": true
       }
+    },
+    "ferns_monitored_outcome": {
+      "text": "The giant tree-ferns almost caused a problem when they triggered some allergic reaction in several animal species nearby, but the botanists took care of it before it had any serious consequences."
     },
     "vegetables_outcome": {
       "text": "Moreover, the newly planted vegetables turned out to be quite to your specimens' liking, and that abundant new source of food helps the population grow.",
