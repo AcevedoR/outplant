@@ -1,4 +1,4 @@
-import type {Chain, ChainEvent, Condition, Effect} from "./model";
+import type {Chain, ChainEvent, StateCondition, Effect} from "./model";
 import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
 import {validate as validateJsonSchema} from "jsonschema";
 
@@ -88,7 +88,7 @@ function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
 type JSONChain = {
     title: string;
     cooldown?: number;
-    trigger?: Condition;
+    trigger?: StateCondition;
     autoSelect?: boolean;
     events: {
         start: ChainEvent;
