@@ -16,7 +16,7 @@
     let overlaySceneIn = false;
     let overlaySceneOut = false;
 
-    export async function playAnimation(textToDisplay: string): Promise<void> {
+    export async function playAnimation(textToDisplay: string, animationSpeed: NextCycleAnimationSpeed): Promise<void> {
         return new Promise((resolve) => {
             if (overlaySceneElement && overlayLabelElement) {
 
@@ -30,12 +30,14 @@
                 setTimeout(() => {
                     overlaySceneOut = true;
                     resolve();
-                }, 1500);
+                }, animationSpeed === 'slow' ? 1500 : 700);
             }
         });
     }
 </script>
-
+<script lang="ts" context="module">
+    export type NextCycleAnimationSpeed = 'fast' | 'slow';
+</script>
 <div class="overlay">
     <div class="overlay__scene" bind:this={overlaySceneElement} class:overlay__scene--in={overlaySceneIn}
          class:overlay__scene--out={overlaySceneOut}>

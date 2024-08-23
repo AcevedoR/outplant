@@ -4,7 +4,7 @@
     import {Engine, type ViewModel} from "./engine/engine";
     import LogDisplayer from "./LogDisplayer.svelte";
     import ChoiceDisplayer, {type NextCycleEvent} from "./ChoiceDisplayer.svelte";
-    import NextCycleTransition from "./animation/NextCycleTransition.svelte";
+    import NextCycleTransition, {type NextCycleAnimationSpeed} from "./animation/NextCycleTransition.svelte";
 
     const engine = new Engine();
 
@@ -40,11 +40,14 @@
         return false;
     })();
 
-    let playNextCycleTransition: (textToDisplay: string) => Promise<void>;
+    let playNextCycleTransition: (textToDisplay: string, animationSpeed: NextCycleAnimationSpeed) => Promise<void>;
 
     function handleNextCycle(event: CustomEvent) {
         const nextCycleEvent = event.detail as NextCycleEvent;
-        playNextCycleTransition(nextCycleEvent.type)
+        playNextCycleTransition(
+            nextCycleEvent.type,
+            nextCycleEvent.type === 'First cycle' ? 'slow' : 'fast'
+        )
             ?.then(() => {
                 viewModel = engine.nextCycle();
                 updateCounters();
