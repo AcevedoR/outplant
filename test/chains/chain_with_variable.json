@@ -1,0 +1,48 @@
+{
+  "$schema": "./schema.json",
+  "title": "chain_with_variable",
+  "cooldown": 999,
+  "autoSelect": true,
+  "events": {
+    "start": {
+      "text": "Set a variable value",
+      "next": [
+        {
+          "event": "second_event",
+          "variables": {
+            "plantType": "vegetables"
+          }
+        }
+      ]
+    },
+    "second_event": {
+      "text": "Second event",
+      "next": [
+        {
+          "event": "event_vegetables",
+          "if": {
+            "target": "plantType",
+            "comparator": "eq",
+            "value": "vegetables"
+          }
+        },
+        {
+          "event": "event_not_vegetables",
+          "weight": 9999999999,
+          "if": {
+            "target": "plantType",
+            "comparator": "not",
+            "value": "vegetables"
+          }
+        }
+      ]
+    },
+    "event_vegetables": {
+      "text": "IS OK"
+    },
+    "event_not_vegetables": {
+      "text": "NOT OK"
+    }
+  },
+  "effects": {}
+}
