@@ -107,7 +107,7 @@
 
     @media (max-width: 500px) {
         .variable-dashboard {
-            flex-direction: column;
+            flex-wrap: wrap;
             align-items: center;
         }
     }

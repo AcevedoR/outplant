@@ -58,7 +58,7 @@
 
   @media (max-width: 500px) {
     .variable-dashboard__item {
-        width: 90%;
+b         width: 40%;
     }
   }
 </style>
