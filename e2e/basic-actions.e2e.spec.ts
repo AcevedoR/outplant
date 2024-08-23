@@ -46,6 +46,18 @@ test('an outcome with a truthy condition should be displayed when condition is m
     });
 });
 
+test('a variable should be able to be used as a condition', async ({page}) => {
+    const testedChain = 'chain_with_variable';
+    await test.step(`Given a ${testedChain}`, async () => {
+        await page.goto(encodeURI(`/?overrideInputChainFilenames=${testedChain}`));
+        await startPlaying(page);
+    });
+
+    await test.step('See if engine has selected the right outcome', async () => {
+        await expect(page.getByText('IS OK')).toBeVisible();
+    });
+});
+
 async function startPlaying(page: Page) {
     await page.getByRole('button').click();
     await expect(page.getByRole('button').first(), 'you should be able to make a choice after introduction').toBeVisible();
