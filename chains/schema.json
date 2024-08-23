@@ -58,14 +58,7 @@
                       }
                     },
                     "if": {
-                      "oneOf": [
-                        {
-                          "$ref": "#/definitions/Condition"
-                        },
-                        {
-                          "$ref": "#/definitions/VariableCondition"
-                        }
-                      ]
+                      "$ref": "#/definitions/Condition"
                     }
                   },
                   "required": [
@@ -157,14 +150,7 @@
           }
         },
         "if": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/Condition"
-            },
-            {
-              "$ref": "#/definitions/VariableCondition"
-            }
-          ]
+          "$ref": "#/definitions/Condition"
         },
         "variables": {
           "type": "object",
@@ -179,6 +165,47 @@
       ]
     },
     "Condition": {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "allOf": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Condition"
+              }
+            }
+          },
+          "required": [
+            "allOf"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "anyOf": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Condition"
+              }
+            }
+          },
+          "required": [
+            "anyOf"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/definitions/StateCondition"
+        },
+        {
+          "$ref": "#/definitions/VariableCondition"
+        }
+      ]
+    },
+    "StateCondition": {
       "type": "object",
       "properties": {
         "comparator": {

@@ -1,15 +1,21 @@
-import type { Condition, StateVariable, VariableCondition } from "./model";
+import type { Condition, StateCondition, VariableCondition } from "./model";
 import type { GameState } from "./state";
 import type { VariableStore } from "./variable_store";
 
-export function checkIsSatisfied(condition: Condition | VariableCondition | undefined, state: GameState, chainTitle: string = ''): boolean {
+export function checkIsSatisfied(condition: Condition | undefined, state: GameState, chainTitle: string = ''): boolean {
     if (!condition) {
         return true;
+    }
+    if (determineIfIsAllOfCondition(condition)) {
+        return condition.allOf.findIndex(c => !checkIsSatisfied(c, state, chainTitle)) === -1;
+    }
+    if (determineIfIsAnyOfCondition(condition)) {
+        return condition.anyOf.findIndex(c => checkIsSatisfied(c, state, chainTitle)) !== -1;
     }
     if (determineIfIsVariableCondition(condition)) {
         return checkVariableConditionIsSatisfied(condition, state.chainVariables, chainTitle);
     }
-    return checkConditionIsSatisfied(condition, state);
+    return checkStateConditionIsSatisfied(condition, state);
 }
 
 function checkVariableConditionIsSatisfied(condition: VariableCondition, variables: VariableStore, chainTitle: string): boolean {
@@ -23,7 +29,7 @@ function checkVariableConditionIsSatisfied(condition: VariableCondition, variabl
     }
 }
 
-function checkConditionIsSatisfied(condition: Condition, state: GameState): boolean {
+function checkStateConditionIsSatisfied(condition: StateCondition, state: GameState): boolean {
     const actualValue = {
         'population': state.population,
         'ecology': state.ecology,
@@ -44,9 +50,23 @@ function checkConditionIsSatisfied(condition: Condition, state: GameState): bool
     }
 }
 
-function determineIfIsVariableCondition(toBeDetermined: Condition | VariableCondition): toBeDetermined is VariableCondition {
-    if ((typeof toBeDetermined.value) === 'string') {
-      return true
+function determineIfIsAllOfCondition(toBeDetermined: Condition): toBeDetermined is { allOf: Condition[] } {
+    if (Object.hasOwn(toBeDetermined, 'allOf')) {
+        return true
     }
     return false
-  }
+}
+
+function determineIfIsAnyOfCondition(toBeDetermined: Condition): toBeDetermined is { anyOf: Condition[] } {
+    if (Object.hasOwn(toBeDetermined, 'anyOf')) {
+        return true
+    }
+    return false
+}
+
+function determineIfIsVariableCondition(toBeDetermined: Condition): toBeDetermined is VariableCondition {
+    if (Object.hasOwn(toBeDetermined, 'value') && (typeof ((toBeDetermined as {value: any}).value) === 'string')) {
+        return true
+    }
+    return false
+}

@@ -16,7 +16,7 @@ export type Choice = {
     text: string;
     next: Array<Outcome>;
     effects?: { [key: string]: boolean };
-    if?: Condition | VariableCondition;
+    if?: Condition;
 };
 
 export type Outcome = {
@@ -24,7 +24,7 @@ export type Outcome = {
     in?: number;
     weight?: number;
     effects?: { [key: string]: boolean };
-    if?: Condition | VariableCondition;
+    if?: Condition;
     variables?: { [key: string]: string };
 };
 
@@ -35,7 +35,9 @@ export type Effect = {
     type: "instant" | "permanent";
 };
 
-export type Condition = {
+export type Condition = StateCondition | VariableCondition | { allOf: Condition[] } | { anyOf: Condition[] };
+
+export type StateCondition = {
     comparator: Comparator;
     target: StateVariable;
     value: number;
