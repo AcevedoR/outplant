@@ -57,11 +57,17 @@
     }
 
     let pop = engine.state.population;
+    let previousPop = pop;
     let eco = engine.state.ecology;
+    let previousEco = eco;
     let money = engine.state.money;
+    let previousMoney = money;
     let turnCounter = engine.state.turnCounter;
 
     function updateCounters() {
+        previousPop = pop;
+        previousEco = eco;
+        previousMoney = money;
         pop = engine.state.population;
         eco = engine.state.ecology;
         money = engine.state.money;
@@ -72,9 +78,9 @@
 <div>
     <header>
         <ul class="variable-dashboard">
-            <VariableDashboardItem label="Pop" value={pop} />
-            <VariableDashboardItem label="Eco" value={eco} />
-            <VariableDashboardItem label="€€€" value={money} />
+            <VariableDashboardItem label="Pop" value={pop} previousValue={previousPop} />
+            <VariableDashboardItem label="Eco" value={eco} previousValue={previousEco} />
+            <VariableDashboardItem label="€€€" value={money} previousValue={previousMoney} />
             <VariableDashboardItem label="Turn" value={turnCounter} />
         </ul>
     </header>
@@ -101,6 +107,7 @@
     .variable-dashboard {
         display: flex;
         justify-content: space-around;
+        align-items: center;
         flex-wrap: wrap;
     }
 
