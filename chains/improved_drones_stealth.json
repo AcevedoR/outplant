@@ -7,7 +7,7 @@
       "text": "Your 'Ecology balance simulation' shows that the current balance in the area of your species is lower than estimated. - You think that your deployed drones are disturbing local wildlife, maybe a stealth upgrade for the drones could be a good idea. You could order it right away and hope for a fast delivery. #dcaadq",
       "choices": [
         {
-          "text": "“Oh, there is a discount on the MIL-SPEC model! This module is even invisible to most sensors and emits customizable noise-canceling waves!“ [300 €€€] #y9zg0n",
+          "text": "“Oh, there is a discount on the MIL-SPEC model! This module is even invisible to most sensors and emits customizable noise-canceling waves!” [300 €€€] #y9zg0n",
           "next": [
             {
               "event": "major_drone_upgrade",
@@ -24,7 +24,7 @@
           }
         },
         {
-          "text": "“WHAT?! All that money for a basic sound emitter and a smart holographic display, this is a scam! The cheapest one, used, on a weird discount platform, will do just fine.“ [95 €€€] #0hnn4k",
+          "text": "“WHAT?! All that money for a basic sound emitter and a smart holographic display, this is a scam! The cheapest one, used, on a weird discount platform, will do just fine.” [95 €€€] #0hnn4k",
           "next": [
             {
               "event": "minor_drone_upgrade",
@@ -46,7 +46,7 @@
           }
         },
         {
-          "text": "“I'm not sure the simulation is even well calibrated, better spend money elsewhere.“ #gsfd6m",
+          "text": "“I'm not sure the simulation is even well calibrated, better spend money elsewhere.” #gsfd6m",
           "next": [
             {
               "event": "no_drone_upgrade"
@@ -56,7 +56,7 @@
       ]
     },
     "major_drone_upgrade": {
-      "text": "The drone stealth upgrade arrived, you start deploying it, and it's so satisfying to manipulate such quality product - With some tests trying different combinations, you notice that some local species you thought were fearful by nature, were actually terrified about the atrocious sound the drones were making! - The upgrade had a better positive impact on the ecology than expected! “I knew this beautiful piece of hardware would not fail me.“ #fg7i5z",
+      "text": "The drone stealth upgrade arrived, you start deploying it, and it's so satisfying to manipulate such quality product - With some tests trying different combinations, you notice that some local species you thought were fearful by nature, were actually terrified about the atrocious sound the drones were making! - The upgrade had a better positive impact on the ecology than expected! “I knew this beautiful piece of hardware would not fail me.” #fg7i5z",
       "effects": {
         "major_ecology_impact_reduction": true
       }
@@ -71,7 +71,7 @@
       "text": "You do not try to upgrade your drones. #rxkov6"
     },
     "minor_drone_upgrade_failed": {
-      "text": "The drone stealth upgrade arrived, the installation manual is covered with some unknown fluids, and the module stops working after only 10 hours being deployed. “These damn space scammers!!“ #rp03hu"
+      "text": "The drone stealth upgrade arrived, the installation manual is covered with some unknown fluids, and the module stops working after only 10 hours being deployed. “These damn space scammers!!” #rp03hu"
     }
   },
   "effects": {

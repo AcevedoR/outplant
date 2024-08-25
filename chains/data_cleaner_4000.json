@@ -68,7 +68,25 @@
           ]
         },
         {
+          "text": "“I don't have enough money for that...”",
+          "if": {
+            "target": "money",
+            "comparator": "lt",
+            "value": 200
+          },
+          "next": [
+            {
+              "event": "website-closed"
+            }
+          ]
+        },
+        {
           "text": "“Let's order this beauty, I love buying new gear and toys!” [pay 200€€€]",
+          "if": {
+            "target": "money",
+            "comparator": "gte",
+            "value": 200
+          },
           "next": [
             {
               "event": "order-maid"
@@ -85,6 +103,11 @@
       "choices": [
         {
           "text": "“I could pay with a temporary bank account and hope this thing is real, I'll be fine.” [pay 200€€€]",
+          "if": {
+            "target": "money",
+            "comparator": "gte",
+            "value": 400
+          },
           "next": [
             {
               "event": "order-maid"
@@ -93,6 +116,19 @@
           "effects": {
             "pay-the-software": true
           }
+        },
+        {
+          "text": "“I don't have enough money for that...”",
+          "if": {
+            "target": "money",
+            "comparator": "lt",
+            "value": 200
+          },
+          "next": [
+            {
+              "event": "website-closed"
+            }
+          ]
         },
         {
           "text": "“These brigands are obviously trying to steal my credit card informations! I should leave this website immediately.” [close the website]",
@@ -233,7 +269,7 @@
     "pay-the-scammers": {
       "text": "You pay the scammers and your sensors data is back - not your pride though…",
       "effects": {
-        "pay-ransormware": true
+        "pay-ransomware": true
       }
     },
     "minor-hack": {
@@ -349,12 +385,6 @@
       "value": 1,
       "type": "permanent",
       "target": "ecology"
-    },
-    "pay-ransormware": {
-      "operation": "subtract",
-      "value": 400,
-      "type": "instant",
-      "target": "money"
     },
     "pay-ransomware": {
       "operation": "subtract",

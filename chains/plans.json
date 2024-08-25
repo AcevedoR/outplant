@@ -30,6 +30,11 @@
         },
         {
           "text": "Heavily invest into cloning new specimens, to boost population growth to unprecedented levels. #gxlt5r",
+          "if": {
+            "target": "money",
+            "comparator": "gte",
+            "value": 400
+          },
           "effects": {
             "pop_continuous_up": true,
             "money_instant_down": true
@@ -65,6 +70,11 @@
         },
         {
           "text": "Launch a new and ambitious plan to reinsert other species that were driven to extinction following the arrival of your species. #eeufv7",
+          "if": {
+            "target": "money",
+            "comparator": "gte",
+            "value": 400
+          },
           "effects": {
             "eco_continuous_up": true,
             "money_instant_down": true

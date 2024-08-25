@@ -63,9 +63,14 @@
       "text": "What should you do about the diminution of bees negatively impacting the flora? #fw2cx7",
       "choices": [
         {
-          "text": "Quietly send a small missile on a subset of your subjects to solve a likely overpopulation issue [100 €€€] #mjg7ys",
+          "text": "Quietly send a small missile on a subset of your subjects to solve a likely overpopulation issue [100€€€] #mjg7ys",
           "effects": {
             "missile_payed": true
+          },
+          "if": {
+            "target": "money",
+            "comparator": "gte",
+            "value": 100
           },
           "next": [
             {
