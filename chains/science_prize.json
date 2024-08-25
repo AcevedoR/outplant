@@ -72,6 +72,11 @@
         },
         {
           "text": "“I'm not a fan of how they worded their invite but you should never judge a book by its cover. I'll go!” #obido1",
+          "if": {
+            "target": "money",
+            "comparator": "gte",
+            "value": 20
+          },
           "effects": {
             "pay_for_invite": true
           },
@@ -83,6 +88,11 @@
         },
         {
           "text": "“They seem laid back and friendly! I'll be happy to go!” #ftcajt",
+          "if": {
+            "target": "money",
+            "comparator": "gte",
+            "value": 20
+          },
           "effects": {
             "pay_for_invite": true
           },
