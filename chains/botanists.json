@@ -5,13 +5,13 @@
   "autoSelect": true,
   "events": {
     "start": {
-      "text": "Several reports seem to show the planet base ecosystems are still not completely stable. A few areas in the northern hemisphere that used to be covered with forests are now plains. One is even close to becoming a desert.",
+      "text": "Several reports seem to show the planet base ecosystems are still not completely stable. A few areas in the northern hemisphere that used to be covered with forests are now plains. One is even close to becoming a desert. #b9aboo",
       "effects": {
         "desertification": true
       },
       "choices": [
         {
-          "text": "“So what? The ecosystems won't be stable until the last species has been completely integrated. This kind of things happen all the time.”",
+          "text": "“So what? The ecosystems won't be stable until the last species has been completely integrated. This kind of things happen all the time.” #nbwtih",
           "next": [
             {
               "event": "ignore",
@@ -20,7 +20,7 @@
           ]
         },
         {
-          "text": "“Someone should probably go there and see if there's anything weird going on.”",
+          "text": "“Someone should probably go there and see if there's anything weird going on.” #d4id3r",
           "next": [
             {
               "event": "send_intern_to_investigate"
@@ -28,7 +28,7 @@
           ]
         },
         {
-          "text": "“Is that normal? Maybe I should ask AUDE to run some simulations about it.”",
+          "text": "“Is that normal? Maybe I should ask AUDE to run some simulations about it.” #j6jvz6",
           "next": [
             {
               "event": "aude_simulation"
@@ -38,7 +38,7 @@
       ]
     },
     "send_intern_to_investigate": {
-      "text": "Turns out the only member of your team available is an intern. It takes some time explaining the situation to them and what you're expecting them to do, but they eventually seem to understand.",
+      "text": "Turns out the only member of your team available is an intern. It takes some time explaining the situation to them and what you're expecting them to do, but they eventually seem to understand. #tzb9iv",
       "next": [
         {
           "event": "news_from_intern",
@@ -47,7 +47,7 @@
       ]
     },
     "news_from_intern": {
-      "text": "You get news from the intern you sent to investigate about the forests that turned to plains and deserts in the northern hemisphere.",
+      "text": "You get news from the intern you sent to investigate about the forests that turned to plains and deserts in the northern hemisphere. #m0s73v",
       "next": [
         {
           "event": "intern_hurt"
@@ -59,7 +59,7 @@
       ]
     },
     "intern_hurt": {
-      "text": "They've managed to hurt themselves while on the field before they found any insight about what's going on there. Healing them will cost around 50€€€.",
+      "text": "They've managed to hurt themselves while on the field before they found any insight about what's going on there. Healing them will cost around 50€€€. #spaqxl",
       "effects": {
         "pay_to_heal_intern": true
       },
@@ -71,10 +71,10 @@
       ]
     },
     "intern_misunderstood": {
-      "text": "They proudly tell you that yes, they are positive there are no forests there. When asked about the reasons why there are no forests anymore, they seem lost.",
+      "text": "They proudly tell you that yes, they are positive there are no forests there. When asked about the reasons why there are no forests anymore, it's as if the question never occured to them. #kwalpc",
       "choices": [
         {
-          "text": "“I guess I should have repeated my instructions an 11th time...”",
+          "text": "“I guess I should have repeated my instructions an 11th time...” #osxvwy",
           "next": [
             {
               "event": "space_botanists_call",
@@ -85,7 +85,7 @@
       ]
     },
     "aude_simulation": {
-      "text": "AUDE informs you running the simulations, even based on cached data rather than field observations, will take some time.",
+      "text": "AUDE informs you running the simulations, even based on cached data rather than field observations, will take some time. #1oa6kq",
       "next": [
         {
           "event": "aude_simulation_completed",
@@ -94,10 +94,10 @@
       ]
     },
     "aude_simulation_completed": {
-      "text": "AUDE lets you know it's done running the simulations about the forests that turned to plains and deserts in the northern hemisphere.\nAccording to its conclusions, this is but a temporary anomaly, and the plants and trees are bound to grow back there soon.",
+      "text": "AUDE lets you know it's done running the simulations about the forests that turned to plains and deserts in the northern hemisphere.\nAccording to its conclusions, this is but a temporary anomaly, and the plants and trees are bound to grow back there soon. #46687e",
       "choices": [
         {
-          "text": "“That's surprising, but if you say so, I have a ton of other matters to worry about.”",
+          "text": "“That's surprising, but if you say so, I have a ton of other matters to worry about.” #696j9a",
           "next": [
             {
               "event": "space_botanists_call",
@@ -108,7 +108,7 @@
       ]
     },
     "space_botanists_call": {
-      "text": "Not long after, just as you've escaped from a mandatory team-building event, you receive a call from the team of space-botanists who were in charge of the planets some time before you arrived.",
+      "text": "Not long after, just as you've escaped from a mandatory team-building event, you receive a call from the team of space-botanists who were in charge of the planets some time before you arrived. #ofzfpy",
       "next": [
         {
           "event": "missing_vegetables",
@@ -131,7 +131,7 @@
       ]
     },
     "missing_vegetables": {
-      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of proto-vegetables that was supposed to go to your planet, but for some reason, didn't.",
+      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of proto-vegetables that was supposed to go to your planet, but for some reason, didn't. #l14vmq",
       "next": [
         {
           "event": "botanists_setback"
@@ -139,7 +139,7 @@
       ]
     },
     "missing_ferns": {
-      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of giant tree-ferns that was supposed to go to your planet, but for some reason, didn't.",
+      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of giant tree-ferns that was supposed to go to your planet, but for some reason, didn't. #kaxu9q",
       "next": [
         {
           "event": "botanists_setback"
@@ -147,7 +147,7 @@
       ]
     },
     "missing_flowers": {
-      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of flowers that was supposed to go to your planet, but for some reason, didn't.",
+      "text": "They've been doing an inventory of all their seeds, and found about a whole stock of flowers that was supposed to go to your planet, but for some reason, didn't. #6rhe2a",
       "next": [
         {
           "event": "botanists_setback"
@@ -155,10 +155,10 @@
       ]
     },
     "botanists_setback": {
-      "text": "“There's a very slight chance this could cause a minor setback with some forests.”, they say.\n“Minor setback? Like, 20% of the northern hemisphere is a desert now!”\n“Alright, alright, you don't have to take it like that. We'll plant the seeds now and everything will get back to normal.”",
+      "text": "“There's a very slight chance this could cause a minor setback with some forests.”, they say.\n“Minor setback? Like, 20% of the northern hemisphere is a desert now!”\n“Alright, alright, you don't have to take it like that. We'll plant the seeds now and everything will get back to normal.” #zhsca2",
       "choices": [
         {
-          "text": "Okay.",
+          "text": "Okay. #k5suk3",
           "next": [
             {
               "event": "botanists_choice"
@@ -166,7 +166,7 @@
           ]
         },
         {
-          "text": "“You won't get away with this that easily. You've made a mistake, that disturbs my work, so you're going to pay some penalties.”",
+          "text": "“You won't get away with this that easily. You've made a mistake, that disturbs my work, so you're going to pay some penalties.” #zc2muf",
           "next": [
             {
               "event": "botanists_pay_penalties"
@@ -179,7 +179,7 @@
       ]
     },
     "botanists_pay_penalties": {
-      "text": "“I guess we could spare some money - IF you promise to forget that discussion ever happened.”",
+      "text": "“I guess we could spare some money - IF you promise to forget that discussion ever happened.” #6dklua",
       "effects": {
         "get_paid_by_botanists": true
       },
@@ -190,7 +190,7 @@
       ]
     },
     "botanists_do_not_pay_penalties": {
-      "text": "“Cry me a river.” says an older looking botanist. “If your handcrafted species wasn't that delicate to begin with, they wouldn't care for some tiny deserts here and there. We won't pay anything.”\nLooks like you won't get anything from them but the seeds.",
+      "text": "“Cry me a river.” says an older looking botanist. “If your handcrafted species wasn't that delicate to begin with, they wouldn't care for some tiny deserts here and there. We won't pay anything.”\nLooks like you won't get anything from them but the seeds. #3w198p",
       "next": [
         {
           "event": "botanists_choice"
@@ -201,7 +201,7 @@
       "text": "",
       "choices": [
         {
-          "text": "“Can you at least hurry when fixing this? We're behind our schedule more than enough already.”",
+          "text": "“Can you at least hurry when fixing this? We're behind our schedule more than enough already.” #dnknxi",
           "next": [
             {
               "event": "exogardeners_reply"
@@ -209,7 +209,7 @@
           ]
         },
         {
-          "text": "“I'll let you handle this. Let me know once you're finished.”",
+          "text": "“I'll let you handle this. Let me know once you're finished.” #nnsqd1",
           "next": [
             {
               "event": "botanists_reply",
@@ -220,7 +220,7 @@
           ]
         },
         {
-          "text": "“I'll instruct someone from my team to come with you when you fix this.”",
+          "text": "“I'll instruct someone from my team to come with you when you fix this.” #ewb8op",
           "next": [
             {
               "event": "botanists_reply",
@@ -233,7 +233,7 @@
       ]
     },
     "exogardeners_reply": {
-      "text": "“Don't worry, we'll send our best exo-gardeners your way.”",
+      "text": "“Don't worry, we'll send our best exo-gardeners your way.” #qfuoxz",
       "next": [
         {
           "event": "exogardeners_here",
@@ -242,7 +242,7 @@
       ]
     },
     "botanists_reply": {
-      "text": "“Don't worry, we'll be there soon.”",
+      "text": "“Don't worry, we'll be there soon.” #x4ke7s",
       "next": [
         {
           "event": "botanists_here",
@@ -251,13 +251,13 @@
       ]
     },
     "exogardeners_here": {
-      "text": "The exo-gardeners sent by the space-botanists are there, carrying the seeds that are to be planted to fight the northern hemisphere deserts.\nThey do their work remarkably fast, but it seems only partially effective. The desertification process stops, but the plains don't go back to being forests again.",
+      "text": "The exo-gardeners sent by the space-botanists are there, carrying the seeds that are to be planted to fight the northern hemisphere deserts.\nThey do their work remarkably fast, but it seems only partially effective. The desertification process stops, but the plains don't go back to being forests again. #lejs23",
       "effects": {
         "desertification": false
       }
     },
     "botanists_here": {
-      "text": "The space-botanists are there, carrying the seeds they had forgotten to plant on the northern hemisphere. They've also brought other seeds: “Without that we'd be basically setting up mono-cultures and that's never a good thing.”",
+      "text": "The space-botanists are there, carrying the seeds they had forgotten to plant on the northern hemisphere. They've also brought other seeds: “Without that we'd be basically setting up mono-cultures and that's never a good thing.” #3es7ea",
       "effects": {
         "desertification": false
       },
@@ -282,7 +282,7 @@
       ]
     },
     "send_intern_with_botanists": {
-      "text": "You send an intern with them to ensure they'll do a good job.",
+      "text": "You send an intern with them to ensure they'll do a good job. #g9056m",
       "next": [
         {
           "event": "botanists_work_done_1",
@@ -291,7 +291,7 @@
       ]
     },
     "botanists_work_done_1": {
-      "text": "The space-botanists have completed their task, and leave the system after a short stay on your space station.",
+      "text": "The space-botanists have completed their task, and leave the system after a short stay on your space station. #1dpbi0",
       "next": [
         {
           "event": "intern_reports_about_botanists",
@@ -312,7 +312,7 @@
       ]
     },
     "intern_reports_about_botanists": {
-      "text": "The intern you sent with them said they didn't notice them slacking or whatnot.",
+      "text": "The intern you sent with them said they didn't notice them slacking or whatnot. #88yf7f",
       "next": [
         {
           "event": "botanists_work_done_2"
@@ -320,7 +320,7 @@
       ]
     },
     "botanists_work_done_2": {
-      "text": "It seems the space-botanists' efforts have paid off: all the forests that had turned into plains or even deserts are now back.",
+      "text": "It seems the space-botanists' efforts have paid off: all the forests that had turned into plains or even deserts are now back. #v8btbz",
       "effects": {
         "desertification_reversed": true
       },
@@ -378,22 +378,22 @@
       ]
     },
     "flowers_outcome": {
-      "text": "Moreover, the newly planted flowers have caught the eyes of a jury, and the planet now holds the title of “Flowered Planet©® 1 pistil”, while you've got a cashprize of 100€€€.",
+      "text": "Moreover, the newly planted flowers have caught the eyes of a jury, and the planet now holds the title of “Flowered Planet©® 1 pistil”, while you've got a cashprize of 100€€€. #mzqzsq",
       "effects": {
         "flower_cashprize": true
       }
     },
     "ferns_unmonitored_outcome": {
-      "text": "However, the newly planted giant tree-ferns turn out to trigger an allergic reaction in several animal species nearby, which disturbs the ecosystem as a whole.",
+      "text": "However, the newly planted giant tree-ferns turn out to trigger an allergic reaction in several animal species nearby, which disturbs the ecosystem as a whole. #dx5pdn",
       "effects": {
         "fern_toxins": true
       }
     },
     "ferns_monitored_outcome": {
-      "text": "The giant tree-ferns almost caused a problem when they triggered some allergic reaction in several animal species nearby, but the botanists took care of it before it had any serious consequences."
+      "text": "The giant tree-ferns almost caused a problem when they triggered some allergic reaction in several animal species nearby, but the botanists took care of it before it had any serious consequences. #0xb0ii"
     },
     "vegetables_outcome": {
-      "text": "Moreover, the newly planted vegetables turned out to be quite to your specimens' liking, and that abundant new source of food helps the population grow.",
+      "text": "Moreover, the newly planted vegetables turned out to be quite to your specimens' liking, and that abundant new source of food helps the population grow. #h9a2gy",
       "effects": {
         "species_eats_veggies": true
       }
