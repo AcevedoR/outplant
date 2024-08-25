@@ -113,11 +113,4 @@
         align-items: center;
         flex-wrap: wrap;
     }
-
-    @media (max-width: 500px) {
-        .variable-dashboard {
-            flex-direction: column;
-            align-items: center;
-        }
-    }
 </style>
