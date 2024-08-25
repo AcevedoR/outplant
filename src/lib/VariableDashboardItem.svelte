@@ -11,13 +11,13 @@
   <span>{label}: {value}</span>
   {#if previousValue}
     {#if previousValue < value}
-      <div class="icon positive-growth">
+      <span class="icon positive-growth">
         <Fa icon={faArrowTrendUp} />
-      </div>
+      </span>
     {:else if previousValue > value}
-      <div class="icon negative-growth">
+      <span class="icon negative-growth">
         <Fa icon={faArrowTrendDown} />
-      </div>
+      </span>
     {/if}
   {/if}
 </li>
@@ -39,26 +39,23 @@
     align-items: center;
     height: 2em;
   }
-  .variable-dashboard__item p{
-    display: inline-block;
-    padding: 0;
-  }
-  .variable-dashboard__item .icon{
-    padding: 0;
-    margin: 0;
+
+  .icon {
     padding-left: 0.3em;
     font-size: 1.5em;
   }
-  .variable-dashboard__item .icon.positive-growth {
+
+  .positive-growth {
     color: #1f73b9;
   }
-  .variable-dashboard__item .icon.negative-growth {
+
+  .negative-growth {
     color: #a9303e;
   }
 
   @media (max-width: 500px) {
     .variable-dashboard__item {
-        width: 90%;
+        width: 40%;
     }
   }
 </style>
