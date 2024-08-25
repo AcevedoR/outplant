@@ -17,4 +17,16 @@ export class RNG {
         }
         return options[i].value;
     }
+
+    selectRandomlyFromArray<Type>(elements: Array<Type>, numberToSelect: number): Array<Type> {
+        if (numberToSelect > elements.length) {
+            return elements;
+        }
+
+        const selectedIndices: Set<number> = new Set();
+        while (selectedIndices.size < numberToSelect) {
+            selectedIndices.add(Math.floor(Math.random() * elements.length));
+        }
+        return Array.from(selectedIndices).map(index => elements[index]);
+    }
 }

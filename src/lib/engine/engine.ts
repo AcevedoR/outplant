@@ -1,7 +1,7 @@
 import {ChainStore} from "./chain_store";
 import {checkIsSatisfied} from "./condition";
 import {applyEffectTo} from "./effect";
-import type {Outcome} from "./model";
+import type {Chain, Outcome} from "./model";
 import {addNamespaceToIdentifier, extractNamespace} from "./namespace";
 import {RNG} from "./rng";
 import {GameState} from "./state";
@@ -112,18 +112,28 @@ export class Engine {
     }
 
     selectChains(): Array<OngoingEventChain> {
-        return this.chainStore.getChains()
+        const possibleCandidateChains: Chain[] = this.chainStore.getChains()
             .filter(chain => checkIsSatisfied(chain.trigger, this.state)) // filter out chains with unsatisfied trigger
             .filter(chain => !this.coolingDownChains[chain.title]) // filter out chains that are cooling down
-            .filter(chain => !this.eventsToResolveLater.find(event => event.event.startsWith(chain.title))) // filter out ongoing chains
-            .filter(chain => chain.autoSelect || this.rng.selectOption({value: true, weight: 40}, {
-                value: false,
-                weight: 60
-            })) // chains without autoselect have a 40% chance of being selected
-            .map(chain => ({
-                event: addNamespaceToIdentifier("start", chain.title),
-                timer: 0,
-            }));
+            .filter(chain => !this.eventsToResolveLater.find(event => event.event.startsWith(chain.title))); // filter out ongoing chains
+
+        const autoSelectChains = possibleCandidateChains.filter(chain => chain.autoSelect);
+
+        const targetNumberOfChains = this.state.turnCounter <= 10 ? 1 : 2;
+        
+        const numberOfRandomChainsToSelect = targetNumberOfChains - (this.eventsToResolveLater.length + autoSelectChains.length)
+
+        const selectedChains = autoSelectChains;
+        if (numberOfRandomChainsToSelect > 0) {
+            const possibleNonAutoSelectChains = possibleCandidateChains.filter(chain => !chain.autoSelect);
+            const chainsToAdd = this.rng.selectRandomlyFromArray(possibleNonAutoSelectChains, numberOfRandomChainsToSelect);
+            selectedChains.push(...chainsToAdd);
+        }
+
+        return selectedChains.map(chain => ({
+            event: addNamespaceToIdentifier("start", chain.title),
+            timer: 0,
+        }));
     }
 
     unstackEventsToResolveThisTurn(): ViewModel {
@@ -236,11 +246,11 @@ export class Engine {
     }
 
     hasLost(): boolean {
-        return this.state.money < 0 || this.state.population === 0;
+        return this.state.money < -400 || this.state.population === 0 || this.state.ecology === 0;
     }
 
     hasWon(): boolean {
-        return this.state.population === 10;
+        return this.state.population === 20;
     }
 
     selectNextEvent(outcomes: Array<Outcome>): Outcome {
