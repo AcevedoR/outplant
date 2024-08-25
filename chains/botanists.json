@@ -2,7 +2,6 @@
   "$schema": "./schema.json",
   "title": "botanists",
   "cooldown": 999,
-  "autoSelect": true,
   "events": {
     "start": {
       "text": "Several reports seem to show the planet base ecosystems are still not completely stable. A few areas in the northern hemisphere that used to be covered with forests are now plains. One is even close to becoming a desert. #b9aboo",
