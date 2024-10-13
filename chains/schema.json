@@ -172,6 +172,7 @@
           "properties": {
             "allOf": {
               "type": "array",
+              "minItems": 2,
               "items": {
                 "$ref": "#/definitions/Condition"
               }
@@ -187,6 +188,7 @@
           "properties": {
             "anyOf": {
               "type": "array",
+              "minItems": 2,
               "items": {
                 "$ref": "#/definitions/Condition"
               }
