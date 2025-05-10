@@ -103,7 +103,7 @@
       ]
     },
     "KEEPTHELIGHTSON_sensors_received": {
-      "text": "You received KEEPTHELIGHTSON light sensors, they work as expected, fine.",
+      "text": "You received the KEEPTHELIGHTSON light sensors, they work as expected: fine.",
       "choices": [
         {
           "text": "”Delightful, another source of problems out of my mind”",
