@@ -61,7 +61,7 @@
           ]
         },
         {
-          "text": "“I WILL NOT ALLOW FAULTY GEAR IN MY STATION“",
+          "text": "“I WILL NOT ALLOW FAULTY GEAR IN MY STATION!“",
           "next": [
             {
               "event": "price-estimation"
