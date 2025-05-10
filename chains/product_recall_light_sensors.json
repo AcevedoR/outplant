@@ -46,7 +46,7 @@
       ]
     },
     "sensors-listing-aude": {
-      "text": "Aude: “There is 23 of these sensors installed in a particular hallway, they are used to turn lights on when movement is detected“",
+      "text": "Aude: “There are 23 of these sensors installed in a particular hallway, they are used to turn lights on when movement is detected.“",
       "choices": [
         {
           "text": "“These lights could be turned on everyday, they would not even consume a fraction of the required resources to send this mail across the entire galaxy“ [ignore it]",
