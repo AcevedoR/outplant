@@ -90,7 +90,7 @@
           ]
         },
         {
-          "text": "”I'm not trusting UNIVERSAL-PARTS again on this, better play it safe” [order KEEPTHELIGHTSON sensors for 10 €€€]",
+          "text": "”I'm not trusting UNIVERSAL-PARTS again on this, better play it safe.” [order KEEPTHELIGHTSON sensors for 10 €€€]",
           "next": [
             {
               "event": "KEEPTHELIGHTSON_sensors_received"
