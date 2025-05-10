@@ -78,7 +78,7 @@
           }
         },
         {
-          "text": "“They'll be fine“ [do nothing]",
+          "text": "“They'll be fine.“ [do nothing]",
           "next": [
             {
               "event": "failing_screw_major",
