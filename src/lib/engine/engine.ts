@@ -120,7 +120,7 @@ export class Engine {
         const autoSelectChains = possibleCandidateChains.filter(chain => chain.autoSelect);
 
         const targetNumberOfChains = this.state.turnCounter <= 10 ? 1 : 2;
-        
+
         const numberOfRandomChainsToSelect = targetNumberOfChains - (this.eventsToResolveLater.length + autoSelectChains.length)
 
         const selectedChains = autoSelectChains;

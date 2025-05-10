@@ -34,6 +34,7 @@ function checkStateConditionIsSatisfied(condition: StateCondition, state: GameSt
         'population': state.population,
         'ecology': state.ecology,
         'money': state.money,
+        'time': state.turnCounter,
     }[condition.target];
 
     switch (condition.comparator) {

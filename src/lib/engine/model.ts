@@ -39,7 +39,7 @@ export type Condition = StateCondition | VariableCondition | { allOf: Condition[
 
 export type StateCondition = {
     comparator: Comparator;
-    target: StateVariable;
+    target: StateVariable | "time";
     value: number;
 };
 
