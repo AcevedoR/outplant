@@ -136,7 +136,7 @@
       "text": "You learn by checking the logs that one light sensor suddenly did start false-triggering... 1000 times per second! This caused the light to malfunction and ignite itself.\nThe fire damaged nearby cables inside the wall. Unless you repair them, this station area is unusable.",
       "choices": [
         {
-          "text": "“This station has other working areas like this, I'll be fine“ [do nothing]",
+          "text": "“This station has other working areas like this, I'll be fine.“ [do nothing]",
           "next": [
             {
               "event": "station_lost_one_area"
