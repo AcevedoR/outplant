@@ -54,7 +54,7 @@
       "text": "Aude: “These screws are used all around the station for storage facilities like closets, drawers, human-usable doors. It would take approximately two full days to replace them.“",
       "choices": [
         {
-          "text": "“I will repair them on the spot if they break“ [do nothing]",
+          "text": "“I will repair them on the spot if they break.“ [do nothing]",
           "next": [
             {
               "event": "failing_screw_minor"
