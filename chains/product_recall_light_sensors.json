@@ -157,7 +157,7 @@
       ]
     },
     "station_lost_one_area": {
-      "text": "Your station is now missing one area"
+      "text": "Your station is now missing one area."
     },
     "wall_repaired": {
       "text": "Wall is repaired, you now resign yourself to replacing the sensors.",
