@@ -160,7 +160,7 @@
       "text": "Your station is now missing one area"
     },
     "wall_repaired": {
-      "text": "Wall is repaired, you now resort replacing the sensors",
+      "text": "Wall is repaired, you now resign yourself to replacing the sensors.",
       "next": [
         {
           "event": "price-estimation"
