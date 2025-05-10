@@ -38,7 +38,7 @@
           ]
         },
         {
-          "text": "“I better check with Aude where I used them“",
+          "text": "“I better check with Aude where I used them.“",
           "next": [
             {
               "event": "aude_estimation_minor_risk"
