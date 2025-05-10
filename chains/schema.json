@@ -165,7 +165,6 @@
       ]
     },
     "Condition": {
-      "type": "object",
       "oneOf": [
         {
           "type": "object",
@@ -221,7 +220,17 @@
           ]
         },
         "target": {
-          "$ref": "#/definitions/StateVariable"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/StateVariable"
+            },
+            {
+              "type": "string",
+              "enum": [
+                "time"
+              ]
+            }
+          ]
         },
         "value": {
           "type": "integer"
