@@ -109,7 +109,7 @@
       "text": "The issue was one of your homemade asteroids deflectors automatic turrets which could not rotate on the x-axis anymore because a screw broke.",
       "choices": [
         {
-          "text": "“A SCREW? A DAMNED SCREW? Aude, don't tell me.. is it THIS screw?“",
+          "text": "“A SCREW? A DAMNED SCREW? Aude, don't tell me... is it THIS screw?“",
           "next": [
             {
               "event": "aude_answer"
