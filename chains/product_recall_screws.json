@@ -135,7 +135,7 @@
       "text": "Aude: ”Emergency one-time use drones are not cheap to operate, it will cost 200 €€€ to replenish them, and 300 €€€ to fix the hull.”",
       "choices": [
         {
-          "text": "“I don't have the money right now, I will take the risk to keep things like they are“",
+          "text": "“I don't have the money right now, I will take the risk to keep things like they are.“",
           "next": [
             {
               "event": "nothing_repaired"
