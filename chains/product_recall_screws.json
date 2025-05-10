@@ -9,7 +9,7 @@
   },
   "events": {
     "start": {
-      "text": "Incoming mail:\n\nSender: support@universal-parts.univ\nSubject: IMPORTANT! PRODUCT RECALL\n\nDear customer, all Type 543-B screws made 124 months ago, having a serial number between 31293920373000 and 31294072971000 are being recalled for failure issues.\n\nPlease send them back as soon as possible, informations are provided in attached document.",
+      "text": "Incoming mail:\n\nSender: support@universal-parts.univ\nSubject: IMPORTANT! PRODUCT RECALL\n\nDear customer, all Type 543-B screws made 124 months ago, having a serial number between 31293920373000 and 31294072971000 are being recalled for failure issues.\n\nPlease send them back as soon as possible, more information is provided in attached document.",
       "choices": [
         {
           "text": "“Spam?“ [mark as spam]",
