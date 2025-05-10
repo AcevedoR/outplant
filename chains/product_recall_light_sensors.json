@@ -106,7 +106,7 @@
       "text": "You received the KEEPTHELIGHTSON light sensors, they work as expected: fine.",
       "choices": [
         {
-          "text": "”Delightful, another source of problems out of my mind”",
+          "text": "”Delightful, another source of problems out of my mind.”",
           "next": [
             {
               "event": "KEEPTHELIGHTSON_end"
