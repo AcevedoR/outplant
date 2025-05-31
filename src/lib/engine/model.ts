@@ -3,6 +3,7 @@ export type Chain = {
     cooldown: number;
     trigger?: Condition;
     autoSelect: boolean;
+    usedVariables: StateVariable[];
 };
 
 export type ChainEvent = {

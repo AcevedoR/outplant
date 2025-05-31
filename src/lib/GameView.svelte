@@ -66,6 +66,7 @@
     let money = engine.state.money;
     let previousMoney = money;
     let turnCounter = engine.state.turnCounter;
+    let displayEcology = engine.state.isEcologyUnlocked();
 
     function updateCounters() {
         previousPop = pop;
@@ -75,6 +76,7 @@
         eco = engine.state.ecology;
         money = engine.state.money;
         turnCounter = engine.state.turnCounter;
+        displayEcology = engine.state.isEcologyUnlocked();
     }
 </script>
 
@@ -82,7 +84,9 @@
     <header>
         <ul class="variable-dashboard">
             <VariableDashboardItem label="Pop" value={pop} previousValue={previousPop} />
-            <VariableDashboardItem label="Eco" value={eco} previousValue={previousEco} />
+            {#if displayEcology }
+                <VariableDashboardItem label="Eco" value={eco} previousValue={previousEco} />
+            {/if}
             <VariableDashboardItem label="€€€" value={money} previousValue={previousMoney} />
             <VariableDashboardItem label="Turn" value={turnCounter} />
         </ul>

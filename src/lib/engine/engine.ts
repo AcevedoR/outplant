@@ -115,7 +115,8 @@ export class Engine {
         const possibleCandidateChains: Chain[] = this.chainStore.getChains()
             .filter(chain => checkIsSatisfied(chain.trigger, this.state)) // filter out chains with unsatisfied trigger
             .filter(chain => !this.coolingDownChains[chain.title]) // filter out chains that are cooling down
-            .filter(chain => !this.eventsToResolveLater.find(event => event.event.startsWith(chain.title))); // filter out ongoing chains
+            .filter(chain => !this.eventsToResolveLater.find(event => event.event.startsWith(chain.title))) // filter out ongoing chains
+            .filter(chain => this.state.turnCounter >= 10 || !chain.usedVariables.includes("ecology"));
 
         const autoSelectChains = possibleCandidateChains.filter(chain => chain.autoSelect);
 
