@@ -114,7 +114,7 @@ export function getUsedVariablesIn(jsonChain: JSONChain): StateVariable[] {
     }
 
     addIfDefined(jsonChain.trigger?.target);
-
+    // TODO implement all other cases
     Object.entries(jsonChain.events)
         .forEach(([eventName, event]) =>
             event.choices?.forEach((choice) =>
