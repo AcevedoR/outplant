@@ -1,6 +1,7 @@
-import type {Chain, ChainEvent, StateCondition, Effect} from "./model";
+import type {Chain, ChainEvent, Condition, Effect, StateCondition, StateVariable} from "./model";
 import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
 import {validate as validateJsonSchema} from "jsonschema";
+import {determineIfIsAllOfCondition, determineIfIsAnyOfCondition, determineIfIsVariableCondition} from "./condition";
 
 export class ChainStore {
     readonly chains: { [key: string]: Chain } = {};
@@ -37,6 +38,7 @@ export class ChainStore {
                 ...jsonChain,
                 cooldown: jsonChain.cooldown || 0,
                 autoSelect: jsonChain.autoSelect || false,
+                usedVariables: getUsedVariablesIn(jsonChain),
             };
 
             for (const eventId in jsonChain.events) {
@@ -85,7 +87,7 @@ function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
     return import.meta.glob(["/chains/*.json", "!**/schema.json"], {eager: true});
 }
 
-type JSONChain = {
+export type JSONChain = {
     title: string;
     cooldown?: number;
     trigger?: StateCondition;
@@ -101,4 +103,37 @@ type JSONChain = {
 
 type ConstructorOptions = {
     overrideInputChains?: Record<string, any>
+}
+
+export function getUsedVariablesIn(jsonChain: JSONChain): StateVariable[] {
+    const variables: Set<StateVariable> = new Set();
+    const addIfDefined = (v: StateVariable | 'time' | null | undefined) => {
+        if (v && v != 'time') {
+            variables.add(v);
+        }
+    }
+
+    addIfDefined(jsonChain.trigger?.target);
+
+    Object.entries(jsonChain.events)
+        .forEach(([eventName, event]) =>
+            event.choices?.forEach((choice) =>
+                getUsedVariablesInCondition(choice.if).forEach(x => variables.add(x)))
+        )
+
+    return Array.from(variables);
+}
+
+export function getUsedVariablesInCondition(condition: Condition | undefined): Set<StateVariable> {
+    const variables: StateVariable[] = [];
+    if (condition && !determineIfIsVariableCondition(condition)) {
+        if (determineIfIsAllOfCondition(condition)) {
+            condition.allOf.forEach(c => variables.push(...getUsedVariablesInCondition(c)));
+        } else if (determineIfIsAnyOfCondition(condition)) {
+            condition.anyOf.forEach(c => variables.push(...getUsedVariablesInCondition(c)));
+        } else if (condition.target !== 'time') {
+            variables.push(condition.target);
+        }
+    }
+    return new Set(variables);
 }

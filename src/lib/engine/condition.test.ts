@@ -8,6 +8,7 @@ describe('condition', () => {
 
     const state: GameState = (() => {
         const state = new GameState();
+        state.unlockEcology();
         state.changeEcologyBy(-state.ecology);
         state.changeEcologyBy(5);
         state.changeMoneyBy(-state.money);
