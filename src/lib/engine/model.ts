@@ -45,6 +45,18 @@ export type StateCondition = {
 };
 
 export type StateVariable = "population" | "ecology" | "money";
+const stateVariableValues: StateVariable[] = ["population", "ecology", "money"];
+
+export function isStateVariable(value: string): value is StateVariable {
+    return stateVariableValues.includes(value as StateVariable);
+}
+
+export function parseStateVariable(input: string): StateVariable {
+    if (isStateVariable(input)) {
+        return input;
+    }
+    throw new Error(`cannot parseStateVariable for: '${input}'`);
+}
 
 export type Comparator = "lt" | "lte" | "eq" | "gte" | "gt";
 
