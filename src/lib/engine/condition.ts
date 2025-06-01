@@ -51,21 +51,21 @@ function checkStateConditionIsSatisfied(condition: StateCondition, state: GameSt
     }
 }
 
-function determineIfIsAllOfCondition(toBeDetermined: Condition): toBeDetermined is { allOf: Condition[] } {
+export function determineIfIsAllOfCondition(toBeDetermined: Condition): toBeDetermined is { allOf: Condition[] } {
     if (Object.hasOwn(toBeDetermined, 'allOf')) {
         return true
     }
     return false
 }
 
-function determineIfIsAnyOfCondition(toBeDetermined: Condition): toBeDetermined is { anyOf: Condition[] } {
+export function determineIfIsAnyOfCondition(toBeDetermined: Condition): toBeDetermined is { anyOf: Condition[] } {
     if (Object.hasOwn(toBeDetermined, 'anyOf')) {
         return true
     }
     return false
 }
 
-function determineIfIsVariableCondition(toBeDetermined: Condition): toBeDetermined is VariableCondition {
+export function determineIfIsVariableCondition(toBeDetermined: Condition): toBeDetermined is VariableCondition {
     if (Object.hasOwn(toBeDetermined, 'value') && (typeof ((toBeDetermined as {value: any}).value) === 'string')) {
         return true
     }

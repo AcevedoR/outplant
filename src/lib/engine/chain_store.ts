@@ -1,4 +1,12 @@
-import type {Chain, ChainEvent, StateCondition, Effect} from "./model";
+import {
+    type Chain,
+    type ChainEvent,
+    type Effect,
+    isStateVariable,
+    parseStateVariable,
+    type StateCondition,
+    type StateVariable
+} from "./model";
 import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
 import {validate as validateJsonSchema} from "jsonschema";
 
@@ -37,6 +45,7 @@ export class ChainStore {
                 ...jsonChain,
                 cooldown: jsonChain.cooldown || 0,
                 autoSelect: jsonChain.autoSelect || false,
+                usedVariables: getUsedVariablesIn(jsonChain),
             };
 
             for (const eventId in jsonChain.events) {
@@ -85,7 +94,7 @@ function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
     return import.meta.glob(["/chains/*.json", "!**/schema.json"], {eager: true});
 }
 
-type JSONChain = {
+export type JSONChain = {
     title: string;
     cooldown?: number;
     trigger?: StateCondition;
@@ -101,4 +110,25 @@ type JSONChain = {
 
 type ConstructorOptions = {
     overrideInputChains?: Record<string, any>
+}
+
+export function getUsedVariablesIn(jsonChain: JSONChain): StateVariable[] {
+    let keyToFind = 'target';
+    const seen = new Set<StateVariable>();
+
+    function recurse(jsonTree: any) {
+        if (Array.isArray(jsonTree)) {
+            for (const item of jsonTree) recurse(item);
+        } else if (jsonTree && typeof jsonTree === 'object') {
+            for (const [key, val] of Object.entries(jsonTree)) {
+                if (key === keyToFind && typeof val === 'string' && isStateVariable(val)) {
+                    seen.add(parseStateVariable(String(val)));
+                }
+                recurse(val);
+            }
+        }
+    }
+
+    recurse(jsonChain);
+    return Array.from(seen);
 }
