@@ -1,7 +1,14 @@
-import type {Chain, ChainEvent, Condition, Effect, StateCondition, StateVariable} from "./model";
+import {
+    type Chain,
+    type ChainEvent,
+    type Effect,
+    isStateVariable,
+    parseStateVariable,
+    type StateCondition,
+    type StateVariable
+} from "./model";
 import {addNamespaceToIdentifier, addNamespaceToKeys, setNamespaceInEvent} from "./namespace";
 import {validate as validateJsonSchema} from "jsonschema";
-import {determineIfIsAllOfCondition, determineIfIsAnyOfCondition, determineIfIsVariableCondition} from "./condition";
 
 export class ChainStore {
     readonly chains: { [key: string]: Chain } = {};
@@ -106,34 +113,22 @@ type ConstructorOptions = {
 }
 
 export function getUsedVariablesIn(jsonChain: JSONChain): StateVariable[] {
-    const variables: Set<StateVariable> = new Set();
-    const addIfDefined = (v: StateVariable | 'time' | null | undefined) => {
-        if (v && v != 'time') {
-            variables.add(v);
+    let keyToFind = 'target';
+    const seen = new Set<StateVariable>();
+
+    function recurse(jsonTree: any) {
+        if (Array.isArray(jsonTree)) {
+            for (const item of jsonTree) recurse(item);
+        } else if (jsonTree && typeof jsonTree === 'object') {
+            for (const [key, val] of Object.entries(jsonTree)) {
+                if (key === keyToFind && typeof val === 'string' && isStateVariable(val)) {
+                    seen.add(parseStateVariable(String(val)));
+                }
+                recurse(val);
+            }
         }
     }
 
-    addIfDefined(jsonChain.trigger?.target);
-    // TODO implement all other cases
-    Object.entries(jsonChain.events)
-        .forEach(([eventName, event]) =>
-            event.choices?.forEach((choice) =>
-                getUsedVariablesInCondition(choice.if).forEach(x => variables.add(x)))
-        )
-
-    return Array.from(variables);
-}
-
-export function getUsedVariablesInCondition(condition: Condition | undefined): Set<StateVariable> {
-    const variables: StateVariable[] = [];
-    if (condition && !determineIfIsVariableCondition(condition)) {
-        if (determineIfIsAllOfCondition(condition)) {
-            condition.allOf.forEach(c => variables.push(...getUsedVariablesInCondition(c)));
-        } else if (determineIfIsAnyOfCondition(condition)) {
-            condition.anyOf.forEach(c => variables.push(...getUsedVariablesInCondition(c)));
-        } else if (condition.target !== 'time') {
-            variables.push(condition.target);
-        }
-    }
-    return new Set(variables);
+    recurse(jsonChain);
+    return Array.from(seen);
 }

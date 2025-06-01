@@ -1,4 +1,5 @@
-import { VariableStore } from "./variable_store";
+import {VariableStore} from "./variable_store";
+import type {StateVariable} from "./model";
 
 export class GameState {
     private _population: number;
@@ -24,16 +25,20 @@ export class GameState {
         return this._ecology.value;
     }
 
-    isEcologyUnlocked(): boolean {
-        return this._ecology.unlocked;
-    }
-
     get money(): number {
         return this._money;
     }
 
     get turnCounter(): number {
         return this._turnCounter;
+    }
+
+    getUnlockedVariables(): StateVariable[] {
+        let unlockedVariables: StateVariable[] = ['population', 'money'];
+        if (this._ecology.unlocked) {
+            unlockedVariables.push('ecology');
+        }
+        return unlockedVariables;
     }
 
     changePopulationBy(difference: number) {
@@ -63,7 +68,6 @@ export class GameState {
 
     nextTurn() {
         this._turnCounter++;
-        console.log(this._ecology)
         if(this.turnCounter === 10){
             this.unlockEcology();
         }

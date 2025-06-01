@@ -66,7 +66,7 @@
     let money = engine.state.money;
     let previousMoney = money;
     let turnCounter = engine.state.turnCounter;
-    let displayEcology = engine.state.isEcologyUnlocked();
+    let displayEcology = engine.state.getUnlockedVariables().find(v => v === 'ecology');
 
     function updateCounters() {
         previousPop = pop;
@@ -76,7 +76,7 @@
         eco = engine.state.ecology;
         money = engine.state.money;
         turnCounter = engine.state.turnCounter;
-        displayEcology = engine.state.isEcologyUnlocked();
+        displayEcology = engine.state.getUnlockedVariables().find(v => v === 'ecology');
     }
 </script>
 
