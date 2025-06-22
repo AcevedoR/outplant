@@ -38,6 +38,7 @@ export class ChainStore {
 	constructor(options?: ConstructorOptions) {
 		const chainFiles = getChainsFiles(options);
 		for (const chainFile in chainFiles) {
+			// @ts-expect-error TS2698 TODO need to improve getChainsFiles typing
 			const jsonChain = { ...chainFiles[chainFile] } as JSONChain;
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			delete (jsonChain as any).default;
