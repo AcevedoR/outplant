@@ -168,6 +168,7 @@
     }
 
     .overlay__label {
+        font-family: 'Orbitron', sans-serif;
         position: absolute;
         width: 200%;
         height: 25vmin;
