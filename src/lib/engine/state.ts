@@ -48,7 +48,7 @@ export class GameState {
 	}
 
 	getUnlockedVariables(): StateVariable[] {
-		let unlockedVariables: StateVariable[] = ['population', 'money'];
+		const unlockedVariables: StateVariable[] = ['population', 'money'];
 		if (this._ecology.unlocked) {
 			unlockedVariables.push('ecology');
 		}

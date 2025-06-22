@@ -5,7 +5,10 @@
     export let choices: ViewChoice[] | undefined;
     export let gameStart: boolean;
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<{
+        choiceMade: { index: number };
+        nextCycle: { type: NextCycleType };
+    }>();
 
     function makeChoice(i: number) {
         dispatch('choiceMade', {
@@ -35,7 +38,7 @@
 
 <section class="choice-displayer">
     {#if !!choices && choices.length !== 0}
-        <p class="choice-displayer__cta">{ "What's your response?" }</p>
+        <p class="choice-displayer__cta">What's your response?</p>
         <ul class="choice-displayer__entries">
             {#each choices as choice, i (i)}
                 {#if !choice.hidden }
@@ -55,14 +58,14 @@
                 type="button"
                 class="choice-displayer__button"
                 on:click={() => nextCycle('First cycle')}
-        > {"Let's begin!"}</button>
+        > Let's begin!</button>
     {:else}
-        <p class="choice-displayer__cta">{"There is nothing to do for you right now."}</p>
+        <p class="choice-displayer__cta">There is nothing to do for you right now.</p>
         <button
                 type="button"
                 class="choice-displayer__button"
                 on:click={() => nextCycle('Next cycle')}
-        > {"Wait until next cycle"}</button>
+        > Wait until next cycle</button>
     {/if}
 </section>
 

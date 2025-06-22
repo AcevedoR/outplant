@@ -15,18 +15,15 @@
     let overlayLabelElement: HTMLElement | null = null;
     let overlaySceneIn = false;
     let overlaySceneOut = false;
+    let labelText = '';
 
     export async function playAnimation(textToDisplay: string, animationSpeed: NextCycleAnimationSpeed): Promise<void> {
         return new Promise((resolve) => {
             if (overlaySceneElement && overlayLabelElement) {
-
                 overlaySceneIn = false;
                 overlaySceneOut = false;
-
                 overlaySceneIn = true;
-
-                overlayLabelElement.innerText = textToDisplay;
-
+                labelText = textToDisplay;
                 setTimeout(() => {
                     overlaySceneOut = true;
                     resolve();
@@ -43,7 +40,7 @@
          class:overlay__scene--out={overlaySceneOut}>
         <div class="overlay__label" bind:this={overlayLabelElement}>
             <div class="overlay__label-content">
-                Page 2
+                {labelText}
             </div>
         </div>
         <div class="overlay__ribbon"></div>

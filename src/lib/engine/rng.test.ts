@@ -1,4 +1,4 @@
-import { expect, test, describe, it } from 'vitest';
+import { expect, test } from 'vitest';
 import { RNG, type RNGOption } from './rng';
 
 test('rng without mock should return relatively random results', () => {
@@ -60,7 +60,7 @@ test('rng without mock should pick relatively random elements from an array', ()
 		[1, 2, 3],
 	].map((a) => JSON.stringify(a));
 
-	for (let normalizedResult of normalizedResults) {
+	for (const normalizedResult of normalizedResults) {
 		expect(expectedNormalized).toContain(normalizedResult); // each throw should have exactly 3 distincts elements from the base array
 	}
 

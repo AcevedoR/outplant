@@ -79,8 +79,8 @@ describe('engine test', () => {
 	});
 });
 
-function getChainFromDisk(chainFileName: string): Record<string, any> {
-	let res: Record<string, any> = {};
+function getChainFromDisk(chainFileName: string): Record<string, unknown> {
+	const res: Record<string, unknown> = {};
 	res[chainFileName] = JSON.parse(
 		fs.readFileSync(
 			path.resolve(__dirname, '../../../test/chains/' + chainFileName),
