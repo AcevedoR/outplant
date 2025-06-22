@@ -12,13 +12,16 @@
     "test": "vitest --typecheck",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@playwright/test": "^1.43.1",
     "@sveltejs/vite-plugin-svelte": "^3.1.0",
     "@tsconfig/svelte": "^5.0.0",
     "@types/node": "^20.12.7",
+    "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.4.0",
     "svelte": "^4.0.5",
     "svelte-check": "^3.4.6",
     "tslib": "^2.6.0",
@@ -29,8 +32,8 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@types/node": "^20.12.7",
-    "svelte-fa": "^4.0.2",
     "jsonschema": "^1.4.1",
+    "svelte-fa": "^4.0.2",
     "url": "^0.11.4"
   }
 }
