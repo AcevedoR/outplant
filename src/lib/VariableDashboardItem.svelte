@@ -24,6 +24,7 @@
 
 <style>
   .variable-dashboard__item {
+    font-family: 'Orbitron', sans-serif;
     box-shadow: 0 0 20px var(--main-color);
     border: 2px solid var(--main-color-light);
     border-radius: 0 0 10px 0;

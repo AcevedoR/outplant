@@ -82,7 +82,7 @@
         color: var(--main-color-light);
         padding: 5px 20px;
         transition: all ease-out 200ms;
-        font-family: 'Orbitron', sans-serif;
+        font-family: 'Open Sans', sans-serif;
         margin: 0.2em;
         font-size: 16px;
         border-radius: 0 0 10px 0;

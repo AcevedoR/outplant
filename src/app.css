@@ -2,21 +2,21 @@
 
 body {
   --background-color: #141414;
-  --main-color: #5e548e;
-  --main-color-light: #e0b1cb;
+  --main-color: #403960;
+  --main-color-light: #fae4f0;
   --main-color-dark: color-mix(in srgb, var(--background-color) 65%, var(--main-color));
 }
 
 /* body {
   --background-color: #141414;
-  --main-color: #00dfff;
-  --main-color-light: rgb(198, 249, 249);
+  --main-color: #0a879b;
+  --main-color-light: rgb(220, 250, 250);
   --main-color-dark: color-mix(in srgb, var(--background-color) 65%, var(--main-color));
 } */
 
 body {
   background: var(--background-color);
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: var(--main-color-light);
 
   display: flex;
