@@ -1,183 +1,183 @@
 {
-  "$schema": "./schema.json",
-  "title": "product recall: screws",
-  "cooldown": 999,
-  "trigger": {
-    "target": "population",
-    "comparator": "gte",
-    "value": 3
-  },
-  "events": {
-    "start": {
-      "text": "Incoming mail:\n\nSender: support@universal-parts.univ\nSubject: IMPORTANT! PRODUCT RECALL\n\nDear customer, all Type 543-B screws made 124 months ago, having a serial number between 31293920373000 and 31294072971000 are being recalled for failure issues.\n\nPlease send them back as soon as possible, more information is provided in attached document.",
-      "choices": [
-        {
-          "text": "“Spam?“ [mark as spam]",
-          "next": [
-            {
-              "event": "aude_estimation_major_risk",
-              "in": 3
-            },
-            {
-              "event": "failing_screw_minor",
-              "weight": 10
-            }
-          ]
-        },
-        {
-          "text": "“They've been working fine for now, if it's not broken, don't fix it!“ [ignore it]",
-          "next": [
-            {
-              "event": "failing_screw_minor",
-              "weight": 10
-            },
-            {
-              "event": "aude_estimation_major_risk",
-              "in": 3
-            }
-          ]
-        },
-        {
-          "text": "“I better check with Aude where I used them.“",
-          "next": [
-            {
-              "event": "aude_estimation_minor_risk"
-            },
-            {
-              "event": "aude_estimation_major_risk"
-            }
-          ]
-        }
-      ]
-    },
-    "aude_estimation_minor_risk": {
-      "text": "Aude: “These screws are used all around the station for storage facilities like closets, drawers, human-usable doors. It would take approximately two full days to replace them.“",
-      "choices": [
-        {
-          "text": "“I will repair them on the spot if they break.“ [do nothing]",
-          "next": [
-            {
-              "event": "failing_screw_minor"
-            }
-          ]
-        }
-      ]
-    },
-    "aude_estimation_major_risk": {
-      "text": "Aude: “These screws are used in your homemade asteroids deflectors automatic turrets. It would take one day and 15 €€€ of consumable to replace them.“",
-      "choices": [
-        {
-          "text": "”I would never let my beautiful turrets be sub-optimally assembled!” [repair them for 15 €€€]",
-          "next": [
-            {
-              "event": "turret-repaired"
-            }
-          ],
-          "effects": {
-            "pay-turret-screws-repair": true
-          }
-        },
-        {
-          "text": "“They'll be fine.“ [do nothing]",
-          "next": [
-            {
-              "event": "failing_screw_major",
-              "in": 4
-            },
-            {
-              "event": "nothing"
-            }
-          ]
-        }
-      ]
-    },
-    "turret-repaired": {
-      "text": "You replaced you turrets screws, they now look brand new."
-    },
-    "failing_screw_minor": {
-      "text": "From time to time, these Type 543-B screws, used in closets, drawers, human-usable doors, fail and you have to repair them. It's not a big deal, but it's annoying."
-    },
-    "failing_screw_major": {
-      "text": "One day, you are woken up by a critical alarm, an asteroid did pass your station's defenses and made a hole in the hull. Emergency repairs drones were deployed and worked well.",
-      "next": [
-        {
-          "event": "failing_screw_major_2"
-        }
-      ]
-    },
-    "failing_screw_major_2": {
-      "text": "The issue was one of your homemade asteroids deflectors automatic turrets which could not rotate on the x-axis anymore because a screw broke.",
-      "choices": [
-        {
-          "text": "“A SCREW? A DAMNED SCREW? Aude, don't tell me... is it THIS screw?“",
-          "next": [
-            {
-              "event": "aude_answer"
-            }
-          ]
-        }
-      ]
-    },
-    "aude_answer": {
-      "text": "Aude: “Yes, it was a Type 543-B that failed. The same type that was recalled by UNIVERSAL-PARTS some time ago, but your refused to replace them, remember?“",
-      "choices": [
-        {
-          "text": "”You don't need to take that paternalistic tone with me. How much will it cost?”",
-          "next": [
-            {
-              "event": "aude_price"
-            }
-          ]
-        }
-      ]
-    },
-    "aude_price": {
-      "text": "Aude: ”Emergency one-time use drones are not cheap to operate, it will cost 200 €€€ to replenish them, and 300 €€€ to fix the hull.”",
-      "choices": [
-        {
-          "text": "“I don't have the money right now, I will take the risk to keep things like they are.“",
-          "next": [
-            {
-              "event": "nothing_repaired"
-            }
-          ]
-        },
-        {
-          "text": "pay for repairs [500 €€€]",
-          "next": [
-            {
-              "event": "repair-all"
-            }
-          ],
-          "effects": {
-            "pay_major": true
-          }
-        }
-      ]
-    },
-    "repair-all": {
-      "text": "Everything is repaired now, you changed the screws too..."
-    },
-    "nothing_repaired": {
-      "text": "Nothing is repaired, you will have to hope no other asteroid come close any time soon."
-    },
-    "nothing": {
-      "text": ""
-    }
-  },
-  "effects": {
-    "pay-turret-screws-repair": {
-      "operation": "subtract",
-      "value": 15,
-      "type": "instant",
-      "target": "money"
-    },
-    "pay_major": {
-      "operation": "subtract",
-      "value": 500,
-      "type": "instant",
-      "target": "money",
-      "description": ""
-    }
-  }
+	"$schema": "./schema.json",
+	"title": "product recall: screws",
+	"cooldown": 999,
+	"trigger": {
+		"target": "population",
+		"comparator": "gte",
+		"value": 3
+	},
+	"events": {
+		"start": {
+			"text": "Incoming mail:\n\nSender: support@universal-parts.univ\nSubject: IMPORTANT! PRODUCT RECALL\n\nDear customer, all Type 543-B screws made 124 months ago, having a serial number between 31293920373000 and 31294072971000 are being recalled for failure issues.\n\nPlease send them back as soon as possible, more information is provided in attached document.",
+			"choices": [
+				{
+					"text": "“Spam?“ [mark as spam]",
+					"next": [
+						{
+							"event": "aude_estimation_major_risk",
+							"in": 3
+						},
+						{
+							"event": "failing_screw_minor",
+							"weight": 10
+						}
+					]
+				},
+				{
+					"text": "“They've been working fine for now, if it's not broken, don't fix it!“ [ignore it]",
+					"next": [
+						{
+							"event": "failing_screw_minor",
+							"weight": 10
+						},
+						{
+							"event": "aude_estimation_major_risk",
+							"in": 3
+						}
+					]
+				},
+				{
+					"text": "“I better check with Aude where I used them.“",
+					"next": [
+						{
+							"event": "aude_estimation_minor_risk"
+						},
+						{
+							"event": "aude_estimation_major_risk"
+						}
+					]
+				}
+			]
+		},
+		"aude_estimation_minor_risk": {
+			"text": "Aude: “These screws are used all around the station for storage facilities like closets, drawers, human-usable doors. It would take approximately two full days to replace them.“",
+			"choices": [
+				{
+					"text": "“I will repair them on the spot if they break.“ [do nothing]",
+					"next": [
+						{
+							"event": "failing_screw_minor"
+						}
+					]
+				}
+			]
+		},
+		"aude_estimation_major_risk": {
+			"text": "Aude: “These screws are used in your homemade asteroids deflectors automatic turrets. It would take one day and 15 €€€ of consumable to replace them.“",
+			"choices": [
+				{
+					"text": "”I would never let my beautiful turrets be sub-optimally assembled!” [repair them for 15 €€€]",
+					"next": [
+						{
+							"event": "turret-repaired"
+						}
+					],
+					"effects": {
+						"pay-turret-screws-repair": true
+					}
+				},
+				{
+					"text": "“They'll be fine.“ [do nothing]",
+					"next": [
+						{
+							"event": "failing_screw_major",
+							"in": 4
+						},
+						{
+							"event": "nothing"
+						}
+					]
+				}
+			]
+		},
+		"turret-repaired": {
+			"text": "You replaced you turrets screws, they now look brand new."
+		},
+		"failing_screw_minor": {
+			"text": "From time to time, these Type 543-B screws, used in closets, drawers, human-usable doors, fail and you have to repair them. It's not a big deal, but it's annoying."
+		},
+		"failing_screw_major": {
+			"text": "One day, you are woken up by a critical alarm, an asteroid did pass your station's defenses and made a hole in the hull. Emergency repairs drones were deployed and worked well.",
+			"next": [
+				{
+					"event": "failing_screw_major_2"
+				}
+			]
+		},
+		"failing_screw_major_2": {
+			"text": "The issue was one of your homemade asteroids deflectors automatic turrets which could not rotate on the x-axis anymore because a screw broke.",
+			"choices": [
+				{
+					"text": "“A SCREW? A DAMNED SCREW? Aude, don't tell me... is it THIS screw?“",
+					"next": [
+						{
+							"event": "aude_answer"
+						}
+					]
+				}
+			]
+		},
+		"aude_answer": {
+			"text": "Aude: “Yes, it was a Type 543-B that failed. The same type that was recalled by UNIVERSAL-PARTS some time ago, but your refused to replace them, remember?“",
+			"choices": [
+				{
+					"text": "”You don't need to take that paternalistic tone with me. How much will it cost?”",
+					"next": [
+						{
+							"event": "aude_price"
+						}
+					]
+				}
+			]
+		},
+		"aude_price": {
+			"text": "Aude: ”Emergency one-time use drones are not cheap to operate, it will cost 200 €€€ to replenish them, and 300 €€€ to fix the hull.”",
+			"choices": [
+				{
+					"text": "“I don't have the money right now, I will take the risk to keep things like they are.“",
+					"next": [
+						{
+							"event": "nothing_repaired"
+						}
+					]
+				},
+				{
+					"text": "pay for repairs [500 €€€]",
+					"next": [
+						{
+							"event": "repair-all"
+						}
+					],
+					"effects": {
+						"pay_major": true
+					}
+				}
+			]
+		},
+		"repair-all": {
+			"text": "Everything is repaired now, you changed the screws too..."
+		},
+		"nothing_repaired": {
+			"text": "Nothing is repaired, you will have to hope no other asteroid come close any time soon."
+		},
+		"nothing": {
+			"text": ""
+		}
+	},
+	"effects": {
+		"pay-turret-screws-repair": {
+			"operation": "subtract",
+			"value": 15,
+			"type": "instant",
+			"target": "money"
+		},
+		"pay_major": {
+			"operation": "subtract",
+			"value": 500,
+			"type": "instant",
+			"target": "money",
+			"description": ""
+		}
+	}
 }

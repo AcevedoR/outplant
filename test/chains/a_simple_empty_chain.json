@@ -1,10 +1,10 @@
 {
-  "title": "simple empty chain",
-  "autoSelect": true,
-  "events": {
-    "start": {
-      "text": "Hello world! #09e111"
-    }
-  },
-  "effects": {}
+	"title": "simple empty chain",
+	"autoSelect": true,
+	"events": {
+		"start": {
+			"text": "Hello world! #09e111"
+		}
+	},
+	"effects": {}
 }

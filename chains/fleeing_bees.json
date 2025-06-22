@@ -1,201 +1,201 @@
 {
-  "$schema": "./schema.json",
-  "title": "fleeing bees",
-  "cooldown": 999,
-  "trigger": {
-    "target": "population",
-    "comparator": "gte",
-    "value": 3
-  },
-  "events": {
-    "start": {
-      "text": "An alert is rising: the local flora is rapidly decreasing. #kv9yhr",
-      "choices": [
-        {
-          "text": "“These plants will grow back, no need to worry” #ppdyq4",
-          "next": [
-            {
-              "event": "issue_ignored",
-              "in": 2
-            }
-          ]
-        },
-        {
-          "text": "“This is strange, I should look into it” #wn7mjg",
-          "next": [
-            {
-              "event": "investigation_finds_bees_issue"
-            }
-          ]
-        }
-      ],
-      "effects": {
-        "reducing_eco": true
-      }
-    },
-    "issue_ignored": {
-      "text": "The flora decrease issue is still present. #na8nzq",
-      "choices": [
-        {
-          "text": "“I guess I'm forced to look into it...” #ho86yx",
-          "next": [
-            {
-              "event": "investigation_finds_bees_issue"
-            }
-          ]
-        }
-      ]
-    },
-    "investigation_finds_bees_issue": {
-      "text": "After a brief investigation, you find out the flora decrease is linked to a diminution of local bees. #jb89ax",
-      "choices": [
-        {
-          "text": "“Bees are foundation of all biomes! Catastrophe..“ #yznv1w",
-          "next": [
-            {
-              "event": "bees_are_decreasing"
-            }
-          ]
-        }
-      ]
-    },
-    "bees_are_decreasing": {
-      "text": "What should you do about the diminution of bees negatively impacting the flora? #fw2cx7",
-      "choices": [
-        {
-          "text": "Quietly send a small missile on a subset of your subjects to solve a likely overpopulation issue [100€€€] #mjg7ys",
-          "effects": {
-            "missile_payed": true
-          },
-          "if": {
-            "target": "money",
-            "comparator": "gte",
-            "value": 100
-          },
-          "next": [
-            {
-              "event": "missile_sent"
-            }
-          ]
-        },
-        {
-          "text": "“There must be another way. I could take some time to think about this” #ak3ukc",
-          "next": [
-            {
-              "event": "no_bees_solution",
-              "in": 2
-            },
-            {
-              "event": "bees_solution",
-              "in": 2
-            }
-          ]
-        }
-      ]
-    },
-    "missile_sent": {
-      "text": "In the dark of the night, a divine hand takes back what is hers, leaving only destruction and crushed hopes behind her... #7l172e",
-      "effects": {
-        "reduced_population": true,
-        "reducing_eco": false
-      },
-      "choices": [
-        {
-          "text": "“Now I am become death..“ #bxhbv8",
-          "next": [
-            {
-              "event": "species_minor_extermination"
-            }
-          ]
-        }
-      ]
-    },
-    "species_minor_extermination": {
-      "text": "A subset of the subjects were terminated. #tl67k9"
-    },
-    "no_bees_solution": {
-      "text": "After intense reflexions, staring at the mirror about this flora/bees issue, no easy solution seems to appear... #bwn3lb",
-      "choices": [
-        {
-          "text": "Do nothing and hope for the best. “Go Go bees! Hum...” #0z0z87",
-          "next": [
-            {
-              "event": "bees_issue_still_present",
-              "in": 2
-            }
-          ]
-        },
-        {
-          "text": "Quietly send a small missile on a subset of your subjects to solve a likely overpopulation issue [100 €€€] #0spd2q",
-          "effects": {
-            "missile_payed": true
-          },
-          "next": [
-            {
-              "event": "missile_sent"
-            }
-          ]
-        }
-      ]
-    },
-    "bees_issue_still_present": {
-      "text": "The flora/bees decrease issue is still present #hslvte",
-      "next": [
-        {
-          "event": "bees_are_decreasing"
-        }
-      ]
-    },
-    "bees_solution": {
-      "text": "Bingo! You found out your species likes to hang out near a huge plain filled with colorful flowers. - The issue is more about the flowers being crushed and eaten than overpopulation, causing bees to go elsewhere. #06yhum",
-      "choices": [
-        {
-          "text": "“Still, just let the bees be, there were here before. May the lesson be learned” Missile the species out of the plain [100 €€€] #pe2n00",
-          "effects": {
-            "missile_payed": true
-          },
-          "next": [
-            {
-              "event": "missile_sent"
-            }
-          ]
-        },
-        {
-          "text": "“It would take time, but I could plant more flowers with drones” #b3cfd2",
-          "next": [
-            {
-              "event": "flower_planted",
-              "in": 2
-            }
-          ]
-        }
-      ]
-    },
-    "flower_planted": {
-      "text": "You solved the flora/bees decrease by planting more flowers to compensate your species impact. #kbdoxl",
-      "effects": {
-        "reducing_eco": false
-      }
-    }
-  },
-  "effects": {
-    "reducing_eco": {
-      "type": "permanent",
-      "target": "ecology",
-      "operation": "subtract",
-      "value": 1
-    },
-    "missile_payed": {
-      "type": "instant",
-      "target": "money",
-      "operation": "subtract",
-      "value": 100
-    },
-    "reduced_population": {
-      "type": "instant",
-      "target": "population",
-      "operation": "subtract",
-      "value": 1
-    }
-  }
+	"$schema": "./schema.json",
+	"title": "fleeing bees",
+	"cooldown": 999,
+	"trigger": {
+		"target": "population",
+		"comparator": "gte",
+		"value": 3
+	},
+	"events": {
+		"start": {
+			"text": "An alert is rising: the local flora is rapidly decreasing. #kv9yhr",
+			"choices": [
+				{
+					"text": "“These plants will grow back, no need to worry” #ppdyq4",
+					"next": [
+						{
+							"event": "issue_ignored",
+							"in": 2
+						}
+					]
+				},
+				{
+					"text": "“This is strange, I should look into it” #wn7mjg",
+					"next": [
+						{
+							"event": "investigation_finds_bees_issue"
+						}
+					]
+				}
+			],
+			"effects": {
+				"reducing_eco": true
+			}
+		},
+		"issue_ignored": {
+			"text": "The flora decrease issue is still present. #na8nzq",
+			"choices": [
+				{
+					"text": "“I guess I'm forced to look into it...” #ho86yx",
+					"next": [
+						{
+							"event": "investigation_finds_bees_issue"
+						}
+					]
+				}
+			]
+		},
+		"investigation_finds_bees_issue": {
+			"text": "After a brief investigation, you find out the flora decrease is linked to a diminution of local bees. #jb89ax",
+			"choices": [
+				{
+					"text": "“Bees are foundation of all biomes! Catastrophe..“ #yznv1w",
+					"next": [
+						{
+							"event": "bees_are_decreasing"
+						}
+					]
+				}
+			]
+		},
+		"bees_are_decreasing": {
+			"text": "What should you do about the diminution of bees negatively impacting the flora? #fw2cx7",
+			"choices": [
+				{
+					"text": "Quietly send a small missile on a subset of your subjects to solve a likely overpopulation issue [100€€€] #mjg7ys",
+					"effects": {
+						"missile_payed": true
+					},
+					"if": {
+						"target": "money",
+						"comparator": "gte",
+						"value": 100
+					},
+					"next": [
+						{
+							"event": "missile_sent"
+						}
+					]
+				},
+				{
+					"text": "“There must be another way. I could take some time to think about this” #ak3ukc",
+					"next": [
+						{
+							"event": "no_bees_solution",
+							"in": 2
+						},
+						{
+							"event": "bees_solution",
+							"in": 2
+						}
+					]
+				}
+			]
+		},
+		"missile_sent": {
+			"text": "In the dark of the night, a divine hand takes back what is hers, leaving only destruction and crushed hopes behind her... #7l172e",
+			"effects": {
+				"reduced_population": true,
+				"reducing_eco": false
+			},
+			"choices": [
+				{
+					"text": "“Now I am become death..“ #bxhbv8",
+					"next": [
+						{
+							"event": "species_minor_extermination"
+						}
+					]
+				}
+			]
+		},
+		"species_minor_extermination": {
+			"text": "A subset of the subjects were terminated. #tl67k9"
+		},
+		"no_bees_solution": {
+			"text": "After intense reflexions, staring at the mirror about this flora/bees issue, no easy solution seems to appear... #bwn3lb",
+			"choices": [
+				{
+					"text": "Do nothing and hope for the best. “Go Go bees! Hum...” #0z0z87",
+					"next": [
+						{
+							"event": "bees_issue_still_present",
+							"in": 2
+						}
+					]
+				},
+				{
+					"text": "Quietly send a small missile on a subset of your subjects to solve a likely overpopulation issue [100 €€€] #0spd2q",
+					"effects": {
+						"missile_payed": true
+					},
+					"next": [
+						{
+							"event": "missile_sent"
+						}
+					]
+				}
+			]
+		},
+		"bees_issue_still_present": {
+			"text": "The flora/bees decrease issue is still present #hslvte",
+			"next": [
+				{
+					"event": "bees_are_decreasing"
+				}
+			]
+		},
+		"bees_solution": {
+			"text": "Bingo! You found out your species likes to hang out near a huge plain filled with colorful flowers. - The issue is more about the flowers being crushed and eaten than overpopulation, causing bees to go elsewhere. #06yhum",
+			"choices": [
+				{
+					"text": "“Still, just let the bees be, there were here before. May the lesson be learned” Missile the species out of the plain [100 €€€] #pe2n00",
+					"effects": {
+						"missile_payed": true
+					},
+					"next": [
+						{
+							"event": "missile_sent"
+						}
+					]
+				},
+				{
+					"text": "“It would take time, but I could plant more flowers with drones” #b3cfd2",
+					"next": [
+						{
+							"event": "flower_planted",
+							"in": 2
+						}
+					]
+				}
+			]
+		},
+		"flower_planted": {
+			"text": "You solved the flora/bees decrease by planting more flowers to compensate your species impact. #kbdoxl",
+			"effects": {
+				"reducing_eco": false
+			}
+		}
+	},
+	"effects": {
+		"reducing_eco": {
+			"type": "permanent",
+			"target": "ecology",
+			"operation": "subtract",
+			"value": 1
+		},
+		"missile_payed": {
+			"type": "instant",
+			"target": "money",
+			"operation": "subtract",
+			"value": 100
+		},
+		"reduced_population": {
+			"type": "instant",
+			"target": "population",
+			"operation": "subtract",
+			"value": 1
+		}
+	}
 }
