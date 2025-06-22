@@ -1,157 +1,157 @@
 {
-  "$schema": "./schema.json",
-  "title": "wrong_planet",
-  "cooldown": 999,
-  "trigger": {
-    "target": "time",
-    "comparator": "lt",
-    "value": 3
-  },
-  "events": {
-    "start": {
-      "text": "Like everyday, you get reports from Aude, and like everyday, they mention one particular issue that's been increasingly bugging you: #6l8mbu",
-      "next": [
-        {
-          "event": "acid_rain"
-        },
-        {
-          "event": "desert"
-        },
-        {
-          "event": "faulty_day_night_cycle"
-        },
-        {
-          "event": "poisonous_plants"
-        },
-        {
-          "event": "commands_go_to_other_system"
-        }
-      ]
-    },
-    "acid_rain": {
-      "text": "“How come we have to deal with that many acid rains? I can't believe exo-climatologists are so incompetent.” #zj8wvw",
-      "next": [
-        {
-          "event": "intern_dialog"
-        }
-      ]
-    },
-    "desert": {
-      "text": "“How are we supposed to develop a species that needs water when the deserts on that planet just keep spreading?” #73t3xa",
-      "next": [
-        {
-          "event": "intern_dialog"
-        }
-      ]
-    },
-    "faulty_day_night_cycle": {
-      "text": "“These exo-planetologists really messed up. I didn't think it was possible to have a day/night cycle end up twice as long as it's supposed to be, yet here we are.” #bf06mi",
-      "next": [
-        {
-          "event": "intern_dialog"
-        }
-      ]
-    },
-    "poisonous_plants": {
-      "text": "“I swear, these exo-botanists are going to feel sorry for that excuse of a flora they make us work with here. I'll be overjoyed to hear why they decided to add poisonous plants that kill half of the specimens we're trying to introduce.” #0x9j54",
-      "next": [
-        {
-          "event": "intern_dialog"
-        }
-      ]
-    },
-    "commands_go_to_other_system": {
-      "text": "“Seriously, what's wrong with the logistic teams? Why do all our supplies get delivered to that system nearby?” #2j3dig",
-      "next": [
-        {
-          "event": "intern_dialog"
-        }
-      ]
-    },
-    "intern_dialog": {
-      "text": "A nearby intern hears you, and says: “I couldn't agree more. Plus, what's the point of all that flood of reports and warnings?”. Despite your lack of reaction, the intern keeps on speaking: “Like, when I got here, Aude was logging an uninterrupted flow of warnings about the space station not being in the correct system. Obviously you couldn't have made that big of a mistake, going to the wrong planet, so I turned off all these noisy warnings.” #nm82y1",
-      "next": [
-        {
-          "event": "realization"
-        }
-      ]
-    },
-    "realization": {
-      "text": "A sudden doubt makes you freeze for a while, then you quickly check the spatial coordinates on your mission order, and you slowly come to a horrible conclusion: you did actually make a huge mistake, and went to the wrong planet. #01ybnv",
-      "choices": [
-        {
-          "text": "“I can't let anyone discover this. I'm going to falsify the documents. Then, introducing a species, even to a hostile world, shouldn't be too much of a challenge for someone as smart as I am.” #eu6o62",
-          "next": [
-            {
-              "event": "boss_finds_out"
-            }
-          ]
-        },
-        {
-          "text": "“Damn, I really f***ed up. I can't risk anyone finding out on their own; it's better I come clean about it beforehand.” #qk7hq1",
-          "next": [
-            {
-              "event": "boss_is_warned"
-            }
-          ]
-        }
-      ]
-    },
-    "boss_finds_out": {
-      "text": "Not long after, you get a call from your boss. You've never heard them being so furious - they seem enraged. “You idiot! I've done this job for over 600 standard time periods, and I've never encountered someone dumb enough to go to the wrong planet. I don't know what'd be worse, that you bunch of morons realized your mistake and tried to hide it, or that you didn't even figure it out. I don't care. All of you cretins are demoted, effective immediately.” #r6sukf",
-      "choices": [
-        {
-          "text": "“There goes my career...” #9ly65r",
-          "next": [
-            {
-              "event": "game_over"
-            }
-          ]
-        }
-      ]
-    },
-    "game_over": {
-      "text": "",
-      "effects": {
-        "population_removed": true
-      }
-    },
-    "boss_is_warned": {
-      "text": "The call with your boss goes as well as one would expect. “You idiot! I've done this job for over 600 standard time periods, and I've never encountered someone dumb enough to go to the wrong planet. Tell me, who's going to clean up all that mess now? As if dealing with all the other departments wasn't enough of a hassle already, now my own subordinates behave like a bunch of morons. You get one more chance, and you're very lucky I can't afford for that blunder to get too much publicity, or I'd demote all of you.” #aldliq",
-      "next": [
-        {
-          "event": "relocation"
-        }
-      ]
-    },
-    "relocation": {
-      "text": "Relocating your species to the planet that's actually supposed to be their home won't be easy, and will take some time. #rk6r3s",
-      "next": [
-        {
-          "event": "species_relocated",
-          "in": 1
-        }
-      ]
-    },
-    "species_relocated": {
-      "text": "Finally, the relocation of the species to their new planet is done. Sadly, not all specimens were retrieved, and even fewer actually made it during the trip, but the situation isn't as dire as it could be. #imia7z",
-      "effects": {
-        "population_relocated": true
-      }
-    }
-  },
-  "effects": {
-    "population_removed": {
-      "operation": "subtract",
-      "value": 999,
-      "type": "instant",
-      "target": "population"
-    },
-    "population_relocated": {
-      "operation": "subtract",
-      "value": 1,
-      "type": "instant",
-      "target": "population"
-    }
-  }
+	"$schema": "./schema.json",
+	"title": "wrong_planet",
+	"cooldown": 999,
+	"trigger": {
+		"target": "time",
+		"comparator": "lt",
+		"value": 3
+	},
+	"events": {
+		"start": {
+			"text": "Like everyday, you get reports from Aude, and like everyday, they mention one particular issue that's been increasingly bugging you: #6l8mbu",
+			"next": [
+				{
+					"event": "acid_rain"
+				},
+				{
+					"event": "desert"
+				},
+				{
+					"event": "faulty_day_night_cycle"
+				},
+				{
+					"event": "poisonous_plants"
+				},
+				{
+					"event": "commands_go_to_other_system"
+				}
+			]
+		},
+		"acid_rain": {
+			"text": "“How come we have to deal with that many acid rains? I can't believe exo-climatologists are so incompetent.” #zj8wvw",
+			"next": [
+				{
+					"event": "intern_dialog"
+				}
+			]
+		},
+		"desert": {
+			"text": "“How are we supposed to develop a species that needs water when the deserts on that planet just keep spreading?” #73t3xa",
+			"next": [
+				{
+					"event": "intern_dialog"
+				}
+			]
+		},
+		"faulty_day_night_cycle": {
+			"text": "“These exo-planetologists really messed up. I didn't think it was possible to have a day/night cycle end up twice as long as it's supposed to be, yet here we are.” #bf06mi",
+			"next": [
+				{
+					"event": "intern_dialog"
+				}
+			]
+		},
+		"poisonous_plants": {
+			"text": "“I swear, these exo-botanists are going to feel sorry for that excuse of a flora they make us work with here. I'll be overjoyed to hear why they decided to add poisonous plants that kill half of the specimens we're trying to introduce.” #0x9j54",
+			"next": [
+				{
+					"event": "intern_dialog"
+				}
+			]
+		},
+		"commands_go_to_other_system": {
+			"text": "“Seriously, what's wrong with the logistic teams? Why do all our supplies get delivered to that system nearby?” #2j3dig",
+			"next": [
+				{
+					"event": "intern_dialog"
+				}
+			]
+		},
+		"intern_dialog": {
+			"text": "A nearby intern hears you, and says: “I couldn't agree more. Plus, what's the point of all that flood of reports and warnings?”. Despite your lack of reaction, the intern keeps on speaking: “Like, when I got here, Aude was logging an uninterrupted flow of warnings about the space station not being in the correct system. Obviously you couldn't have made that big of a mistake, going to the wrong planet, so I turned off all these noisy warnings.” #nm82y1",
+			"next": [
+				{
+					"event": "realization"
+				}
+			]
+		},
+		"realization": {
+			"text": "A sudden doubt makes you freeze for a while, then you quickly check the spatial coordinates on your mission order, and you slowly come to a horrible conclusion: you did actually make a huge mistake, and went to the wrong planet. #01ybnv",
+			"choices": [
+				{
+					"text": "“I can't let anyone discover this. I'm going to falsify the documents. Then, introducing a species, even to a hostile world, shouldn't be too much of a challenge for someone as smart as I am.” #eu6o62",
+					"next": [
+						{
+							"event": "boss_finds_out"
+						}
+					]
+				},
+				{
+					"text": "“Damn, I really f***ed up. I can't risk anyone finding out on their own; it's better I come clean about it beforehand.” #qk7hq1",
+					"next": [
+						{
+							"event": "boss_is_warned"
+						}
+					]
+				}
+			]
+		},
+		"boss_finds_out": {
+			"text": "Not long after, you get a call from your boss. You've never heard them being so furious - they seem enraged. “You idiot! I've done this job for over 600 standard time periods, and I've never encountered someone dumb enough to go to the wrong planet. I don't know what'd be worse, that you bunch of morons realized your mistake and tried to hide it, or that you didn't even figure it out. I don't care. All of you cretins are demoted, effective immediately.” #r6sukf",
+			"choices": [
+				{
+					"text": "“There goes my career...” #9ly65r",
+					"next": [
+						{
+							"event": "game_over"
+						}
+					]
+				}
+			]
+		},
+		"game_over": {
+			"text": "",
+			"effects": {
+				"population_removed": true
+			}
+		},
+		"boss_is_warned": {
+			"text": "The call with your boss goes as well as one would expect. “You idiot! I've done this job for over 600 standard time periods, and I've never encountered someone dumb enough to go to the wrong planet. Tell me, who's going to clean up all that mess now? As if dealing with all the other departments wasn't enough of a hassle already, now my own subordinates behave like a bunch of morons. You get one more chance, and you're very lucky I can't afford for that blunder to get too much publicity, or I'd demote all of you.” #aldliq",
+			"next": [
+				{
+					"event": "relocation"
+				}
+			]
+		},
+		"relocation": {
+			"text": "Relocating your species to the planet that's actually supposed to be their home won't be easy, and will take some time. #rk6r3s",
+			"next": [
+				{
+					"event": "species_relocated",
+					"in": 1
+				}
+			]
+		},
+		"species_relocated": {
+			"text": "Finally, the relocation of the species to their new planet is done. Sadly, not all specimens were retrieved, and even fewer actually made it during the trip, but the situation isn't as dire as it could be. #imia7z",
+			"effects": {
+				"population_relocated": true
+			}
+		}
+	},
+	"effects": {
+		"population_removed": {
+			"operation": "subtract",
+			"value": 999,
+			"type": "instant",
+			"target": "population"
+		},
+		"population_relocated": {
+			"operation": "subtract",
+			"value": 1,
+			"type": "instant",
+			"target": "population"
+		}
+	}
 }

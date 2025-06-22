@@ -1,36 +1,36 @@
 {
-  "title": "a_simple_chain_with_hidden_and_not_outcomes",
-  "autoSelect": true,
-  "events": {
-    "start": {
-      "text": "Hello world!",
-      "next": [
-        {
-          "event": "outcome_below_3_pop",
-          "if": {
-            "comparator": "lt",
-            "target": "population",
-            "value": 3
-          }
-        },
-        {
-          "event": "outcome_above_and_eq_3_pop",
-          "if": {
-            "comparator": "gte",
-            "target": "population",
-            "value": 3
-          }
-        }
-      ]
-    },
-    "outcome_below_3_pop": {
-      "text": "outcome_below_3_pop",
-      "effects": {}
-    },
-    "outcome_above_and_eq_3_pop": {
-      "text": "outcome_above_and_eq_3_pop",
-      "effects": {}
-    }
-  },
-  "effects": {}
+	"title": "a_simple_chain_with_hidden_and_not_outcomes",
+	"autoSelect": true,
+	"events": {
+		"start": {
+			"text": "Hello world!",
+			"next": [
+				{
+					"event": "outcome_below_3_pop",
+					"if": {
+						"comparator": "lt",
+						"target": "population",
+						"value": 3
+					}
+				},
+				{
+					"event": "outcome_above_and_eq_3_pop",
+					"if": {
+						"comparator": "gte",
+						"target": "population",
+						"value": 3
+					}
+				}
+			]
+		},
+		"outcome_below_3_pop": {
+			"text": "outcome_below_3_pop",
+			"effects": {}
+		},
+		"outcome_above_and_eq_3_pop": {
+			"text": "outcome_above_and_eq_3_pop",
+			"effects": {}
+		}
+	},
+	"effects": {}
 }

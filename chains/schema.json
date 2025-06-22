@@ -1,280 +1,229 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$ref": "#/definitions/EventChain",
-  "title": "Json schema for an event chain",
-  "definitions": {
-    "EventChain": {
-      "type": "object",
-      "properties": {
-        "$schema": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "cooldown": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "trigger": {
-          "$ref": "#/definitions/Condition"
-        },
-        "autoSelect": {
-          "type": "boolean",
-          "description": "when set to true, this chain will be selected as soon as its trigger is satisfied"
-        },
-        "events": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "text": {
-                "type": "string"
-              },
-              "effects": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "boolean"
-                }
-              },
-              "choices": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "text": {
-                      "type": "string"
-                    },
-                    "next": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/Outcome"
-                      }
-                    },
-                    "effects": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "boolean"
-                      }
-                    },
-                    "if": {
-                      "$ref": "#/definitions/Condition"
-                    }
-                  },
-                  "required": [
-                    "text",
-                    "next"
-                  ],
-                  "additionalProperties": false
-                }
-              },
-              "next": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Outcome"
-                }
-              }
-            },
-            "additionalProperties": false,
-            "required": [
-              "text"
-            ]
-          },
-          "required": [
-            "start"
-          ]
-        },
-        "effects": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "description": {
-                "type": "string"
-              },
-              "operation": {
-                "type": "string",
-                "enum": [
-                  "add",
-                  "subtract"
-                ]
-              },
-              "target": {
-                "$ref": "#/definitions/StateVariable"
-              },
-              "value": {
-                "type": "number"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "instant",
-                  "permanent"
-                ]
-              }
-            },
-            "additionalProperties": false,
-            "required": [
-              "operation",
-              "target",
-              "value",
-              "type"
-            ]
-          }
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "title",
-        "events"
-      ]
-    },
-    "Outcome": {
-      "type": "object",
-      "properties": {
-        "event": {
-          "type": "string"
-        },
-        "in": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "weight": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-        "effects": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "boolean"
-          }
-        },
-        "if": {
-          "$ref": "#/definitions/Condition"
-        },
-        "variables": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "event"
-      ]
-    },
-    "Condition": {
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "allOf": {
-              "type": "array",
-              "minItems": 2,
-              "items": {
-                "$ref": "#/definitions/Condition"
-              }
-            }
-          },
-          "required": [
-            "allOf"
-          ],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "anyOf": {
-              "type": "array",
-              "minItems": 2,
-              "items": {
-                "$ref": "#/definitions/Condition"
-              }
-            }
-          },
-          "required": [
-            "anyOf"
-          ],
-          "additionalProperties": false
-        },
-        {
-          "$ref": "#/definitions/StateCondition"
-        },
-        {
-          "$ref": "#/definitions/VariableCondition"
-        }
-      ]
-    },
-    "StateCondition": {
-      "type": "object",
-      "properties": {
-        "comparator": {
-          "type": "string",
-          "enum": [
-            "lt",
-            "lte",
-            "eq",
-            "gte",
-            "gt"
-          ]
-        },
-        "target": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/StateVariable"
-            },
-            {
-              "type": "string",
-              "enum": [
-                "time"
-              ]
-            }
-          ]
-        },
-        "value": {
-          "type": "integer"
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "comparator",
-        "target",
-        "value"
-      ]
-    },
-    "VariableCondition": {
-      "type": "object",
-      "properties": {
-        "comparator": {
-          "type": "string",
-          "enum": [
-            "eq",
-            "not"
-          ]
-        },
-        "target": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "comparator",
-        "target",
-        "value"
-      ]
-    },
-    "StateVariable": {
-      "type": "string",
-      "enum": [
-        "population",
-        "ecology",
-        "money",
-        "reputation"
-      ]
-    }
-  }
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$ref": "#/definitions/EventChain",
+	"title": "Json schema for an event chain",
+	"definitions": {
+		"EventChain": {
+			"type": "object",
+			"properties": {
+				"$schema": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string"
+				},
+				"cooldown": {
+					"type": "integer",
+					"minimum": 1
+				},
+				"trigger": {
+					"$ref": "#/definitions/Condition"
+				},
+				"autoSelect": {
+					"type": "boolean",
+					"description": "when set to true, this chain will be selected as soon as its trigger is satisfied"
+				},
+				"events": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "object",
+						"properties": {
+							"text": {
+								"type": "string"
+							},
+							"effects": {
+								"type": "object",
+								"additionalProperties": {
+									"type": "boolean"
+								}
+							},
+							"choices": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"text": {
+											"type": "string"
+										},
+										"next": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Outcome"
+											}
+										},
+										"effects": {
+											"type": "object",
+											"additionalProperties": {
+												"type": "boolean"
+											}
+										},
+										"if": {
+											"$ref": "#/definitions/Condition"
+										}
+									},
+									"required": ["text", "next"],
+									"additionalProperties": false
+								}
+							},
+							"next": {
+								"type": "array",
+								"items": {
+									"$ref": "#/definitions/Outcome"
+								}
+							}
+						},
+						"additionalProperties": false,
+						"required": ["text"]
+					},
+					"required": ["start"]
+				},
+				"effects": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "object",
+						"properties": {
+							"description": {
+								"type": "string"
+							},
+							"operation": {
+								"type": "string",
+								"enum": ["add", "subtract"]
+							},
+							"target": {
+								"$ref": "#/definitions/StateVariable"
+							},
+							"value": {
+								"type": "number"
+							},
+							"type": {
+								"type": "string",
+								"enum": ["instant", "permanent"]
+							}
+						},
+						"additionalProperties": false,
+						"required": ["operation", "target", "value", "type"]
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["title", "events"]
+		},
+		"Outcome": {
+			"type": "object",
+			"properties": {
+				"event": {
+					"type": "string"
+				},
+				"in": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"weight": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"effects": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "boolean"
+					}
+				},
+				"if": {
+					"$ref": "#/definitions/Condition"
+				},
+				"variables": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "string"
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["event"]
+		},
+		"Condition": {
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"allOf": {
+							"type": "array",
+							"minItems": 2,
+							"items": {
+								"$ref": "#/definitions/Condition"
+							}
+						}
+					},
+					"required": ["allOf"],
+					"additionalProperties": false
+				},
+				{
+					"type": "object",
+					"properties": {
+						"anyOf": {
+							"type": "array",
+							"minItems": 2,
+							"items": {
+								"$ref": "#/definitions/Condition"
+							}
+						}
+					},
+					"required": ["anyOf"],
+					"additionalProperties": false
+				},
+				{
+					"$ref": "#/definitions/StateCondition"
+				},
+				{
+					"$ref": "#/definitions/VariableCondition"
+				}
+			]
+		},
+		"StateCondition": {
+			"type": "object",
+			"properties": {
+				"comparator": {
+					"type": "string",
+					"enum": ["lt", "lte", "eq", "gte", "gt"]
+				},
+				"target": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/StateVariable"
+						},
+						{
+							"type": "string",
+							"enum": ["time"]
+						}
+					]
+				},
+				"value": {
+					"type": "integer"
+				}
+			},
+			"additionalProperties": false,
+			"required": ["comparator", "target", "value"]
+		},
+		"VariableCondition": {
+			"type": "object",
+			"properties": {
+				"comparator": {
+					"type": "string",
+					"enum": ["eq", "not"]
+				},
+				"target": {
+					"type": "string"
+				},
+				"value": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false,
+			"required": ["comparator", "target", "value"]
+		},
+		"StateVariable": {
+			"type": "string",
+			"enum": ["population", "ecology", "money", "reputation"]
+		}
+	}
 }

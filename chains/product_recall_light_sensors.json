@@ -1,185 +1,185 @@
 {
-  "$schema": "./schema.json",
-  "title": "product recall: light sensors",
-  "cooldown": 999,
-  "trigger": {
-    "target": "population",
-    "comparator": "gte",
-    "value": 3
-  },
-  "events": {
-    "start": {
-      "text": "Incoming mail:\n\nSender: support@universal-parts.univ\nSubject: IMPORTANT! PRODUCT RECALL\n\nDear customer, all products of the collection 'LIGHTSENSORS' are being recalled for false-triggering issues.\n\nPlease send them back as soon as possible, information is provided in attached document.",
-      "choices": [
-        {
-          "text": "“Again, a spam?“ [mark as spam]",
-          "next": [
-            {
-              "event": "minor_malfunction",
-              "weight": 3
-            },
-            {
-              "event": "major_malfunction"
-            }
-          ]
-        },
-        {
-          "text": "“Do I even have any in my station?“",
-          "next": [
-            {
-              "event": "sensors-listing-aude"
-            }
-          ]
-        },
-        {
-          "text": "“I don't have time for this“ [ignore it]",
-          "next": [
-            {
-              "event": "minor_malfunction",
-              "weight": 3
-            },
-            {
-              "event": "major_malfunction"
-            }
-          ]
-        }
-      ]
-    },
-    "sensors-listing-aude": {
-      "text": "Aude: “There are 23 of these sensors installed in a particular hallway, they are used to turn lights on when movement is detected.“",
-      "choices": [
-        {
-          "text": "“These lights could be turned on everyday, they would not even consume a fraction of the required resources to send this mail across the entire galaxy“ [ignore it]",
-          "next": [
-            {
-              "event": "minor_malfunction",
-              "weight": 3
-            },
-            {
-              "event": "major_malfunction"
-            }
-          ]
-        },
-        {
-          "text": "“I WILL NOT ALLOW FAULTY GEAR IN MY STATION!“",
-          "next": [
-            {
-              "event": "price-estimation"
-            }
-          ]
-        },
-        {
-          "text": "“Only 23 eh? It would only take a couple of hours to dismount them.“",
-          "next": [
-            {
-              "event": "price-estimation"
-            }
-          ]
-        }
-      ]
-    },
-    "price-estimation": {
-      "text": "You start packing up the sensors for shipping. And then think back about an ad you saw recently: premium light sensors on sales from KEEPTHELIGHTSON company, it would cost you [10 €€€] shipping included.",
-      "choices": [
-        {
-          "text": "”Why spend my hard-earned money for something that futile?” [wait for UNIVERSAL-PARTS replacement sensors]",
-          "next": [
-            {
-              "event": "UNIVERSAL_PARTS_sensors_received"
-            }
-          ]
-        },
-        {
-          "text": "”I'm not trusting UNIVERSAL-PARTS again on this, better play it safe.” [order KEEPTHELIGHTSON sensors for 10 €€€]",
-          "next": [
-            {
-              "event": "KEEPTHELIGHTSON_sensors_received"
-            }
-          ],
-          "effects": {
-            "buy_KEEPTHELIGHTSON_sensors": true
-          }
-        }
-      ]
-    },
-    "KEEPTHELIGHTSON_sensors_received": {
-      "text": "You received the KEEPTHELIGHTSON light sensors, they work as expected: fine.",
-      "choices": [
-        {
-          "text": "”Delightful, another source of problems out of my mind.”",
-          "next": [
-            {
-              "event": "KEEPTHELIGHTSON_end"
-            }
-          ]
-        }
-      ]
-    },
-    "UNIVERSAL_PARTS_sensors_received": {
-      "text": "You received UNIVERSAL-PARTS light sensors, they work as expected."
-    },
-    "KEEPTHELIGHTSON_end": {
-      "text": ""
-    },
-    "minor_malfunction": {
-      "text": "Sometimes, some lights are already on when you go through a particular hallway, but it's not a big deal."
-    },
-    "major_malfunction": {
-      "text": "A few days after not changing your light sensors, a fire happens in that particular hallway. The area put itself in quarantine when the fire was getting to big. With no oxygen left it died rapidly.",
-      "next": [
-        {
-          "event": "fire_reason"
-        }
-      ]
-    },
-    "fire_reason": {
-      "text": "You learn by checking the logs that one light sensor suddenly did start false-triggering... 1000 times per second! This caused the light to malfunction and ignite itself.\nThe fire damaged nearby cables inside the wall. Unless you repair them, this station area is unusable.",
-      "choices": [
-        {
-          "text": "“This station has other working areas like this, I'll be fine.“ [do nothing]",
-          "next": [
-            {
-              "event": "station_lost_one_area"
-            }
-          ]
-        },
-        {
-          "text": "“All of this for some gadget light sensors!!“ [repair the wall cables for 100 €€€]",
-          "next": [
-            {
-              "event": "wall_repaired"
-            }
-          ],
-          "effects": {
-            "repair_wall": true
-          }
-        }
-      ]
-    },
-    "station_lost_one_area": {
-      "text": "Your station is now missing one area."
-    },
-    "wall_repaired": {
-      "text": "Wall is repaired, you now resign yourself to replacing the sensors.",
-      "next": [
-        {
-          "event": "price-estimation"
-        }
-      ]
-    }
-  },
-  "effects": {
-    "buy_KEEPTHELIGHTSON_sensors": {
-      "operation": "subtract",
-      "value": 10,
-      "type": "instant",
-      "target": "money"
-    },
-    "repair_wall": {
-      "operation": "subtract",
-      "value": 100,
-      "type": "instant",
-      "target": "money"
-    }
-  }
+	"$schema": "./schema.json",
+	"title": "product recall: light sensors",
+	"cooldown": 999,
+	"trigger": {
+		"target": "population",
+		"comparator": "gte",
+		"value": 3
+	},
+	"events": {
+		"start": {
+			"text": "Incoming mail:\n\nSender: support@universal-parts.univ\nSubject: IMPORTANT! PRODUCT RECALL\n\nDear customer, all products of the collection 'LIGHTSENSORS' are being recalled for false-triggering issues.\n\nPlease send them back as soon as possible, information is provided in attached document.",
+			"choices": [
+				{
+					"text": "“Again, a spam?“ [mark as spam]",
+					"next": [
+						{
+							"event": "minor_malfunction",
+							"weight": 3
+						},
+						{
+							"event": "major_malfunction"
+						}
+					]
+				},
+				{
+					"text": "“Do I even have any in my station?“",
+					"next": [
+						{
+							"event": "sensors-listing-aude"
+						}
+					]
+				},
+				{
+					"text": "“I don't have time for this“ [ignore it]",
+					"next": [
+						{
+							"event": "minor_malfunction",
+							"weight": 3
+						},
+						{
+							"event": "major_malfunction"
+						}
+					]
+				}
+			]
+		},
+		"sensors-listing-aude": {
+			"text": "Aude: “There are 23 of these sensors installed in a particular hallway, they are used to turn lights on when movement is detected.“",
+			"choices": [
+				{
+					"text": "“These lights could be turned on everyday, they would not even consume a fraction of the required resources to send this mail across the entire galaxy“ [ignore it]",
+					"next": [
+						{
+							"event": "minor_malfunction",
+							"weight": 3
+						},
+						{
+							"event": "major_malfunction"
+						}
+					]
+				},
+				{
+					"text": "“I WILL NOT ALLOW FAULTY GEAR IN MY STATION!“",
+					"next": [
+						{
+							"event": "price-estimation"
+						}
+					]
+				},
+				{
+					"text": "“Only 23 eh? It would only take a couple of hours to dismount them.“",
+					"next": [
+						{
+							"event": "price-estimation"
+						}
+					]
+				}
+			]
+		},
+		"price-estimation": {
+			"text": "You start packing up the sensors for shipping. And then think back about an ad you saw recently: premium light sensors on sales from KEEPTHELIGHTSON company, it would cost you [10 €€€] shipping included.",
+			"choices": [
+				{
+					"text": "”Why spend my hard-earned money for something that futile?” [wait for UNIVERSAL-PARTS replacement sensors]",
+					"next": [
+						{
+							"event": "UNIVERSAL_PARTS_sensors_received"
+						}
+					]
+				},
+				{
+					"text": "”I'm not trusting UNIVERSAL-PARTS again on this, better play it safe.” [order KEEPTHELIGHTSON sensors for 10 €€€]",
+					"next": [
+						{
+							"event": "KEEPTHELIGHTSON_sensors_received"
+						}
+					],
+					"effects": {
+						"buy_KEEPTHELIGHTSON_sensors": true
+					}
+				}
+			]
+		},
+		"KEEPTHELIGHTSON_sensors_received": {
+			"text": "You received the KEEPTHELIGHTSON light sensors, they work as expected: fine.",
+			"choices": [
+				{
+					"text": "”Delightful, another source of problems out of my mind.”",
+					"next": [
+						{
+							"event": "KEEPTHELIGHTSON_end"
+						}
+					]
+				}
+			]
+		},
+		"UNIVERSAL_PARTS_sensors_received": {
+			"text": "You received UNIVERSAL-PARTS light sensors, they work as expected."
+		},
+		"KEEPTHELIGHTSON_end": {
+			"text": ""
+		},
+		"minor_malfunction": {
+			"text": "Sometimes, some lights are already on when you go through a particular hallway, but it's not a big deal."
+		},
+		"major_malfunction": {
+			"text": "A few days after not changing your light sensors, a fire happens in that particular hallway. The area put itself in quarantine when the fire was getting to big. With no oxygen left it died rapidly.",
+			"next": [
+				{
+					"event": "fire_reason"
+				}
+			]
+		},
+		"fire_reason": {
+			"text": "You learn by checking the logs that one light sensor suddenly did start false-triggering... 1000 times per second! This caused the light to malfunction and ignite itself.\nThe fire damaged nearby cables inside the wall. Unless you repair them, this station area is unusable.",
+			"choices": [
+				{
+					"text": "“This station has other working areas like this, I'll be fine.“ [do nothing]",
+					"next": [
+						{
+							"event": "station_lost_one_area"
+						}
+					]
+				},
+				{
+					"text": "“All of this for some gadget light sensors!!“ [repair the wall cables for 100 €€€]",
+					"next": [
+						{
+							"event": "wall_repaired"
+						}
+					],
+					"effects": {
+						"repair_wall": true
+					}
+				}
+			]
+		},
+		"station_lost_one_area": {
+			"text": "Your station is now missing one area."
+		},
+		"wall_repaired": {
+			"text": "Wall is repaired, you now resign yourself to replacing the sensors.",
+			"next": [
+				{
+					"event": "price-estimation"
+				}
+			]
+		}
+	},
+	"effects": {
+		"buy_KEEPTHELIGHTSON_sensors": {
+			"operation": "subtract",
+			"value": 10,
+			"type": "instant",
+			"target": "money"
+		},
+		"repair_wall": {
+			"operation": "subtract",
+			"value": 100,
+			"type": "instant",
+			"target": "money"
+		}
+	}
 }

@@ -1,17 +1,17 @@
 {
-  "title": "simple empty chain",
-  "autoSelect": true,
-  "events": {
-    "start": {
-      "text": "Hello world! #09e111"
-    }
-  },
-  "effects": {
-    "my-effect-depending-on-ecology": {
-      "type": "instant",
-      "operation": "add",
-      "value": 1,
-      "target": "ecology"
-    }
-  }
+	"title": "simple empty chain",
+	"autoSelect": true,
+	"events": {
+		"start": {
+			"text": "Hello world! #09e111"
+		}
+	},
+	"effects": {
+		"my-effect-depending-on-ecology": {
+			"type": "instant",
+			"operation": "add",
+			"value": 1,
+			"target": "ecology"
+		}
+	}
 }
