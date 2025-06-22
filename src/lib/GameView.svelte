@@ -12,8 +12,8 @@
         linesByChain: {
             intro: [
                 "Hello, I'm Aude, your personal AI that you created a while ago to help you and to remind you of your tasks. We are currently orbiting around an uninhabited planet, and your job is to introduce a new species on it. The end goal is to study how this species adapts to its environment, as well as finding new evolutionary traits that your company could patent and sell! You have just implemented the first subjects that you previously created in your lab. You told me that you were eager to watch them grow, and, hopefully, survive and adapt! You did not seem too sure to what extent it is wise for you to physically intervene with them, so, for now, you would try to let them be as much possible on their own.",
-                "I will report to you events that you need to be aware of, and, for some of them, to react to. Your current goal is for you species to develop enough to reach 8 'Pop' (Population), and it would be a catastrophic failure if it went down to 0.",
-                "Additionally, the 'Eco' (Ecology) represents the stability of the current biome your species is in, the maximum value is 12 and means the biome is stable and is in a perfect state for you species to grow in! Obviously, the more it goes down, the more you will have issues.",
+                "I will report to you events that you need to be aware of, and, for some of them, to react to. Your current goal is for you species to develop enough to reach 10 'Pop' (Population), and it would be a catastrophic failure if it went down to 0.",
+                // "Additionally, the 'Eco' (Ecology) represents the stability of the current biome your species is in, the maximum value is 10 and means the biome is stable and is in a perfect state for you species to grow in! Obviously, the more it goes down, the more you will have issues.",
                 "You better start emerging soon from your sleep and get to work, go grab a coffee!",
             ],
         },
@@ -63,20 +63,26 @@
     let previousPop = pop;
     let eco = engine.state.ecology;
     let previousEco = eco;
+    let rep = engine.state.reputation;
+    let previousRep = rep;
     let money = engine.state.money;
     let previousMoney = money;
     let turnCounter = engine.state.turnCounter;
     let displayEcology = engine.state.getUnlockedVariables().find(v => v === 'ecology');
+    let displayReputation = engine.state.getUnlockedVariables().find(v => v === 'reputation');
 
     function updateCounters() {
         previousPop = pop;
         previousEco = eco;
+        previousRep = rep;
         previousMoney = money;
         pop = engine.state.population;
         eco = engine.state.ecology;
+        rep = engine.state.reputation;
         money = engine.state.money;
         turnCounter = engine.state.turnCounter;
         displayEcology = engine.state.getUnlockedVariables().find(v => v === 'ecology');
+        displayReputation = engine.state.getUnlockedVariables().find(v => v === 'reputation');
     }
 </script>
 
@@ -86,6 +92,9 @@
             <VariableDashboardItem label="Pop" value={pop} previousValue={previousPop} />
             {#if displayEcology }
                 <VariableDashboardItem label="Eco" value={eco} previousValue={previousEco} />
+            {/if}
+            {#if displayReputation }
+                <VariableDashboardItem label="Rep" value={rep} previousValue={previousRep} />
             {/if}
             <VariableDashboardItem label="€€€" value={money} previousValue={previousMoney} />
             <VariableDashboardItem label="Turn" value={turnCounter} />

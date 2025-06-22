@@ -167,9 +167,9 @@ export class Engine {
                 this.eventsToResolveThisTurn.push(eventToPlay);
 
                 // Test for win and lose conditions
-                if (this.hasWon()) {
+                if (this.state.hasWon()) {
                     return {isVictory: true};
-                } else if (this.hasLost()) {
+                } else if (this.state.hasLost()) {
                     return {isVictory: false};
                 }
 
@@ -210,9 +210,9 @@ export class Engine {
 
         // We resolved every event that could be during this turn
         // Test for win and lose conditions
-        if (this.hasWon()) {
+        if (this.state.hasWon()) {
             return {isVictory: true};
-        } else if (this.hasLost()) {
+        } else if (this.state.hasLost()) {
             return {isVictory: false};
         }
 
@@ -244,14 +244,6 @@ export class Engine {
         const effectDeactivations = Object.keys(effects)
             .filter(effectName => !effects[effectName]);
         effectDeactivations.forEach(effectName => this.ongoingPermanentEffects.delete(effectName));
-    }
-
-    hasLost(): boolean {
-        return this.state.money < -400 || this.state.population === 0 || this.state.ecology === 0;
-    }
-
-    hasWon(): boolean {
-        return this.state.population === 20;
     }
 
     selectNextEvent(outcomes: Array<Outcome>): Outcome {
