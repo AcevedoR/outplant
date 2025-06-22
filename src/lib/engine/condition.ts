@@ -98,7 +98,7 @@ export function determineIfIsVariableCondition(
 ): toBeDetermined is VariableCondition {
 	if (
 		Object.hasOwn(toBeDetermined, 'value') &&
-		typeof (toBeDetermined as { value: any }).value === 'string'
+		typeof (toBeDetermined as { value: unknown }).value === 'string'
 	) {
 		return true;
 	}

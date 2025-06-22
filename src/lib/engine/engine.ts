@@ -108,7 +108,7 @@ export class Engine {
 			this.applyEffects(outcome.effects);
 		}
 		if (outcome.variables) {
-			for (let variable in outcome.variables) {
+			for (const variable in outcome.variables) {
 				this.state.chainVariables.set(
 					extractNamespace(eventWithChoiceName),
 					variable,
@@ -225,7 +225,7 @@ export class Engine {
 					this.applyEffects(nextEvent.effects);
 				}
 				if (next.variables) {
-					for (let variable in next.variables) {
+					for (const variable in next.variables) {
 						this.state.chainVariables.set(
 							chainTitle,
 							variable,

@@ -61,7 +61,7 @@ describe('getUsedVariablesIn', () => {
 });
 
 function getChainFromDisk(chainFileName: string): JSONChain {
-	let res: Record<string, any> = {};
+	const res: Record<string, unknown> = {};
 	res[chainFileName] = JSON.parse(
 		fs.readFileSync(
 			path.resolve(__dirname, '../../../test/chains/' + chainFileName),

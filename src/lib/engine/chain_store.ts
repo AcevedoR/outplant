@@ -38,7 +38,9 @@ export class ChainStore {
 	constructor(options?: ConstructorOptions) {
 		const chainFiles = getChainsFiles(options);
 		for (const chainFile in chainFiles) {
+			// @ts-expect-error TS2698 TODO need to improve getChainsFiles typing
 			const jsonChain = { ...chainFiles[chainFile] } as JSONChain;
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			delete (jsonChain as any).default;
 
 			const validationRes = validateJsonSchema(jsonChain, getJsonSchema());
@@ -72,7 +74,7 @@ export class ChainStore {
 }
 
 function getJsonSchema() {
-	let foundFiles = Object.values(
+	const foundFiles = Object.values(
 		import.meta.glob(['/chains/schema.json'], { eager: true }),
 	);
 	if (foundFiles.length === 0) {
@@ -83,7 +85,7 @@ function getJsonSchema() {
 	return foundFiles[0];
 }
 
-function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
+function getChainsFiles(options?: ConstructorOptions): Record<string, unknown> {
 	if (options && options.overrideInputChains) {
 		return options.overrideInputChains;
 	}
@@ -92,7 +94,7 @@ function getChainsFiles(options?: ConstructorOptions): Record<string, any> {
 		const overrideInputChainFilenames = urlParams
 			.getAll('overrideInputChainFilenames')
 			.map((name) => `/test/chains/${name}.json`);
-		let files: Record<string, any> = import.meta.glob(
+		const files: Record<string, unknown> = import.meta.glob(
 			['/test/chains/*.json', '!**/schema.json'],
 			{ eager: true },
 		);
@@ -124,18 +126,18 @@ export type JSONChain = {
 };
 
 type ConstructorOptions = {
-	overrideInputChains?: Record<string, any>;
+	overrideInputChains?: Record<string, unknown>;
 };
 
 export function getUsedVariablesIn(jsonChain: JSONChain): StateVariable[] {
-	let keyToFind = 'target';
+	const keyToFind = 'target';
 	const seen = new Set<StateVariable>();
 
-	function recurse(jsonTree: any) {
+	function recurse(jsonTree: unknown) {
 		if (Array.isArray(jsonTree)) {
 			for (const item of jsonTree) recurse(item);
 		} else if (jsonTree && typeof jsonTree === 'object') {
-			for (const [key, val] of Object.entries(jsonTree)) {
+			for (const [key, val] of Object.entries(jsonTree as Record<string, unknown>)) {
 				if (
 					key === keyToFind &&
 					typeof val === 'string' &&

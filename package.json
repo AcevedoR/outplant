@@ -13,19 +13,24 @@
 		"test:e2e": "playwright test",
 		"test:e2e:ui": "playwright test --ui",
 		"coverage": "vitest run --coverage",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"lint": "eslint . --ext .js,.ts,.svelte"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.43.1",
 		"@sveltejs/vite-plugin-svelte": "^3.1.0",
 		"@tsconfig/svelte": "^5.0.0",
 		"@types/node": "^20.12.7",
+		"eslint": "^9.29.0",
+		"eslint-plugin-svelte": "^3.9.3",
+		"globals": "^16.2.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.4.0",
-		"svelte": "^4.0.5",
+		"svelte": "^4.2.20",
 		"svelte-check": "^3.4.6",
 		"tslib": "^2.6.0",
 		"typescript": "^5.0.2",
+		"typescript-eslint": "^8.34.1",
 		"vite": "^5.2.8",
 		"vitest": "^1.6.1"
 	},

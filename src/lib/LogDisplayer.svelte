@@ -4,15 +4,15 @@
 
     const getLastChain = (linesByChain: { [key: string]: Array<string> }) => {
         let entries = Object.entries(linesByChain);
-        if(entries.map(([chainName, lines]) => lines.length).flat().reduce((a,b) => a+b) > 1) {
+        if(entries.map(([_chainName, lines]) => lines.length).flat().reduce((a,b) => a+b) > 1) {
             return entries[entries.length-1][0];
         }
     };
 </script>
 <section>
-    {#each Object.entries(linesByChain) as [chainName, lines]}
+    {#each Object.entries(linesByChain) as [chainName, lines] (chainName)}
         <ul class="log-displayer__entry-group { (currentChain && currentChain === chainName) ? currentChain + ' highlight-group' : ''}">
-            {#each lines as line}
+            {#each lines as line, i (i)}
                 <li class="log-displayer__entry">{line}</li>
             {/each}
         </ul>
