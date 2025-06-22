@@ -272,7 +272,8 @@
       "enum": [
         "population",
         "ecology",
-        "money"
+        "money",
+        "reputation"
       ]
     }
   }

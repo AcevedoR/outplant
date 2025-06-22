@@ -44,8 +44,8 @@ export type StateCondition = {
     value: number;
 };
 
-export type StateVariable = "population" | "ecology" | "money";
-const stateVariableValues: StateVariable[] = ["population", "ecology", "money"];
+export type StateVariable = "population" | "ecology" | "money" | "reputation";
+const stateVariableValues: StateVariable[] = ["population", "ecology", "money", "reputation"];
 
 export function isStateVariable(value: string): value is StateVariable {
     return stateVariableValues.includes(value as StateVariable);

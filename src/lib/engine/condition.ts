@@ -33,6 +33,7 @@ function checkStateConditionIsSatisfied(condition: StateCondition, state: GameSt
     const actualValue = {
         'population': state.population,
         'ecology': state.ecology,
+        'reputation': state.reputation,
         'money': state.money,
         'time': state.turnCounter,
     }[condition.target];
